@@ -1,0 +1,55 @@
+name: Bug Report
+description: Report a problem with the template
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report an issue! 
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Also tell us what you expected to happen.
+      placeholder: Describe the bug here...
+    validations:
+      required: true
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Environment
+      options:
+        - Overleaf
+        - Local TeX Live (Linux)
+        - Local TeX Live (Mac/MacTeX)
+        - Local TeX Live (Windows)
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: compiler
+    attributes:
+      label: Compiler
+      options:
+        - XeLaTeX (Recommended)
+        - LuaLaTeX
+        - PDFLaTeX
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant LaTeX Logs
+      description: Please paste relevant error messages from the logs.
+      render: text
+  - type: checkboxes
+    id: checkboxes
+    attributes:
+      label: Validation
+      options:
+        - label: I have checked the Quick_Start_Guide and README files.
+          required: true
+        - label: I am using the latest version of this template.
+          required: true
