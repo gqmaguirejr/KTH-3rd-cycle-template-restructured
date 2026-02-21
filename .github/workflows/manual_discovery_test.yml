@@ -1,0 +1,33 @@
+name: Manual DiVA Discovery Test
+
+on:
+  workflow_dispatch: # This is the "Magic" line that adds the button
+
+jobs:
+  run-discovery:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install bibtexparser thefuzz python-Levenshtein pymods requests pandas
+
+      - name: Run Discovery Script
+        run: python scripts/DiVA_discovery.py
+
+      - name: Check Results
+        run: |
+          if [ -f "publications_map.json" ]; then
+            cat publications_map.json
+          else
+            echo "Error: publications_map.json was not created."
+            exit 1
+          fi
+
