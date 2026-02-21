@@ -30,7 +30,7 @@ The project contains many README files; consult them for further details.
 
 
 ## Getting started
-A student should begin by reading the file Quick_Start_Guide (.tex or .pdf). This three-page guide gives the four most important steps to get started.
+A student should begin by reading the Quick_Start_Guide (.tex or .pdf) file. This three-page guide gives the four most important steps to get started.
 
 The README_3rd_cycle_author (.tex or .pdf) file provides information the student will want to know about working with the template.
 
@@ -53,10 +53,11 @@ At the top of examplethesis.tex you will see that it is easy to configure (withi
 ## For more advanced users
 More advanced users might also want to modify or add to the definitions in lib/defines.tex.
 
-If you need to add additional fonts, take a look at KTH/kth-fonts.tex
+If you need to add additional fonts, take a look at kth/kth-fonts.tex
 
 The folder README_notes contains more specialized information for users, supervisors, administrators, and programmers. It also contains files that describe the KTH DOCX template and another LaTeX template (called here the Tekla template) that started with my template (but unfortunately removed most of the important functionality).
 
 ## For problems with compile timeouts
 If you run into (compile) timeouts and have added additional fonts, take a look at Saving_and_restoring_font_cache.tex. By modifying and compiling this file, you can cache the fonts you use, saving a lot of time when compiling.
 
+This requires manually copying the files from the compilation results into a directory in your project. This is necessary because the LaTeX compiler runs in a container that does not have write access to the Overleaf project itself; instead, it only gets a copy of these files when the container is run.
