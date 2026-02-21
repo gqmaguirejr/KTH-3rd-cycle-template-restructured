@@ -1,7 +1,8 @@
 # KTH 3rd cycle template restructured
 This Overleaf project is for the LaTeX template called "KTH 3rd cycle template restructured," designed by Gerald Q. Maguire Jr. for use by third-cycle students (i.e., doctoral students - be they licentiate or Ph.D. students) at KTH. One of the main goals of this project is to support all phases of the thesis (process) and all the different *readers* (be they human or machine).
 
-**Note** This template is not an official template; it has been developed to try to address the weakness of the existing templates while trying to be consistent with the graphical design.
+> [!NOTE]
+> This template is not an official template; it has been developed to try to address the weakness of the existing templates while trying to be consistent with the graphical design.
 
 One of the key aims of the template is to have you enter information _once_ and reuse this data. This is rather important as some of this information will be used in many different systems (including the announcement for your presentation, the requests for ISBN and TRITA numbers, the metadata and thesis in DiVA, the final grade in LADOK, and even on your diploma). My experiments in quality control of previous theses revealed that manually entering this information across these many different systems results in numerous errors and inconsistent data.
 
@@ -11,7 +12,7 @@ A third aim is that if there are errors, the errata.tex document should help you
 
 The project contains many README files; consult them for further details.
 
-[Getting Started](#getting-started) | [Key Files](#key-files-at-a-glance) | [For more advanced users](#For-more-advanced-users) | [Fixing Timeouts](#for-problems-with-compile-timeouts)
+[Getting Started](#getting-started) | [Key Files](#key-files-at-a-glance) | [For more advanced users](#for-more-advanced-users) | [Fixing Timeouts](#for-problems-with-compile-timeouts)
 
 ## Core Features
 
@@ -30,11 +31,11 @@ The project contains many README files; consult them for further details.
 
 
 ## Getting started
-A student should begin by reading the Quick_Start_Guide (.tex or .pdf) file. This three-page guide gives the four most important steps to get started.
+A student should begin by reading the `Quick_Start_Guide` (.tex or .pdf) file. This three-page guide gives the four most important steps to get started.
 
-The README_3rd_cycle_author (.tex or .pdf) file provides information the student will want to know about working with the template.
+The `README_3rd_cycle_author` (.tex or .pdf) file provides information the student will want to know about working with the template.
 
-Most students will only need to configure their thesis-specific values (author information (name, KTHID, ...), supervisors, titles, etc.) in custom_configuration, and then can start turning the file examplethesis.tex into their thesis. Acronyms should be added to the file lib/acronyms.tex. If you need to include additional LaTeX libraries, look at lib/includes or lib/includes-after-hyperref (the latter file is for packages that must be loaded after hyperref).
+Most students will only need to configure their thesis-specific values (author information (name, KTHID, ...), supervisors, titles, etc.) in custom_configuration, and then can start turning the file examplethesis.tex into their thesis. Acronyms should be added to the file `lib/acronyms.tex`. If you need to include additional LaTeX libraries, look at `lib/includes.tex` or `lib/includes-after-hyperref.tex` (the latter file is for packages that must be loaded after hyperref).
 
 At the top of examplethesis.tex you will see that it is easy to configure (within \documentclass) whether your thesis is being written in English or Swedish, which bibliographic tool you want to use, whether you are including publications (for a compilation style thesis) or not, and what languages of abstracts you want to have (beyond the required English and Swedish abstracts and keywords).
 
@@ -53,11 +54,14 @@ At the top of examplethesis.tex you will see that it is easy to configure (withi
 ## For more advanced users
 More advanced users might also want to modify or add to the definitions in lib/defines.tex.
 
-If you need to add additional fonts, take a look at kth/kth-fonts.tex
+If you need to add additional fonts, take a look at `kth/kth-fonts.tex`
 
-The folder README_notes contains more specialized information for users, supervisors, administrators, and programmers. It also contains files that describe the KTH DOCX template and another LaTeX template (called here the Tekla template) that started with my template (but unfortunately removed most of the important functionality).
+The folder `README_notes` contains more specialized information for users, supervisors, administrators, and programmers. It also contains files that describe the KTH DOCX template and another LaTeX template (called here the Tekla template) that started with my template (but unfortunately removed most of the important functionality).
 
 ## For problems with compile timeouts
 If you run into (compile) timeouts and have added additional fonts, take a look at Saving_and_restoring_font_cache.tex. By modifying and compiling this file, you can cache the fonts you use, saving a lot of time when compiling.
 
 This requires manually copying the files from the compilation results into a directory in your project. This is necessary because the LaTeX compiler runs in a container that does not have write access to the Overleaf project itself; instead, it only gets a copy of these files when the container is run.
+
+## Potential coming enhancements
+By making this template available via github, I hope that it will be possible to exploit generative AI and other tools ability to produce content and make changes directly in the github repository. For example, to automate much of the configuration via `custom_configuration.tex` using information that is already available in various sources. Another example, is to directly insert the information about previous publications into the document based on information about them that is already in DiVA. The user would then simply move entries from 'included in the thesis' to 'not included in the thesis'.
