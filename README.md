@@ -11,7 +11,7 @@ A third aim is that if there are errors, the errata.tex document should help you
 
 The project contains many README files; consult them for further details.
 
-[Getting Started](#getting-started) | [Key Files](#key-files-at-a-glance) | .[For more advanced users](#For-more-advanced-users) | [Fixing Timeouts](#for-problems-with-compile-timeouts)
+[Getting Started](#getting-started) | [Key Files](#key-files-at-a-glance) | [For more advanced users](#For-more-advanced-users) | [Fixing Timeouts](#for-problems-with-compile-timeouts)
 
 ## Core Features
 
