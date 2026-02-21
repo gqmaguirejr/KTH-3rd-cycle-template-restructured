@@ -3,14 +3,15 @@ name: Manual DiVA Discovery Test
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   run-discovery:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Required to push changes back
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -24,16 +25,21 @@ jobs:
       - name: Run Discovery Script
         run: python3 -u scripts/DiVA_discovery.py
 
-      - name: Verify and Commit Results
+      - name: Debug Output
         run: |
           if [ -f "publications_map.json" ]; then
-            echo "File found! Committing to repository..."
-            git config --local user.email "action@github.com"
-            git config --local user.name "GitHub Action"
-            git add publications_map.json
-            git commit -m "Auto-generate publications map from DiVA"
-            git push
+            echo "--- CONTENT OF publications_map.json ---"
+            cat publications_map.json
           else
-            echo "::error::publications_map.json was not created. Check script logs above."
-            exit 1
+            echo "ERROR: File not found in workspace."
           fi
+
+      - name: Commit and Push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add publications_map.json
+          # Only commit if there are actually changes to avoid 128/non-zero exits
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update publications map"
+          git push
+
