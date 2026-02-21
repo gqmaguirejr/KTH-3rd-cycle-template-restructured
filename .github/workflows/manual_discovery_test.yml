@@ -1,7 +1,7 @@
 name: Manual DiVA Discovery Test
 
 on:
-  workflow_dispatch: # This is the "Magic" line that adds the button
+  workflow_dispatch:
 
 jobs:
   run-discovery:
@@ -9,6 +9,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Required to push changes back
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -20,14 +22,18 @@ jobs:
           pip install bibtexparser thefuzz python-Levenshtein pymods requests pandas
 
       - name: Run Discovery Script
-        run: python scripts/DiVA_discovery.py
+        run: python3 -u scripts/DiVA_discovery.py
 
-      - name: Check Results
+      - name: Verify and Commit Results
         run: |
           if [ -f "publications_map.json" ]; then
-            cat publications_map.json
+            echo "File found! Committing to repository..."
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git add publications_map.json
+            git commit -m "Auto-generate publications map from DiVA"
+            git push
           else
-            echo "Error: publications_map.json was not created."
+            echo "::error::publications_map.json was not created. Check script logs above."
             exit 1
           fi
-
