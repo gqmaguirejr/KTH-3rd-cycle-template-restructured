@@ -6,13 +6,12 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to report an issue! 
+        Thanks for reporting! Please ensure you are using **LuaLaTeX**, as it is required for the template's logic to function.
   - type: textarea
     id: what-happened
     attributes:
       label: What happened?
-      description: Also tell us what you expected to happen.
-      placeholder: Describe the bug here...
+      description: Describe the bug and what you expected to happen.
     validations:
       required: true
   - type: dropdown
@@ -32,24 +31,23 @@ body:
     attributes:
       label: Compiler
       options:
-        - XeLaTeX (Recommended)
-        - LuaLaTeX
-        - PDFLaTeX
-        - Not sure
+        - LuaLaTeX (Required for Lua functionality)
+        - Other (Build will likely fail)
     validations:
       required: true
   - type: textarea
     id: logs
     attributes:
       label: Relevant LaTeX Logs
-      description: Please paste relevant error messages from the logs.
+      description: Paste error messages here.
       render: text
   - type: checkboxes
     id: checkboxes
     attributes:
       label: Validation
       options:
-        - label: I have checked the Quick_Start_Guide and README files.
+        - label: I am using LuaLaTeX as the compiler.
           required: true
-        - label: I am using the latest version of this template.
+        - label: I have checked the Quick_Start_Guide.
           required: true
+
