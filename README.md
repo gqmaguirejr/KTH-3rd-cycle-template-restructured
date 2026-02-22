@@ -119,6 +119,8 @@ The transition from DiVA metadata to your LaTeX document follows these steps:
    * Optional: Provide a `"full title"` to override the DiVA title or a `"better_bib_key"` to override the automatically discovered BibTeX key.
 3. **Generation:** Any push containing changes to `publications_map.json` triggers the generator script. This automatically creates `lib/publications_generated.tex`.
 4. **Integration:** Pull the latest changes into Overleaf or your local environment. Your thesis will now contain the updated list of publications, cross-referenced correctly with your bibliography.
+> [!TIP]
+> If you have (1) made changes in Overleaf and pushed them to the repository or (2) a script has updated files in the repository be sure to do a `git pull` on you local git **before you start working locally**.
 
 > [!NOTE]
 > You can also manually run the **Sync Publications** workflow.
