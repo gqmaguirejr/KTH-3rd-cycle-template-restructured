@@ -1037,6 +1037,10 @@ och förkortningar}]
     \warningExpl{The use of math mode in the title of Paper E will generate a warning "Font shape `U/stmry/m/n' in size <5.5> not available" - since scaling the 11pt math font for the superscripts and subscripts leads to 5.5pt letters - for which LaTeX substitutes 5pt letters. Both for this font scaling issue and to improve readability (see, for example, the fictitious title of Report A), I would think that the publication titles should be set in a font larger than 11pt.}
     % alternatively use \small as the size - this may be suitable if you have titles that contain characters not in Figtree
     {\FigtreeFont\fontsize{11}{13}\fontshape{n}\selectfont
+% Check if there was an automatically generated list of publications file.
+\IfFileExists{lib/publications\_generated}{
+      \input{lib/publications_generated}
+}{
     \begin{ListOfPapers}
         \item \label{paper:A} Coherent {File} {Distribution} {Protocol}\cite{ioannidis_coherent_1991}
         \item \label{paper:B} A {New} {Automated} {Way} to {Measure}{Polyethylene} {Wear} in {THA} {Using} a {High} {Resolution} {CT} {Scanner}: {Method} and {Analysis}\,\cite{maguire_jr_new_2014}
@@ -1059,7 +1063,7 @@ och förkortningar}]
 Networking - Artifact for ASPLOS’21\,\cite{10.5281/zenodo.4435970}
     \end{ListOfArtifacts}
     } % end of font application
-
+}
     \engExpl{Those who want can also list other peer-reviewed original scientific publications not included in the thesis. I would include granted patents (relevant to the thesis) in this list.}
     \warningExpl{If you are using BibLaTeX, \ref{paper:F} shows an example of how you can easily include the title by simply citing the title field of a reference. The alternative uses math mode to set the special characters.\\In contrast, \ref{paper:G} shows how you can use the unicode version of the characters and explicitly control the font used to set them.}
     \section*{Scientific papers not included in the thesis}
