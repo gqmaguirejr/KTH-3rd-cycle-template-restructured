@@ -63,7 +63,7 @@ If you run into (compile) timeouts and have added additional fonts, take a look 
 
 This requires manually copying the files from the compilation results into a directory in your project. This is necessary because the LaTeX compiler runs in a container that does not have write access to the Overleaf project itself; instead, it only gets a copy of these files when the container is run.
 
-## Potential Enhancements and Workflows
+## Enhancements and Workflows
 By making this template available via GitHub, we exploit the ability of CI/CD (GitHub Actions) to automate thesis metadata management. This repository currently supports:
 
 * **Automated Publication Discovery:** Metadata is pulled directly from DiVA based on the author's KTHID.
@@ -71,7 +71,7 @@ By making this template available via GitHub, we exploit the ability of CI/CD (G
 * **LaTeX Generation:** Direct insertion of formatted publication lists into the document. The system supports LaTeX math mode in titles, citation validation against `references.bib`, and automatic character escaping.
 
 ## Getting Started with GitHub
-To leverage the automation features, you should establish a workflow between your local machine, GitHub, and Overleaf.
+To leverage the automation features, you should establish a workflow between your local machine, GitHub, and Overleaf. For information about GitHub and Overleaf integration see [GitHub synchronization](https://docs.overleaf.com/integrations-and-add-ons/git-integration-and-github-synchronization/github-synchronization)
 
 ### 1. Repository Setup
 1. **Create your own Repository:** It is recommended to create a new private repository on GitHub to host your thesis.
@@ -137,10 +137,17 @@ The transition from DiVA metadata to your LaTeX document follows these steps:
 > 
 > *Note: If you have unstaged changes, run `git stash` before pulling, and `git stash pop` after.*
 
+## Potential enhancements
+It would be nice to:
+* automate the configuration of custom_configuration.tex (currently, this can be done via a python script from the English language PDF file of your eISP; but could perhaps been done better with another integration) and
+* automatically fetch the PDFs of included publications
+
+Expect futher automation, but it may occur slowly.
+
+
 ## Contributing and Feedback
 As this is a template designed to address specific workflow gaps, feedback from the KTH community is welcome.
 
 * **Reporting Issues:** If you find a bug or a discrepancy with KTH's current graphical profile, please [open an issue](https://github.com/gqmaguirejr/KTH-3rd-cycle-template-restructured/issues). Please include a description of the problem and the relevant LaTeX error or log.
 * **Feature Suggestions:** Have an idea for further automation (like the DiVA or LADOK integrations)? Feel free to share your thoughts in the "Issues" tab.
 * **Pull Requests:** To ensure stability for all students, please open an issue to discuss any significant changes before submitting a Pull Request.
-* 
