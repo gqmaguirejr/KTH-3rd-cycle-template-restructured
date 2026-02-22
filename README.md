@@ -65,3 +65,11 @@ This requires manually copying the files from the compilation results into a dir
 
 ## Potential coming enhancements
 By making this template available via github, I hope that it will be possible to exploit generative AI and other tools ability to produce content and make changes directly in the github repository. For example, to automate much of the configuration via `custom_configuration.tex` using information that is already available in various sources. Another example, is to directly insert the information about previous publications into the document based on information about them that is already in DiVA. The user would then simply move entries from 'included in the thesis' to 'not included in the thesis'.
+
+## Contributing and Feedback
+As this is a template designed to address specific workflow gaps, feedback from the KTH community is welcome.
+
+* **Reporting Issues:** If you find a bug or a discrepancy with KTH's current graphical profile, please [open an issue](https://github.com/gqmaguirejr/KTH-3rd-cycle-template-restructured/issues). Please include a description of the problem and the relevant LaTeX error or log.
+* **Feature Suggestions:** Have an idea for further automation (like the DiVA or LADOK integrations)? Feel free to share your thoughts in the "Issues" tab.
+* **Pull Requests:** To ensure stability for all students, please open an issue to discuss any significant changes before submitting a Pull Request.
+* 
