@@ -21,16 +21,33 @@ DIVA_MODS_TEMP = '/tmp/diva_discovery_mods.xml'
 FUZZY_THRESHOLD = 90
 
 def get_kthid_from_config():
-    """Extracts KTHID from the LaTeX configuration file."""
+    """Extracts and validates KTHID from the LaTeX configuration file."""
+    placeholder_id = "u1XXXXXX"
+    fallback_id = "u1d13i2c"
+    
     try:
         with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
-            content = f.read()
-            match = re.search(r'\\kthid\{([^}]+)\}', content)
-            if match:
-                return match.group(1)
+            for line in f:
+                # 1. Ignore commented lines and look for \kthid{...}
+                match = re.search(r'^\s*\\kthid\{([^}]+)\}', line)
+                if match:
+                    found_id = match.group(1).strip()
+                    
+                    # 2. Reject the placeholder u1XXXXXX
+                    if found_id == placeholder_id:
+                        print(f"Info: Found placeholder {placeholder_id}. Using fallback.")
+                        return fallback_id
+                    
+                    # 3. Optional: Validate format (starts with u)
+                    if not found_id.startswith('u'):
+                        print(f"Warning: Extracted ID '{found_id}' looks invalid. Using fallback.")
+                        return fallback_id
+                        
+                    return found_id
     except FileNotFoundError:
-        print(f"Warning: {CONFIG_FILE} not found. Falling back to test ID.")
-    return "u1d13i2c"
+        print(f"Warning: {CONFIG_FILE} not found. Using fallback ID.")
+    
+    return fallback_id
 
 def normalize_text(text):
     """Simple normalization for fuzzy matching."""
@@ -122,15 +139,31 @@ def sync_discovery():
             pub_map[diva_id]["year"] = year
             pub_map[diva_id]["pubtype"] = pub_type
 
-        # Cross-reference with .bib
-        norm_diva_title = normalize_text(main_title)
+# --- Robust Cross-referencing with .bib ---
         found_in_bib = False
+
+        norm_diva_title = normalize_text(pub_map[diva_id].get('title', ''))
+        diva_doi = normalize_text(pub_map[diva_id].get('doi', '')) # Ensure DOI is captured in discovery
+
         for entry in bib_entries:
-            bib_title = normalize_text(entry.get('title', ''))
-            if fuzz.ratio(norm_diva_title, bib_title) > FUZZY_THRESHOLD:
+            # 1. Primary Match: DOI
+            bib_doi = normalize_text(entry.get('doi', ''))
+            if diva_doi and bib_doi and (diva_doi == bib_doi):
+                found_in_bib = True
+            
+            # 2. Secondary Match: Title (if DOI fails)
+            if not found_in_bib:
+                # Strip LaTeX braces from BibTeX title: {New} -> New
+                bib_title_raw = entry.get('title', '').replace('{', '').replace('}', '')
+                norm_bib_title = normalize_text(bib_title_raw)
+                
+                # Check for direct inclusion (handles subtitles) or fuzzy similarity
+                if (norm_diva_title in norm_bib_title) or (fuzz.ratio(norm_diva_title, norm_bib_title) > FUZZY_THRESHOLD):
+                    found_in_bib = True
+
+            if found_in_bib:
                 pub_map[diva_id]["in_bib"] = True
                 pub_map[diva_id]["bib_key"] = entry['ID']
-                found_in_bib = True
                 break
         
         if not found_in_bib:
