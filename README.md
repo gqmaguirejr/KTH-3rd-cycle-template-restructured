@@ -1,7 +1,7 @@
 # KTH 3rd Cycle Thesis Template (Restructured)
 **An unofficial-but-highly-functional LaTeX framework for KTH Doctoral Students.**
 
-[🚀 Getting Started](#getting-started) | [📂 Key Files](#key-files-at-a-glance) | [👨‍💻 For more advanced users](#for-more-advanced-users) | [🤖 Automation](#enhancements-and-workflows) | [🩺 Troubleshooting](#for-problems-with-compile-timeouts)  | [🎯 Aims](#aims)  | [✨ Core Features](#core-features)   | [💬 Contributing and Feedback](#contributing-and-feedback) 
+[📖 Basic Usage](#basic-usage) | [🚀 Advanced Setup & Automation] | [📂 Key Files](#key-files-at-a-glance) | [👨‍💻 For more advanced users](#for-more-advanced-users) | [🤖 Automation](#enhancements-and-workflows) | [🩺 Troubleshooting](#for-problems-with-compile-timeouts)  | [🎯 Aims](#aims)  | [✨ Core Features](#core-features)   | [💬 Contributing and Feedback](#contributing-and-feedback) 
 
 
 This Overleaf project is for the LaTeX template called "KTH 3rd cycle template restructured," designed by Gerald Q. Maguire Jr. for use by third-cycle students (i.e., doctoral students - be they licentiate or Ph.D. students) at KTH. One of the main goals of this project is to support all phases of the thesis (process) and all the different *readers* (be they human or machine).
@@ -12,10 +12,10 @@ This Overleaf project is for the LaTeX template called "KTH 3rd cycle template r
 # The "3-Minute Setup" summary
 1. Fork/Clone Repo - to create your personal workspace.
 2. Run scripts/config_wizard.py - enter your metadata.
-3. Create a new project in Overleaf and Import from GitHub - synchronize with GitHub
+3. Create a new project in Overleaf and **Import from GitHub** - synchronize with GitHub
 4. Start writing with a working template.
 
-## Getting started
+## 📖 Basic Usage
 A student should begin by reading the `Quick_Start_Guide` (.tex or .pdf) file. This three-page guide gives the four most important steps to get started.
 
 The `README_3rd_cycle_author` (.tex or .pdf) file provides information the student will want to know about working with the template.
@@ -24,7 +24,7 @@ Most students will only need to configure their thesis-specific values (author i
 
 At the top of examplethesis.tex you will see that it is easy to configure (within \documentclass) whether your thesis is being written in English or Swedish, which bibliographic tool you want to use, whether you are including publications (for a compilation style thesis) or not, and what languages of abstracts you want to have (beyond the required English and Swedish abstracts and keywords).
 
-## Getting Started with GitHub
+## 🚀 Advanced Setup & Automation
 To leverage the automation features, you should establish a workflow between your local machine, GitHub, and Overleaf. For information about GitHub and Overleaf integration see [GitHub synchronization](https://docs.overleaf.com/integrations-and-add-ons/git-integration-and-github-synchronization/github-synchronization)
 
 ### 1. Repository Setup
@@ -49,6 +49,7 @@ To leverage the automation features, you should establish a workflow between you
 Because GitHub Actions automatically commit changes back to your repository (such as the generated publication list), you must synchronize these your local Git, your GitHub Repository, and your Overleaf project:
 
 	Local Git <==== push/pull ====> GitHub Repository <==== Overleaf sync (push/pull) ====> Overleaf project
+	      	  		  	 Master Source
 
 * **In Overleaf:** Best for writing your thesis text. Once you have finished a section, use the Overleaf menu to **Push** your changes to GitHub.
 * **On GitHub:** Use the **Actions** tab to manually trigger the **Manual DiVA Discovery Test** workflow when you have added new records in DiVA for your publications.
@@ -177,7 +178,7 @@ The project contains many README files; consult them for further details.
 
 * Compilation Theses: Native support for including previous publications. There are even tools to help you access the information in DiVA about your previous publications and to produce a list of included (or excluded) publications. 
 
-* Multi-system Sync: Automatically collects data for later use in DiVA, LADOK, and your diploma.
+* Multi-system Sync: Automatically collects data for later use in DiVA, LADOK, and your diploma. This Administrative Value-Add is important as for a third-cycle student, the most stressful part is not writing — it is the administrative metadata (DiVA, TRITA, ISBN, and printing) [typically with a strong time pressure to get these tasks done].
 
 * Support for UTF-8 text: Automatic conversion of many titles and subtitles to their UTF-8 (plain text) versions, as these are needed for many of the record systems, such as LADOK. 
 
