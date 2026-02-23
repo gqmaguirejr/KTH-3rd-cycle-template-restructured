@@ -1,8 +1,16 @@
 # KTH 3rd Cycle Thesis Template (Restructured)
 **An unofficial-but-highly-functional LaTeX framework for KTH Doctoral Students.**
-
-[📖 Basic Usage](#basic-usage) | [🚀 Advanced Setup & Automation](#advanced-setup--automation) | [📂 Key Files](#key-files-at-a-glance) | [👨‍💻 For more advanced users](#for-more-advanced-users) | [🤖 Enhancements and Workflows](#enhancements-and-workflows) | [🩺 Troubleshooting](#for-problems-with-compile-timeouts)  | [🎯 Aims](#aims)  | [✨ Core Features](#core-features)   | [💬 Contributing and Feedback](#contributing-and-feedback) 
-
+<p align="center">
+<a href="#basic-usage">📖 Basic Usage</a> |
+<a href="#advanced-setup--automation">🚀 Advanced Setup & Automation</a> |
+<a href="#key-files-at-a-glance">📂 Key Files</a> |
+<a href="#for-more-advanced-users">👨‍💻 For more advanced users</a> |
+<a href="#enhancements-and-workflows)">🤖 Enhancements and Workflows</a> |
+<a href="#troubleshooting">🩺 Troubleshooting</a> |
+<a href="#aims">🎯 Aims</a> |
+<a href="#core-features">✨ Core Features</a> |
+<a href="#contributing-and-feedback">💬 Contributing and Feedback</a>
+</p>
 
 This Overleaf project is for the LaTeX template called "KTH 3rd cycle template restructured," designed by Gerald Q. Maguire Jr. for use by third-cycle students (i.e., doctoral students - be they licentiate or Ph.D. students) at KTH. One of the main goals of this project is to support all phases of the thesis (process) and all the different *readers* (be they human or machine).
 
@@ -153,6 +161,8 @@ By making this template available via GitHub, we exploit the ability of CI/CD (G
 * **Automated Publication Discovery:** Metadata is pulled directly from DiVA based on the author's KTHID.
 * **Controlled Inclusion:** A JSON-based mapping system (`publications_map.json`) allows authors to curate which publications are "included" or "not included" in the thesis with custom labels (e.g., `paper:A`, `patent:B`).
 * **LaTeX Generation:** Direct insertion of formatted publication lists into the document. The system supports LaTeX math mode in titles, citation validation against `references.bib`, and automatic character escaping.
+
+# Troubleshooting
 
 ## For problems with compile timeouts
 If you run into (compile) timeouts and have added additional fonts, take a look at Saving_and_restoring_font_cache.tex. By modifying and compiling this file, you can cache the fonts you use, saving a lot of time when compiling.
