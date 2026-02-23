@@ -1,7 +1,7 @@
 # KTH 3rd Cycle Thesis Template (Restructured)
 **An unofficial-but-highly-functional LaTeX framework for KTH Doctoral Students.**
 
-[📖 Basic Usage](#basic-usage) | [🚀 Advanced Setup & Automation] | [📂 Key Files](#key-files-at-a-glance) | [👨‍💻 For more advanced users](#for-more-advanced-users) | [🤖 Automation](#enhancements-and-workflows) | [🩺 Troubleshooting](#for-problems-with-compile-timeouts)  | [🎯 Aims](#aims)  | [✨ Core Features](#core-features)   | [💬 Contributing and Feedback](#contributing-and-feedback) 
+[📖 Basic Usage](#basic-usage) | [🚀 Advanced Setup & Automation](#advanced-setup--automation) | [📂 Key Files](#key-files-at-a-glance) | [👨‍💻 For more advanced users](#for-more-advanced-users) | [🤖 Automation](#enhancements-and-workflows) | [🩺 Troubleshooting](#for-problems-with-compile-timeouts)  | [🎯 Aims](#aims)  | [✨ Core Features](#core-features)   | [💬 Contributing and Feedback](#contributing-and-feedback) 
 
 
 This Overleaf project is for the LaTeX template called "KTH 3rd cycle template restructured," designed by Gerald Q. Maguire Jr. for use by third-cycle students (i.e., doctoral students - be they licentiate or Ph.D. students) at KTH. One of the main goals of this project is to support all phases of the thesis (process) and all the different *readers* (be they human or machine).
