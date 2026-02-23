@@ -1,9 +1,9 @@
-# KTH 3rd Cycle Thesis Template (Restructured)
+z# KTH 3rd Cycle Thesis Template (Restructured)
 **An unofficial-but-highly-functional LaTeX framework for KTH Doctoral Students.**
 <p align="center">
 <a href="#basic-usage">📖 Basic Usage</a> |
-<a href="#advanced-setup-automation">🚀 Advanced Setup & Automation</a> |
 <a href="#key-files-at-a-glance">📂 Key Files</a> |
+<a href="#advanced-setup-automation">🚀 Advanced Setup & Automation</a> |
 <a href="#for-more-advanced-users">👨‍💻 For more advanced users</a> |
 <a href="#enhancements-and-workflows">🤖 Enhancements and Workflows</a> |
 <a href="#troubleshooting">🩺 Troubleshooting</a> |
@@ -18,10 +18,10 @@ This Overleaf project is for the LaTeX template called "KTH 3rd cycle template r
 > This template is not an official template; it has been developed to try to address the weakness of the existing templates while trying to be consistent with the graphical design.
 
 # The "3-Minute Setup" summary
-1. Fork/Clone Repo - to create your personal workspace.
-2. Run scripts/config_wizard.py - enter your metadata.
-3. Create a new project in Overleaf and **Import from GitHub** - synchronize with GitHub
-4. Start writing with a working template.
+1. **Fork/Clone** Repo - to create your personal workspace.
+2. **Run** scripts/config_wizard.py - enter your metadata.
+3. **Create** a new project in Overleaf and **Import from GitHub** - synchronize with GitHub
+4. **Start writing** with a working template.
 
 <a id="basic-usage"></a>
 ## Basic Usage
@@ -32,6 +32,23 @@ The `README_3rd_cycle_author` (.tex or .pdf) file provides information the stude
 Most students will only need to configure their thesis-specific values (author information (name, KTHID, ...), supervisors, titles, etc.) in custom_configuration, and then can start turning the file examplethesis.tex into their thesis. Acronyms should be added to the file `lib/acronyms.tex`. If you need to include additional LaTeX libraries, look at `lib/includes.tex` or `lib/includes-after-hyperref.tex` (the latter file is for packages that must be loaded after hyperref).
 
 At the top of examplethesis.tex you will see that it is easy to configure (within \documentclass) whether your thesis is being written in English or Swedish, which bibliographic tool you want to use, whether you are including publications (for a compilation style thesis) or not, and what languages of abstracts you want to have (beyond the required English and Swedish abstracts and keywords).
+
+<a id="key-files-at-a-glance"></a>
+### Key Files at a Glance
+While there are large number of files and folders - for most students you can ignore most of them.
+The following are likely to be 
+
+| File | Purpose |
+| :--- | :--- |
+| **Quick_Start_Guide.pdf** | **Read this first.** A 3-page guide to get you started. |
+| **README_3rd_cycle_author.tex ** | A guide for the author. |
+| **examplethesis.tex** | Your main document. Start writing here. |
+| **custom_configuration.tex** | Personal info: Name, KTHID, supervisors, and titles. |
+| **lib/acronyms.tex** | Define all your abbreviations here. |
+| **lib/includes.tex** | Add your LaTeX packages/libraries here. |
+| **lib/includes-after-hyperref.tex** | Add LaTeX packages/libraries here that must be loaded after the hyperref package, e.g., packages like cleveref. |
+| **errata.tex** | Use this to generate an errata sheet if errors are found *after* printing. |
+
 
 <a id="advanced-setup-automation"></a>
 ## Advanced Setup & Automation
@@ -60,7 +77,7 @@ Because GitHub Actions automatically commit changes back to your repository (suc
 
 ```mermaid
 graph LR
-    Local[Local Git] <-- "push/pull" --> GitHub((GitHub Repository<br/>Master Source))
+    Local[Local Git] <-- "push/pull" --> GitHub((GitHub Repository<br/><b>Master Source</b>))
     GitHub <-- "push/pull" --> Overleaf[Overleaf Project]
     
     style GitHub fill:#f9f,stroke:#333,stroke-width:4px
@@ -73,7 +90,7 @@ graph LR
 > [!IMPORTANT]
 > **Granting Workflow Permissions:**
 > **Write Permissions Required:** Automated publication lists will fail to update unless you set **Workflow permissions** to **Read and write permissions** in your repository settings.
-> This will enable the automated scripts to commit the generated `lib/publications_generated.tex` file back to your repository. Toenable these permissions do the following:
+> This will enable the automated scripts to commit the generated `lib/publications_generated.tex` file back to your repository. To enable these permissions do the following:
 > 1. In your GitHub repository, go to **Settings > Actions > General**.
 > 2. Scroll down to the **Workflow permissions** section.
 > 3. Select **Read and write permissions**.
@@ -137,19 +154,6 @@ Once you have your KTHID in your `custom_configuration.tex` file and you have ad
 > 
 > *Note: If you have unstaged changes, run `git stash` before pulling, and `git stash pop` after.*
 
-<a id="key-files-at-a-glance"></a>
-### Key Files at a Glance
-
-| File | Purpose |
-| :--- | :--- |
-| **Quick_Start_Guide.pdf** | **Read this first.** A 3-page guide to get you started. |
-| **examplethesis.tex** | Your main document. Start writing here. |
-| **custom_configuration.tex** | Personal info: Name, KTHID, supervisors, and titles. |
-| **lib/acronyms.tex** | Define all your abbreviations here. |
-| **lib/includes.tex** | Add your LaTeX packages/libraries here. |
-| **lib/includes-after-hyperref.tex** | Add LaTeX packages/libraries here that must be loaded after the hyperref package, e.g., packages like cleveref. |
-| **errata.tex** | Use this to generate an errata sheet if errors are found after printing. |
-
 
 <a id="for-more-advanced-users"></a>
 ## For more advanced users
@@ -174,6 +178,8 @@ By making this template available via GitHub, we exploit the ability of CI/CD (G
 
 <a id="troubleshooting"></a>
 # Troubleshooting
+
+Use your favorite search engine, AI tool, ... for general trouble shooting. 
 
 ## For problems with compile timeouts
 If you run into (compile) timeouts and have added additional fonts, take a look at Saving_and_restoring_font_cache.tex. By modifying and compiling this file, you can cache the fonts you use, saving a lot of time when compiling.
