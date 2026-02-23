@@ -58,7 +58,7 @@ To leverage the automation features, you should establish a workflow between you
 ### 3. Synchronized Workflow
 Because GitHub Actions automatically commit changes back to your repository (such as the generated publication list), you must synchronize these your local Git, your GitHub Repository, and your Overleaf project:
 
-	Local Git &DoubleLeftArrow; push/pull &Rightarrow; GitHub Repository [Master Source] &DoubleLeftArrow; Overleaf sync (push/pull) &Rightarrow; Overleaf project
+	Local Git ⇐ push/pull ⇒ GitHub Repository [Master Source] ⇐ Overleaf sync (push/pull) ⇒ Overleaf project
 	      	  		  	 
 * **Overleaf:** Best for writing & previewing your thesis text. Once you have finished a section, use the Overleaf menu to **Push** your changes to GitHub (**Menu** > **GitHub** > **Push**).
 * **GitHub:** Automation & Master Storage; for example,  when you have added new records in DiVA for your publications: **Actions** > **Manual DiVA Discovery Test** workflow
