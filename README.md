@@ -15,7 +15,7 @@ This Overleaf project is for the LaTeX template called "KTH 3rd cycle template r
 3. Create a new project in Overleaf and **Import from GitHub** - synchronize with GitHub
 4. Start writing with a working template.
 
-## 📖 Basic Usage
+## Basic Usage
 A student should begin by reading the `Quick_Start_Guide` (.tex or .pdf) file. This three-page guide gives the four most important steps to get started.
 
 The `README_3rd_cycle_author` (.tex or .pdf) file provides information the student will want to know about working with the template.
@@ -24,7 +24,7 @@ Most students will only need to configure their thesis-specific values (author i
 
 At the top of examplethesis.tex you will see that it is easy to configure (within \documentclass) whether your thesis is being written in English or Swedish, which bibliographic tool you want to use, whether you are including publications (for a compilation style thesis) or not, and what languages of abstracts you want to have (beyond the required English and Swedish abstracts and keywords).
 
-## 🚀 Advanced Setup & Automation
+## Advanced Setup & Automation
 To leverage the automation features, you should establish a workflow between your local machine, GitHub, and Overleaf. For information about GitHub and Overleaf integration see [GitHub synchronization](https://docs.overleaf.com/integrations-and-add-ons/git-integration-and-github-synchronization/github-synchronization)
 
 ### 1. Repository Setup
