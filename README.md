@@ -1,4 +1,10 @@
-# KTH 3rd cycle template restructured
+# KTH 3rd Cycle Thesis Template (Restructured)
+**An unofficial-but-highly-functional LaTeX framework for KTH Doctoral Students.**
+
+[🚀 Getting Started](#getting-started) | [📂 Key Files](#key-files-at-a-glance) | [🚀 For more advanced users](#for-more-advanced-users) | [🤖 Automation](#enhancements-and-workflows) | [🛠 Troubleshooting](#for-problems-with-compile-timeouts)
+
+
+
 This Overleaf project is for the LaTeX template called "KTH 3rd cycle template restructured," designed by Gerald Q. Maguire Jr. for use by third-cycle students (i.e., doctoral students - be they licentiate or Ph.D. students) at KTH. One of the main goals of this project is to support all phases of the thesis (process) and all the different *readers* (be they human or machine).
 
 > [!NOTE]
@@ -12,7 +18,11 @@ A third aim is that if there are errors, the errata.tex document should help you
 
 The project contains many README files; consult them for further details.
 
-[Getting Started](#getting-started) | [Key Files](#key-files-at-a-glance) | [For more advanced users](#for-more-advanced-users) | [Fixing Timeouts](#for-problems-with-compile-timeouts)
+# The "3-Minute Setup" summary
+1. Fork/Clone Repo - to create your personal workspace.
+2. Run scripts/config_wizard.py - enter your metadata.
+3. Create a new project in Overleaf and Import from GitHub - syncronize with GitHub
+4. Start writing with a working template.
 
 ## Core Features
 
@@ -78,11 +88,11 @@ To leverage the automation features, you should establish a workflow between you
 2. **Clone & Push:**
    * Clone this template repository to your local machine:
      ```bash
-     git clone [https://github.com/gqmaguirejr/KTH-3rd-cycle-template-restructured.git](https://github.com/gqmaguirejr/KTH-3rd-cycle-template-restructured.git)
+     git clone https://github.com/gqmaguirejr/KTH-3rd-cycle-template-restructured.git
      ```
    * Change the "remote" to point to your new personal repository:
      ```bash
-     git remote set-url origin [https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git](https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git)
+     git remote set-url origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
      ```
    * Push the content: `git push -u origin main`
 
@@ -92,9 +102,9 @@ To leverage the automation features, you should establish a workflow between you
 3. Overleaf is now "coupled" to your GitHub repository. You can push changes from Overleaf to GitHub using the **Menu > GitHub** sync feature.
 
 ### 3. Synchronized Workflow
-Because GitHub Actions automatically commit changes back to your repository (such as the generated publication list), you must manage the "triangle" of synchronization:
+Because GitHub Actions automatically commit changes back to your repository (such as the generated publication list), you must synchronize these your local Git, your GitHub Repository, and your Overleaf project:
 
-	Local Git <==== push/pull ====> GitHub Repository <==== Overleaf sync (push/pull) ====> Overleaf
+	Local Git <==== push/pull ====> GitHub Repository <==== Overleaf sync (push/pull) ====> Overleaf project
 
 * **In Overleaf:** Best for writing your thesis text. Once you have finished a section, use the Overleaf menu to **Push** your changes to GitHub.
 * **On GitHub:** Use the **Actions** tab to manually trigger the **Manual DiVA Discovery Test** workflow when you have added new records in DiVA for your publications.
@@ -108,6 +118,10 @@ Because GitHub Actions automatically commit changes back to your repository (suc
 > 3. Select **Read and write permissions**.
 > 4. Click **Save**.
 
+> [!CAUTION]
+> **Write Permissions Required:** Automated publication lists will fail to update unless you set **Workflow permissions** to **Read and write permissions** in your repository settings.
+
+
 ## Customizing custom_configuration.tex
 You can locally edit the `custom_configuration.tex` file and the commit it to your repository and then sync with Overleaf.
 
@@ -118,6 +132,13 @@ streamlit run ./scripts/config_wizard.py
 ```
 
 This will run the script with your local browser via the URL: http://localhost:8501 so you can fill in the form, then download the resulting LaTeX and upload the `config_snippet.tex` file to your repository.
+> [!TIP]
+> Before running script the first time, be sure you have installed the relevant libraries with
+
+```bash
+pip install streamlit requests beautifulsoup4
+```
+
 > [!NOTE]
 > This script may not always be able to get the KTHID for a given user or supervisor (as the script is **not** using the KTH Profile API -- since this would require an API key). As a result you may need to collect this information manually by asking your KTH supervisors for this missing information or if you are logged into KTH you may be able to see the KTHID at the bottom of the user's profile page.
 
@@ -130,7 +151,6 @@ git commit -m "introduced config_snippet.tex" config_snippet.tex
 ```
 
 This will automatically trigger the **Merge Wizard Configuration** workflow (`.github/workflows/merge_wizard.yml`) and it will run a script to merge your snippets with the `custom_configuration.tex` file and it will delete the file with your snippets from the repository.  Now sync your Overleaf project with your GitHub repository.
-
 
 ## Managing your Publications
 Once you have your KTHID in your `custom_configuration.tex` file and you have added all of your publications to your `references.bib` file; then, you can automate the generation of your list of publications (for example, essential in a compilation thesis). You do this via the following steps:
