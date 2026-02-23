@@ -111,7 +111,8 @@ Because GitHub Actions automatically commit changes back to your repository (suc
 ## Customizing custom_configuration.tex
 You can locally edit the `custom_configuration.tex` file and the commit it to your repository and then sync with Overleaf.
 
-Alternatively, it you prefer to point-and-click, there is now configuration wizard (`config_wizard.py`). You can invoke this wizard on your local machine
+Alternatively, it you prefer to point-and-click, there is now configuration wizard (`config_wizard.py`). You can invoke this wizard on your local machine:
+
      ```bash
      streamlit run ./scripts/config_wizard.py
      ```
@@ -121,6 +122,7 @@ This will run the script with your local browser via the URL: http://localhost:8
 > This script may not always be able to get the KTHID for a given user or supervisor (as the script is **not** using the KTH Profile API -- since this would require an API key). As a result you may need to collect this information manually by asking your KTH supervisors for this missing information or if you are logged into KTH you may be able to see the KTHID at the bottom of the user's profile page.
 
 If you downloaded the file to `~/Downloads/config_snippet.tex` you can upload it with:
+
      ```bash
      cp ~/Downloads/config_snippet.tex .
      git add config_snippet.tex
