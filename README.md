@@ -60,8 +60,8 @@ Because GitHub Actions automatically commit changes back to your repository (suc
 
 ```mermaid
 graph LR
-    Local[Local Git] -- "push/pull" --- GitHub((GitHub Repository<br/>Master Source))
-    GitHub -- "push/pull" --- Overleaf[Overleaf Project]
+    Local[Local Git] <-- "push/pull" --> GitHub((GitHub Repository<br/>Master Source))
+    GitHub <-- "push/pull" --> Overleaf[Overleaf Project]
     
     style GitHub fill:#f9f,stroke:#333,stroke-width:4px
 ```
