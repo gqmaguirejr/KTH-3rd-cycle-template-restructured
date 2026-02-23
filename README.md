@@ -1,8 +1,7 @@
 # KTH 3rd Cycle Thesis Template (Restructured)
 **An unofficial-but-highly-functional LaTeX framework for KTH Doctoral Students.**
 
-[🚀 Getting Started](#getting-started) | [📂 Key Files](#key-files-at-a-glance) | [🚀 For more advanced users](#for-more-advanced-users) | [🤖 Automation](#enhancements-and-workflows) | [🛠 Troubleshooting](#for-problems-with-compile-timeouts)  | [🛠 Aims](#aims)  | [🛠 Core Features](#core-features)   | [🛠 Contributing and Feedback](#contributing-and-feedback) 
-
+[🚀 Getting Started](#getting-started) | [📂 Key Files](#key-files-at-a-glance) | [👨‍💻 For more advanced users](#for-more-advanced-users) | [🤖 Automation](#enhancements-and-workflows) | [🩺 Troubleshooting](#for-problems-with-compile-timeouts)  | [🎯 Aims](#aims)  | [✨ Core Features](#core-features)   | [💬 Contributing and Feedback](#contributing-and-feedback) 
 
 
 This Overleaf project is for the LaTeX template called "KTH 3rd cycle template restructured," designed by Gerald Q. Maguire Jr. for use by third-cycle students (i.e., doctoral students - be they licentiate or Ph.D. students) at KTH. One of the main goals of this project is to support all phases of the thesis (process) and all the different *readers* (be they human or machine).
@@ -140,7 +139,10 @@ More advanced users might also want to modify or add to the definitions in lib/d
 
 If you need to add additional fonts, take a look at `kth/kth-fonts.tex`
 
+Note that while other templates (like Tekla) exist, this version retains critical automation features not present in these other templates.
+
 The folder `README_notes` contains more specialized information for users, supervisors, administrators, and programmers. It also contains files that describe the KTH DOCX template and another LaTeX template (called here the Tekla template) that started with my template (but unfortunately removed most of the important functionality).
+
 
 ## Enhancements and Workflows
 By making this template available via GitHub, we exploit the ability of CI/CD (GitHub Actions) to automate thesis metadata management. This repository currently supports:
