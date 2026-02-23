@@ -112,7 +112,6 @@ Because GitHub Actions automatically commit changes back to your repository (suc
 You can locally edit the `custom_configuration.tex` file and the commit it to your repository and then sync with Overleaf.
 
 Alternatively, it you prefer to point-and-click, there is now configuration wizard (`config_wizard.py`). You can invoke this wizard on your local machine:
-
      ```bash
      streamlit run ./scripts/config_wizard.py
      ```
