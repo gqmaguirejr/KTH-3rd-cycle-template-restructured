@@ -121,7 +121,6 @@ This will run the script with your local browser via the URL: http://localhost:8
 > This script may not always be able to get the KTHID for a given user or supervisor (as the script is **not** using the KTH Profile API -- since this would require an API key). As a result you may need to collect this information manually by asking your KTH supervisors for this missing information or if you are logged into KTH you may be able to see the KTHID at the bottom of the user's profile page.
 
 If you downloaded the file to `~/Downloads/config_snippet.tex` you can upload it with:
-
      ```bash
      cp ~/Downloads/config_snippet.tex .
      git add config_snippet.tex
