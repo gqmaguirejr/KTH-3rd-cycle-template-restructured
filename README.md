@@ -1,4 +1,4 @@
-z# KTH 3rd Cycle Thesis Template (Restructured)
+# KTH 3rd Cycle Thesis Template (Restructured)
 **An unofficial-but-highly-functional LaTeX framework for KTH Doctoral Students.**
 <p align="center">
 <a href="#basic-usage">📖 Basic Usage</a> |
@@ -35,13 +35,13 @@ At the top of examplethesis.tex you will see that it is easy to configure (withi
 
 <a id="key-files-at-a-glance"></a>
 ### Key Files at a Glance
-While there are large number of files and folders - for most students you can ignore most of them.
-The following are likely to be 
+While there are large number of files and folders - it is very likely that you can ignore most of them.
+The following are those that are most interesting:
 
 | File | Purpose |
 | :--- | :--- |
 | **Quick_Start_Guide.pdf** | **Read this first.** A 3-page guide to get you started. |
-| **README_3rd_cycle_author.tex ** | A guide for the author. |
+| **README_3rd_cycle_author.tex** | A guide for the author. |
 | **examplethesis.tex** | Your main document. Start writing here. |
 | **custom_configuration.tex** | Personal info: Name, KTHID, supervisors, and titles. |
 | **lib/acronyms.tex** | Define all your abbreviations here. |
@@ -127,7 +127,7 @@ git commit -m "introduced config_snippet.tex" config_snippet.tex
 This will automatically trigger the **Merge Wizard Configuration** workflow (`.github/workflows/merge_wizard.yml`) and it will run a script to merge your snippets with the `custom_configuration.tex` file and it will delete the file with your snippets from the repository.  Now sync your Overleaf project with your GitHub repository.
 
 ## Managing your Publications
-Once you have your KTHID in your `custom_configuration.tex` file and you have added all of your publications to your `references.bib` file; then, you can automate the generation of your list of publications (for example, essential in a compilation thesis). You do this via the following steps:
+Once you have your KTHID in your `custom_configuration.tex` file and you have added all of your publications to your `references.bib` file; then, you can automate the generation of your list of publications (for example, for in a compilation thesis). You do this via the following steps:
 
 1. **Discovery:** Go to the **Actions** tab in GitHub and manually run the **Manual DiVA Discovery Test** workflow. This fetches your data from DiVA and populates `publications_map.json`.
 2. **Curation:** Edit `publications_map.json` (either locally, in the GitHub web editor, or via Overleaf). 
@@ -161,7 +161,7 @@ More advanced users might also want to modify or add to the definitions in lib/d
 
 If you need to add additional fonts, take a look at `kth/kth-fonts.tex`
 
-Note that while other templates (like Tekla) exist, this version retains critical automation features not present in these other templates.
+Note that while other templates (like Tekla) exist, this template retains critical automation features not present in these other templates and it is actually more **correct** (when viewed from the point of view of style guides, such as *The Chicago Manual of Style*) in numbering, ordering, consistency, completeness, etc. than these other templates.
 
 The folder `README_notes` contains more specialized information for users, supervisors, administrators, and programmers. It also contains files that describe the KTH DOCX template and another LaTeX template (called here the Tekla template) that started with my template (but unfortunately removed most of the important functionality).
 
@@ -207,11 +207,13 @@ The project contains many README files; consult them for further details.
 
 * Compilation Theses: Native support for including previous publications. There are even tools to help you access the information in DiVA about your previous publications and to produce a list of included (or excluded) publications. 
 
-* Multi-system Sync: Automatically collects data for later use in DiVA, LADOK, and your diploma. This Administrative Value-Add is important as for a third-cycle student, the most stressful part is not writing — it is the administrative metadata (DiVA, TRITA, ISBN, and printing) [typically with a strong time pressure to get these tasks done].
+* Multi-system Sync: Automatically collects data for later use in DiVA, LADOK, and your diploma. This Administrative Value-Add is important as for a third-cycle student, the most stressful part is not writing — it is the administrative metadata (DiVA, TRITA, ISBN, and printing) [typically with a strong time pressure during the final stages of thesis process before your presentation/defense].
 
 * Support for UTF-8 text: Automatic conversion of many titles and subtitles to their UTF-8 (plain text) versions, as these are needed for many of the record systems, such as LADOK. 
 
 * Error Avoidance: Built-in checks for missing SDGs and national subject(s), thesis subject from your education code, ... .
+
+* Completeness: This template has been designed based on an examination of a large number of theses and their metadata in DiVA; hence, it has been designed to support a very wide set of users' needs. 
 
 ### Potential enhancements
 It would be nice to:
