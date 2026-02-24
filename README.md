@@ -96,6 +96,21 @@ graph LR
 > 3. Select **Read and write permissions**.
 > 4. Click **Save**.
 
+
+## Keeping things synchronized
+
+Overleaf acts like a separate user (with respect to updating your GitHub repository). If you were editing in Overleaf while simultaneously pushing a git commit -a from your local machine, the two "histories" diverge. Overleaf is programmed to be cautious; rather than deleting your browser-based edits, it saves them to a branch and asks you—the human curator—to perform the final merge.
+
+Hints:
+* Always Push from Overleaf first: Before you start working locally, use the Overleaf Menu to "Push" any changes to GitHub.
+
+* Always Pull locally before editing: `git pull --rebase origin main`
+
+* After editing locally: `git push origin main`
+
+* The "One Workspace" Rule: Try to avoid making changes in the Overleaf project and editing locally at the same exact time.
+
+
 ## Customizing custom_configuration.tex
 You can locally edit the `custom_configuration.tex` file and the commit it to your repository and then sync with Overleaf.
 
@@ -133,6 +148,15 @@ Once you have your KTHID in your `custom_configuration.tex` file and you have ad
 2. **Curation:** Edit `publications_map.json` (either locally, in the GitHub web editor, or via Overleaf). 
    * Change `status` to `"included"` for papers in your thesis.
    * Assign a `label` (e.g., `"paper:A"`).
+   * To indicate the order of the tabs, add `"tab_index": n,` where n is an integer; the first tab is numbered 1
+   * If you have dowloaded the PDF of the publication, set `"pdf_downloaded": true,`
+> [!TIP]
+> If "pdf_downloaded" is false, the generator will ouput a warning message and will put a red warning message on the page where the included file would be shown
+
+   * Specify the path to the PDF with `"file_path": "Included_publications/x.pdf",`
+   * You can specify a subset (such as `"pdf_pages": "1-2",`) or all of the PDF to be included with `"pdf_pages": "1-",`
+   * You can scale the PDF of the included publication so that it fits within your margins with: `"scale": 0.9,`
+   * You can also include a permissions or other statement on the tab page with `"permission_text": "text to be included"` - note that if you have LaTeX commands in this text, you have to escape each backslash ('\') with a second backslash.
    * Optional: Provide a `"full title"` to override the DiVA title or a `"better_bib_key"` to override the automatically discovered BibTeX key.
 3. **Generation:** Any push containing changes to `publications_map.json` triggers the generator script. This automatically creates `lib/publications_generated.tex`.
 > [!NOTE]
