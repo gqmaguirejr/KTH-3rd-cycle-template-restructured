@@ -151,7 +151,7 @@ Once you have your KTHID in your `custom_configuration.tex` file and you have ad
    * To indicate the order of the tabs, add `"tab_index": n,` where n is an integer; the first tab is numbered 1
    * If you have dowloaded the PDF of the publication, set `"pdf_downloaded": true,`
 > [!TIP]
-> If "pdf_downloaded" is false, the generator will ouput a warning message and will put a red warning message on the page where the included file would be shown
+> If "pdf_downloaded" is false, the generator will output a warning message and will put a red warning message on the page where the included file would be shown
 
    * Specify the path to the PDF with `"file_path": "Included_publications/x.pdf",`
    * You can specify a subset (such as `"pdf_pages": "1-2",`) or all of the PDF to be included with `"pdf_pages": "1-",`
