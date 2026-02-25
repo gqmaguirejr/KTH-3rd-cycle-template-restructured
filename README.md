@@ -164,7 +164,7 @@ Once you have your KTHID in your `custom_configuration.tex` file and you have ad
 > [!NOTE]
 > You can also manually run the **Sync Publications** workflow.
 
-There is now configuration CReDiT Matrix Wizard (`CReDiT_Matrix_Wizard.py`). You can invoke this wizard on your local machine. It will read the `publications_map.json` file and the `references.bib` file and prompt you to enter the CReDiT roles for each author - for each of the papers. It will update the `publications_map.json` files file with contribution information. It is also possible to put in 'equal contribution' information with an optional text to go with it. You can run this wizard with:
+There is now configuration CReDiT Matrix Wizard (`CReDiT_Matrix_Wizard.py`). You can invoke this wizard on your local machine. It will read the `publications_map.json` file and the `references.bib` file and prompt you to enter the CReDiT roles for each author - for each of the papers. It will update the `publications_map.json` file with contribution information. It is also possible to put in 'equal contribution' information with an optional text to go with it. You can run this wizard with:
 
 ```bash
 streamlit run ./scripts/CReDiT_Matrix_Wizard.py
@@ -172,7 +172,7 @@ streamlit run ./scripts/CReDiT_Matrix_Wizard.py
 > [!TIP]
 > You can run this wizard repeatedly to change/update/... roles. It will start with the information that has been saved in the `publications_map.json` file.
 
-When you now upload the `publications_map.json` file it will trigger the Sync publications workflow creating a `lib/thesis_contributions_generated.tex` file. If this file exists, the examplethesis.tex will automatically include it.
+When you now upload the `publications_map.json` file to your GitHub repository, it will trigger the Sync publications workflow creating a `lib/thesis_contributions_generated.tex` file. If this file exists, the examplethesis.tex will automatically include it.
 
 
 4. **Integration:** Pull the latest changes into Overleaf or your local environment. Your thesis will now contain the updated list of publications, cross-referenced correctly with your bibliography.
