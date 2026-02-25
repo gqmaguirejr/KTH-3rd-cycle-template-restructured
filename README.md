@@ -156,7 +156,7 @@ Once you have your KTHID in your `custom_configuration.tex` file and you have ad
    * Specify the path to the PDF with `"file_path": "Included_publications/x.pdf",`
    * You can specify a subset (such as `"pdf_pages": "1-2",`) or all of the PDF to be included with `"pdf_pages": "1-",`
    * You can scale the PDF of the included publication so that it fits within your margins with: `"scale": 0.9,`
-   * You can also include a permissions or other statement on the tab page with `"permission_text": "text to be included"` - note that if you have LaTeX commands in this text, you have to escape each backslash ('\') with a second backslash.
+   * You can also include a permissions or other statement on the tab page with `"permission_text": "text to be included"` - note that if you have LaTeX commands in this text, you have to escape each backslash with a second backslash.
    * Optional: Provide a `"full title"` to override the DiVA title or a `"better_bib_key"` to override the automatically discovered BibTeX key.
 3. **Generation:** Any push containing changes to `publications_map.json` triggers the generator script. This automatically creates `lib/publications_generated.tex` and it also creates `lib/publications_dividers_generated.tex` that will contain the tab pages and the included publications.
 > [!NOTE]
