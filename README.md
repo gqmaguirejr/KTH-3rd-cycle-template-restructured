@@ -229,7 +229,7 @@ The project contains many README files; consult them for further details.
 
 * Multilingual support: Supports abstracts and content in all the languages (and then some) used in earlier theses.
 
-* Compilation Theses: Native support for including previous publications. There are even tools to help you access the information in DiVA about your previous publications and to produce a list of included (or excluded) publications. 
+* Compilation Theses: Native support for including previous publications. There are even tools to help you access the information in DiVA about your previous publications and to produce a list of included publications and even make the tabbed pages together will including the PDF of the publication. 
 
 * Multi-system Sync: Automatically collects data for later use in DiVA, LADOK, and your diploma. This Administrative Value-Add is important as for a third-cycle student, the most stressful part is not writing — it is the administrative metadata (DiVA, TRITA, ISBN, and printing) [typically with a strong time pressure during the final stages of thesis process before your presentation/defense].
 
