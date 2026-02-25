@@ -111,7 +111,7 @@ Hints:
 * The "One Workspace" Rule: Try to avoid making changes in the Overleaf project and editing locally at the same exact time.
 > [!CAUTION]
 > Pulls from GitHub to Overleaf can result in the loss or displacement of track changes and comments. If you are using track changes and/or comments, do **not** work in your local repository or GitHub and then do a pull into Overleaf!
-> For further details see \url{https://docs.overleaf.com/integrations-and-add-ons/git-integration-and-github-synchronization/github-synchronization}
+> For further details see  [GitHub synchronization](https://docs.overleaf.com/integrations-and-add-ons/git-integration-and-github-synchronization/github-synchronization).
 
 ## Customizing custom_configuration.tex
 You can locally edit the `custom_configuration.tex` file and the commit it to your repository and then sync with Overleaf.
