@@ -180,6 +180,19 @@ Once you have your KTHID in your `custom_configuration.tex` file and you have ad
 > 
 > *Note: If you have unstaged changes, run `git stash` before pulling, and `git stash pop` after.*
 
+### Publication Rendering States
+
+The generator determines how to render each paper based on the `status` and `pdf_downloaded` fields in `publications_map.json`.
+
+| State | JSON Configuration | Result in Thesis PDF |
+| :--- | :--- | :--- |
+| **Pending** | `"status": "unprocessed"` | The publication is ignored; no tab page or PDF is included. |
+| **Missing PDF** | `"status": "included"`, `"pdf_downloaded": false` | A red warning page is generated showing the (escaped) missing file path. |
+| **Complete** | `"status": "included"`, `"pdf_downloaded": true` | A formal tab/divider page is followed by the actual publication PDF. |
+
+> [!TIP]
+> Use the **Missing PDF** state during the early stages of writing to verify your tab order and permission text even before you have gathered all final publication files.
+
 
 <a id="for-more-advanced-users"></a>
 ## For more advanced users
