@@ -116,7 +116,7 @@ Hints:
 ## Customizing custom_configuration.tex
 You can locally edit the `custom_configuration.tex` file and the commit it to your repository and then sync with Overleaf.
 
-Alternatively, it you prefer to a graphical user interface (i.e., point-and-click), there is now configuration wizard (`config_wizard.py`). You can invoke this wizard on your local machine. Before running script the first time, be sure you have installed the relevant libraries with
+Alternatively, it you prefer to a graphical user interface (i.e., point-and-click), there is a configuration wizard (`config_wizard.py`). You can invoke this wizard on your local machine. Before running script the first time, be sure you have installed the relevant libraries with
 
 ```bash
 pip install streamlit requests beautifulsoup4
