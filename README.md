@@ -73,7 +73,7 @@ To leverage the automation features, you should establish a workflow between you
 3. Overleaf is now "coupled" to your GitHub repository. You can push changes from Overleaf to GitHub using the **Menu > GitHub** sync feature.
 
 ### 3. Synchronized Workflow
-Because GitHub Actions automatically commit changes back to your repository (such as the generated publication list), you must synchronize these your local Git, your GitHub Repository, and your Overleaf project:
+Because GitHub Actions automatically commit changes back to your repository (such as the generated publication list), you must synchronize your local Git, your GitHub Repository, and your Overleaf project:
 
 ```mermaid
 graph LR
