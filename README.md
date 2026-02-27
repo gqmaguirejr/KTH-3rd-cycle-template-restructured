@@ -211,9 +211,9 @@ More advanced users might also want to modify or add to the definitions in lib/d
 
 If you need to add additional fonts, take a look at `kth/kth-fonts.tex`
 
-Note that while other templates (like Tekla) exist, this template retains critical automation features not present in these other templates and it is actually more **correct** (when viewed from the point of view of style guides, such as *The Chicago Manual of Style*) in numbering, ordering, consistency, completeness, etc. than these other templates.
-
 The folder `README_notes` contains more specialized information for users, supervisors, administrators, and programmers. It also contains files that describe the KTH DOCX template and another LaTeX template (called here the Tekla template) that started with my template (but unfortunately removed most of the important functionality).
+
+Note that while other templates (like Tekla) exist, this template retains critical automation features not present in these other templates and it is actually more **correct** (when viewed from the point of view of style guides, such as *The Chicago Manual of Style*) in numbering, ordering, consistency, completeness, etc. than these other templates.
 
 
 <a id="enhancements-and-workflows"></a>
