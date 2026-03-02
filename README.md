@@ -147,19 +147,19 @@ git commit -m "introduced config_snippet.tex" config_snippet.tex
 This will automatically trigger the **Merge Wizard Configuration** workflow (`.github/workflows/merge_wizard.yml`) and it will run a script to merge your snippets with the `custom_configuration.tex` file and it will delete the file with your snippets from the repository.  Now sync your Overleaf project with your GitHub repository.
 
 💾 Data Management & Safety
-The configuration wizard uses two local files to help manage your thesis configuration. Understanding how these files work will help you avoid accidental data loss.
+The configuration wizard and CReDiT Matrix Wizard uses two local files to help manage your thesis configuration. Understanding how these files work will help you avoid accidental data loss.
 
-1. wizard_session.json (Personal & Thesis Metadata)
-This file acts as a "cache" for the information you enter in the configuration form (names, emails, titles, and supervisor lists).
+1. wizard_session.json (Metadata Cache)
+> This file acts as a "cache" for the information you enter in the configuration form (names, emails, titles, and supervisor lists).
 
-Purpose: It allows you to close and reopen the Wizard without re-typing your details.
+> Purpose: It allows you to close and reopen the Wizard without re-typing your details.
 
-Management: Clicking "Clear All Data (Reset)" inside the config_wizard.py interface will delete this file and reset the form.
+> **Resetting:** Click **"Clear All Data (Reset)"** in the config_wizard.py interface to wipe this and start the form from scratch.
 
 2. publications_map.json (Used for information about publications & CReDiT data)
-This is a critical file that maps your publications from DiVA to your specific contributions (CReDiT roles).
+This is a critical file that maps your publications from DiVA and your references.bib file to your LaTeX by indicating which papers are included, their labels, and your **CReDiT contribution roles**.
 
-The Template: This repository may contain a version of this file containing demonstration data.
+> This repository may contain a version of this file containing demonstration data. Therefore, if you see publications (when starting) the CReDiT Matrix Wizard that are not yours, then you are looking at the template's publications_map.json file -- in this case delete the file and invoke the manual DiVA discovery workflow in the Actions tab.
 
 Starting Fresh: When you begin your own thesis, you must delete the existing publications_map.json file to pull your own data from DiVA. Use the "Delete existing map & Start fresh" button at the top of the configuration wizard to do this safely.
 
