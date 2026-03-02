@@ -130,6 +130,9 @@ streamlit run ./scripts/config_wizard.py
 
 This will run the script with your local browser via the URL: http://localhost:8501 so you can fill in the form, then download the resulting LaTeX and upload the `config_snippet.tex` file to your repository.
 
+> [!CAUTION]
+> If the wizard detects an existing publications_map.json and this is the **first time** you are running this wizard, click the red "Delete existing map & Start fresh" button. Otherwise, do **not** delete the file!
+
 > [!NOTE]
 > This script may not always be able to get the KTHID for a given user or supervisor (as the script is **not** using the KTH Profile API -- since this would require an API key). As a result you may need to collect this information manually by asking your KTH supervisors for this missing information or if you are logged into KTH you may be able to see the KTHID at the bottom of the user's profile page.
 
@@ -142,6 +145,26 @@ git commit -m "introduced config_snippet.tex" config_snippet.tex
 ```
 
 This will automatically trigger the **Merge Wizard Configuration** workflow (`.github/workflows/merge_wizard.yml`) and it will run a script to merge your snippets with the `custom_configuration.tex` file and it will delete the file with your snippets from the repository.  Now sync your Overleaf project with your GitHub repository.
+
+💾 Data Management & Safety
+The configuration wizard uses two local files to help manage your thesis configuration. Understanding how these files work will help you avoid accidental data loss.
+
+1. wizard_session.json (Personal & Thesis Metadata)
+This file acts as a "cache" for the information you enter in the configuration form (names, emails, titles, and supervisor lists).
+
+Purpose: It allows you to close and reopen the Wizard without re-typing your details.
+
+Management: Clicking "Clear All Data (Reset)" inside the config_wizard.py interface will delete this file and reset the form.
+
+2. publications_map.json (Used for information about publications & CReDiT data)
+This is a critical file that maps your publications from DiVA to your specific contributions (CReDiT roles).
+
+The Template: This repository may contain a version of this file containing demonstration data.
+
+Starting Fresh: When you begin your own thesis, you must delete the existing publications_map.json file to pull your own data from DiVA. Use the "Delete existing map & Start fresh" button at the top of the configuration wizard to do this safely.
+
+Work Preservation: Once you have spent time annotating your roles and publication dividers, do not delete the publications_map.json file. The metadata stored in it (such as CReDiT checkboxes) **cannot** be recovered from DiVA if the file is removed.
+
 
 ## Managing your Publications
 Once you have your KTHID in your `custom_configuration.tex` file and you have added all of your publications to your `references.bib` file; then, you can automate the generation of your list of publications (for example, for in a compilation thesis). You do this via the following steps:
