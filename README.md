@@ -150,20 +150,20 @@ This will automatically trigger the **Merge Wizard Configuration** workflow (`.g
 The configuration wizard and CReDiT Matrix Wizard uses two local files to help manage your thesis configuration. Understanding how these files work will help you avoid accidental data loss.
 
 1. wizard_session.json (Metadata Cache)
-> This file acts as a "cache" for the information you enter in the configuration form (names, emails, titles, and supervisor lists).
+   - This file acts as a "cache" for the information you enter in the configuration form (names, emails, titles, and supervisor lists).
 
-> Purpose: It allows you to close and reopen the Wizard without re-typing your details.
+   - Purpose: It allows you to close and reopen the Wizard without re-typing your details.
 
-> **Resetting:** Click **"Clear All Data (Reset)"** in the config_wizard.py interface to wipe this and start the form from scratch.
+   - **Resetting:** Click **"Clear All Data (Reset)"** in the config_wizard.py interface to wipe this and start the form from scratch.
 
 2. publications_map.json (Used for information about publications & CReDiT data)
 This is a critical file that maps your publications from DiVA and your references.bib file to your LaTeX by indicating which papers are included, their labels, and your **CReDiT contribution roles**.
 
-> This repository may contain a version of this file containing demonstration data. Therefore, if you see publications (when starting) the CReDiT Matrix Wizard that are not yours, then you are looking at the template's publications_map.json file -- in this case delete the file and invoke the manual DiVA discovery workflow in the Actions tab.
+   - This repository may contain a version of this file containing demonstration data. Therefore, if you see publications (when starting) the CReDiT Matrix Wizard that are not yours, then you are looking at the template's publications_map.json file -- in this case delete the file and invoke the Manual DiVA discovery workflow in the Actions tab.
 
-Starting Fresh: When you begin your own thesis, you must delete the existing publications_map.json file to pull your own data from DiVA. Use the "Delete existing map & Start fresh" button at the top of the configuration wizard to do this safely.
+   - Starting Fresh: When you begin your own thesis, you must delete the existing publications_map.json file to pull your own data from DiVA. Use the "Delete existing map & Start fresh" button at the top of the configuration wizard to do this safely.
 
-Work Preservation: Once you have spent time annotating your roles and publication dividers, do not delete the publications_map.json file. The metadata stored in it (such as CReDiT checkboxes) **cannot** be recovered from DiVA if the file is removed.
+   - Work Preservation: Once you have spent time annotating your roles and publication dividers, do not delete the publications_map.json file. The metadata stored in it (such as CReDiT checkboxes) **cannot** be recovered from DiVA if the file is removed.
 
 
 ## Managing your Publications
