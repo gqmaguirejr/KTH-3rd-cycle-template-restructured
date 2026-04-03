@@ -228,12 +228,12 @@ The generator determines how to render each paper based on the `status` and `pdf
 > Use the **Missing PDF** state during the early stages of writing to verify your tab order and permission text even before you have gathered all final publication files.
 
 ### Handling collaborations with large numbers of authors
-In a number of research areas, it is common to have a large (or even very large) number of collaborators in a name collaboration. Rather than have the student needing to have a CReDiT matrix that has perhaps thousands of rows, I have extentd the CReDiT_Matrix_Wizard.py to be able to handle 'specific_contributors'.
+In a number of research areas, it is common to have a large (or even very large) number of collaborators in a name collaboration. Rather than have the student needing to have a CReDiT matrix that has perhaps thousands of rows, I have extentd the `CReDiT_Matrix_Wizard.py` to be able to handle 'specific_contributors'.
 
 For example, consider a user who particiated in the BNL MPS collaboration with a reference:
 ```bibtex
 @techreport{bnlMPS1975,
-  author      = {Lindenbaum, S. J. and {MPS Collaborators}},
+  author      = {Lindenbaum, S. J. and {MPS Collaboration}},
   title       = {The {Brookhaven} {Multi-Particle} {Spectrometer} ({MPS}) Facility},
   institution = {Brookhaven National Laboratory},
   year        = {1975},
@@ -269,12 +269,10 @@ and publications_map.json file containing:
     }
 
 ```
+Note that the essential fields to configure were: "status": "included",         "label": "techreport:A", "bib_key": "bnlMPS1975", "in_bib": true, and         "specific_contributors". These are essential since only publications that are included cause the CReDiT_Matrix_Wizard to ask about them using the indicated "label"; together with the information from the indicated "bib_key" in the bib_path (configured in the wizard as `references.bib`).
 
 If one runs the command `streamlit run ./scripts/CReDiT_Matrix_Wizard.py` and selected the techreport:A tab you will seen the configuration:
 ![Configured myself as a collaborator contributing to software and visualization in the MPS Collaboration](figures/wizard-collaboration-example.png)
-
-
-
 
 The resulting JSON file will contain:
 ```json
@@ -309,7 +307,7 @@ The resulting JSON file will contain:
                 "Writing – Original Draft",
                 "Writing – Review & Editing"
             ],
-            "MPS Collaborators": [
+            "MPS Collaboration": [
                 "Conceptualization",
                 "Data Curation",
                 "Formal Analysis",
