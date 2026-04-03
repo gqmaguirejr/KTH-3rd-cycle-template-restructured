@@ -230,7 +230,7 @@ The generator determines how to render each paper based on the `status` and `pdf
 ### Handling collaborations with large numbers of authors
 In a number of research areas, it is common to have a large (or even very large) number of collaborators in a named collaboration. Rather than have the student fill out a CReDiT matrix that has perhaps thousands of rows, I have extented the `CReDiT_Matrix_Wizard.py` to be able to handle 'specific_contributors'.
 
-For example, consider a user who particiated in the BNL MPS collaboration with a reference:
+For example, consider a user who particiated in the Brookhaven National Laboratory (BNL) Multi-Particle Spectrometer (MPS) collaboration with a reference:
 ```bibtex
 @techreport{bnlMPS1975,
   author      = {Lindenbaum, S. J. and {MPS Collaboration}},
