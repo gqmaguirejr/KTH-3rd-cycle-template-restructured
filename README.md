@@ -265,11 +265,11 @@ and publications_map.json file containing:
                 "fname": "Gerald Q."
             }
         ],
-        "equal_contributors": [],
+        "equal_contributors": []
     }
 
 ```
-Note that the essential fields to configure were: "status": "included",         "label": "techreport:A", "bib_key": "bnlMPS1975", "in_bib": true, and         "specific_contributors". These are essential since only publications that are included cause the CReDiT_Matrix_Wizard to ask about them using the indicated "label"; together with the information from the indicated "bib_key" in the bib_path (configured in the wizard as `references.bib`).
+Note that the essential fields to configure were: "status": "included",         "label": "techreport:A", "bib_key": "bnlMPS1975", "in_bib": true, "tab_index": 9, and "specific_contributors". These are essential since only publications that are included cause the CReDiT_Matrix_Wizard to ask about them using the indicated "label"; together with the information from the indicated "bib_key" in the bib_path (configured in the wizard as `references.bib`); and indicated that this publication should be added at the tab index position 9 (the next numeric position).
 
 If one runs the command `streamlit run ./scripts/CReDiT_Matrix_Wizard.py` and selected the techreport:A tab you will seen the configuration:
 ![Configured myself as a collaborator contributing to software and visualization in the MPS Collaboration](figures/wizard-collaboration-example.png)
@@ -334,7 +334,7 @@ The resulting JSON file will contain:
 
 ```
 > [!NOTE]
-> The above example is purely for illuration purposes, I was not a named collaborator on the indicated publication - but was in fact a summer student who converted their PDP-10 assembly code to FORTRAN to make use of the ability to share common blocks between overlays, thus overcoming the fact that the assembly language code had reached the limits of the computer's address space.
+> ** The publication used above is not included in the `examplethesis.tex` file and is purely for illustration purposes, I was *not* a named collaborator on the indicated publication - but was in fact a summer student (1974) who converted their PDP-10 assembly code to FORTRAN to make use of the ability to share common blocks between overlays, thus overcoming the fact that the assembly language code had reached the limits of the computer's address space. In 1975, I also wrote much of the code to render on a vector graphics terminal the reconstructed tracks and the statistics for each part of all of the detectors (to facilitate detecting failing components early, rather than months or years after the data run had concluded.)
 
 
 <a id="for-more-advanced-users"></a>
