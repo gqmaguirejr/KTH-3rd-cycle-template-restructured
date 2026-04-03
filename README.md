@@ -334,7 +334,7 @@ The resulting JSON file will contain:
 
 ```
 > [!NOTE]
-> ** The publication used above is not included in the `examplethesis.tex` file and is purely for illustration purposes, I was *not* a named collaborator on the indicated publication - but was in fact a summer student (1974) who converted their PDP-10 assembly code to FORTRAN to make use of the ability to share common blocks between overlays, thus overcoming the fact that the assembly language code had reached the limits of the computer's address space. In the summer of 1975, I wrote much of the code to render on a vector graphics terminal the reconstructed tracks and the statistics for each part of all of the detectors (to facilitate detecting failing components early, rather than months or years after the data run had concluded.)
+> The publication used above is not included in the `examplethesis.tex` file and is purely for illustration purposes, I was *not* a named collaborator on the indicated publication - but was in fact a summer student (1974) who converted their PDP-10 assembly code to FORTRAN to make use of the ability to share common blocks between overlays, thus overcoming the fact that the assembly language code had reached the limits of the computer's address space. In the summer of 1975, I wrote much of the code to render on a vector graphics terminal the reconstructed tracks and the statistics for each part of all of the detectors (to facilitate detecting failing components early, rather than months or years after the data run had concluded.)
 
 
 <a id="for-more-advanced-users"></a>
