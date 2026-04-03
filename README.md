@@ -227,6 +227,116 @@ The generator determines how to render each paper based on the `status` and `pdf
 > [!TIP]
 > Use the **Missing PDF** state during the early stages of writing to verify your tab order and permission text even before you have gathered all final publication files.
 
+### Handling collaborations with large numbers of authors
+In a number of research areas, it is common to have a large (or even very large) number of collaborators in a name collaboration. Rather than have the student needing to have a CReDiT matrix that has perhaps thousands of rows, I have extentd the CReDiT_Matrix_Wizard.py to be able to handle 'specific_contributors'.
+
+For example, consider a user who particiated in the BNL MPS collaboration with a reference:
+```bibtex
+@techreport{bnlMPS1975,
+  author      = {Lindenbaum, S. J. and {MPS Collaborators}},
+  title       = {The {Brookhaven} {Multi-Particle} {Spectrometer} ({MPS}) Facility},
+  institution = {Brookhaven National Laboratory},
+  year        = {1975},
+  number      = {BNL-20202},
+  type        = {Report},
+  note        = {An invited paper presented at the IV International Symposium on NN Interaction, Syracuse University, May 2-4, 1975.},
+  url = {https://www.osti.gov/servlets/purl/4162299}
+}
+```
+and publications_map.json file containing:
+```json
+    "bnlMPS1975": {
+        "title": "The {Brookhaven} {Multi-Particle} {Spectrometer} ({MPS}) Facility",
+        "year": "1975",
+        "pubtype": "techreport",
+        "status": "included",
+        "label": "techreport:A",
+        "bib_key": "bnlMPS1975",
+        "in_bib": true,
+        "pdf_downloaded": false,
+        "tab_index": 9,
+        "file_path": "Included_publications/",
+        "pdf_pages": "",
+        "scale": 1.0,
+        "permission_text": "",
+        "specific_contributors": [
+            {
+                "lname": "Maguire Jr.",
+                "fname": "Gerald Q."
+            }
+        ],
+        "equal_contributors": [],
+    }
+
+```
+
+If one runs the command `streamlit run ./scripts/CReDiT_Matrix_Wizard.py` and selected the techreport:A tab you will seen the configuration:
+![Configured myself as a collaborator contributing to software and visualization in the MPS Collaboration](figures/wizard-collaboration-example.png)
+
+
+
+
+The resulting JSON file will contain:
+```json
+    "bnlMPS1975": {
+        "title": "The {Brookhaven} {Multi-Particle} {Spectrometer} ({MPS}) Facility",
+        "year": "1975",
+        "pubtype": "techreport",
+        "status": "included",
+        "label": "techreport:A",
+        "bib_key": "bnlMPS1975",
+        "in_bib": true,
+        "pdf_downloaded": false,
+        "tab_index": 9,
+        "file_path": "Included_publications/",
+        "pdf_pages": "",
+        "scale": 1.0,
+        "permission_text": "",
+        "specific_contributors": [
+            {
+                "lname": "Maguire Jr.",
+                "fname": "Gerald Q."
+            }
+        ],
+        "credit_contributions": {
+            "Lindenbaum, S. J.": [
+                "Conceptualization",
+                "Funding Acquisition",
+                "Investigation",
+                "Project Administration",
+                "Resources",
+                "Supervision",
+                "Writing – Original Draft",
+                "Writing – Review & Editing"
+            ],
+            "MPS Collaborators": [
+                "Conceptualization",
+                "Data Curation",
+                "Formal Analysis",
+                "Funding Acquisition",
+                "Investigation",
+                "Methodology",
+                "Project Administration",
+                "Resources",
+                "Software",
+                "Supervision",
+                "Validation",
+                "Visualization",
+                "Writing – Original Draft",
+                "Writing – Review & Editing"
+            ],
+            "Maguire Jr., Gerald Q.": [
+                "Software",
+                "Visualization"
+            ]
+        },
+        "equal_contributors": [],
+        "contribution_note": "Summer student working on PDP-10 software and graphical display of data."
+    }
+
+```
+
+
 
 <a id="for-more-advanced-users"></a>
 ## For more advanced users
