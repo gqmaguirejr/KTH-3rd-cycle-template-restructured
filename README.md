@@ -228,7 +228,7 @@ The generator determines how to render each paper based on the `status` and `pdf
 > Use the **Missing PDF** state during the early stages of writing to verify your tab order and permission text even before you have gathered all final publication files.
 
 ### Handling collaborations with large numbers of authors
-In a number of research areas, it is common to have a large (or even very large) number of collaborators in a name collaboration. Rather than have the student needing to have a CReDiT matrix that has perhaps thousands of rows, I have extentd the `CReDiT_Matrix_Wizard.py` to be able to handle 'specific_contributors'.
+In a number of research areas, it is common to have a large (or even very large) number of collaborators in a named collaboration. Rather than have the student fill out a CReDiT matrix that has perhaps thousands of rows, I have extented the `CReDiT_Matrix_Wizard.py` to be able to handle 'specific_contributors'.
 
 For example, consider a user who particiated in the BNL MPS collaboration with a reference:
 ```bibtex
@@ -333,7 +333,8 @@ The resulting JSON file will contain:
     }
 
 ```
-
+> [!NOTE]
+> The above example is purely for illuration purposes, I was not a named collaborator on the indicated publication - but was in fact a summer student who converted their PDP-10 assembly code to FORTRAN to make use of the ability to share common blocks between overlays, thus overcoming the fact that the assembly language code had reached the limits of the computer's address space.
 
 
 <a id="for-more-advanced-users"></a>
