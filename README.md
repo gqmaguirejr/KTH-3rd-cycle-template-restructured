@@ -367,7 +367,7 @@ To automatically have this script run, you need to manually download the output.
 To be able to facilitate this automation you should add the following files to what git tracks:
 
 | File                            | Role in the Workflow 
-                                             |
+                                             | |
 | ------------------------------- | ---------------------------------------------------------------------------------------- |
 | .bib_validator_cache.json       | verification cache |
 | references_used.bib             | "Clean" output of references you have cited.                                             |
