@@ -357,6 +357,30 @@ By making this template available via GitHub, we exploit the ability of CI/CD (G
 * **Automated Publication Discovery:** Metadata is pulled directly from DiVA based on the author's KTHID.
 * **Controlled Inclusion:** A JSON-based mapping system (`publications_map.json`) allows authors to curate which publications are "included" or "not included" in the thesis with custom labels (e.g., `paper:A`, `patent:B`).
 * **LaTeX Generation:** Direct insertion of formatted publication lists into the document. The system supports LaTeX math mode in titles, citation validation against `references.bib`, and automatic character escaping.
+* **Bibliography Cleanup** Runs scripts/bib_cleanup.py when ever output.bcf, output.aux, or references.bib changes.
+
+#### Bibliography Cleanup - GitHub workflow
+The program scripts/bib_cleanup.py creates a `references_used.bib` file containing only the items from `references.bib` that you have cited. It also does some checking of the DOIs, ISBNs, (US) patents, and computes what fraction of your references have a DOI, ISBN, or URL - to encourage you to have persistant identifiers for your references.
+
+To automatically have this script run, you need to manually download the output.bcf file (if you are using biblatex) or output.aux (if you are using bibtex) from the files generated when you compiled your thesis. When you upload this to you GitHub repository the Bibliography Cleanup workflow will run. This workflow will also be run if the references.bib file changes.
+
+To be able to facilitate this automation you should add the following files to what git tracks:
+
+| File                            | Role in the Workflow 
+                                             |
+| ------------------------------- | ---------------------------------------------------------------------------------------- |
+| .bib_validator_cache.json       | verification cache |
+| references_used.bib             | "Clean" output of references you have cited.                                             |
+| output.bcf                      | The "Ground Truth" artifact from Overleaf that tells the script of which papers to keep. |
+| output.aux                      | Even if it's a stub, it acts as the primary entry point for the script's detection logic.|
+| .github/workflows/bib-clean.yml | The instructions that tell GitHub to automate the cleanup every time you push.           |
+
+A cache of the DOI, ISBN, etc. lookup is stored in `.bib_validator_cache.json`. This helps prevents the GitHub Runner from hitting API rate limits by reusing your local verification or previous verification results.
+
+To add all of these files (if they exist) to what is tracked, do:
+``` bash
+git add .bib_validator_cache.json references_used.bib output.*  .github/workflows/bib-clean.yml
+``` 
 
 <a id="troubleshooting"></a>
 # Troubleshooting
