@@ -89,10 +89,35 @@ def validate_isbn_metadata(isbn, email="unknown@example.com", verbose=False):
         r = requests.get(f"https://api.crossref.org/works?filter=isbn:{isbn}", timeout=5, headers=headers)
         if r.status_code == 200 and r.json()['message']['total-results'] > 0:
             if verbose:
-                print(f"{r.json}")
+                print(f"{r.json()}")
             item = r.json()['message']['items'][0]
-            return {"title": item.get("title", [None])[0], "source": "Crossref"}
-    except Exception: pass
+
+            # Helper to extract year
+            def get_year(date_field):
+                if date_field:
+                    parts = date_field.get('date-parts', [])
+                    if parts and len(parts[0]) >= 1:
+                        return parts[0][0]
+                return None
+
+            # Priority: Print date is the traditional gold standard for proceedings,
+            # but 'issued' is the most common canonical fallback in Crossref.
+            final_year = (get_year(item.get('published-print')) or 
+                          get_year(item.get('issued')) or 
+                          get_year(item.get('published-online')))
+
+            if verbose:
+                print(f"  [+] Crossref Found: {final_year=}")
+
+            return {"title": item.get("title", [None])[0],
+                    "year": str(final_year) if final_year else '',
+                    "source": "Crossref (ISBN)"}
+
+    except Exception as e:
+        if verbose:
+            print(f"  [!] Error in validate_isbn_metadata: {e}")
+        pass
+    return None
 
     # 2. Try Google Books (via isbnlib default service)
     try:
@@ -139,7 +164,7 @@ def validate_doi_metadata(doi, email="unknown@example.com", verbose=False):
         final_year = get_year(item.get('published-print')) or get_year(item.get('issued'))
 
         if verbose:
-            print(f"  [+] Crossref Found: {final_year=}") # This should now appear
+            print(f"  [+] Crossref Found: {final_year=}")
 
         return {
             "title": item.get("title", [None])[0], 
