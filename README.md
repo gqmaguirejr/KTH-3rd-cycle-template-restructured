@@ -381,7 +381,9 @@ To add all of these files (if they exist) to what is tracked, do:
 git add .bib_validator_cache.json referencesUsed.bib output.*  .github/workflows/bib-clean.yml
 ``` 
 > [!NOTE]
-> The checking that is done is that the DOI, ISBN, URL, ... is likely to exist, not that the reference is **factually** correct. Ideally, this checking should be expanded to compare author, title, and other information with the information from CrossRef or other sources -- this could help reduce the probably of undetected fake/erroneous references.
+> The checking that is done is that the DOI, ISBN, URL, ... is likely to exist, not that the reference is **factually** correct. 
+At present, if there is a DOI, then a comparison is made between the year in the reference and the year returned by Crossref (prioritizing 'published-print' over 'issued' year.
+Ideally, this checking should be expanded to compare author, title, and other information with the information from CrossRef or other sources -- this could help reduce the probably of undetected fake/erroneous references. 
 
 > [!TIP]
 > Since the GitHub actions for Bibliography Cleanup do an auto-commit, always run `git pull --rebase` before you start editing your .json or .bib files to keep your "local" and "upstream" repositories in sync.
