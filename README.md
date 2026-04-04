@@ -382,7 +382,7 @@ git add .bib_validator_cache.json referencesUsed.bib output.*  .github/workflows
 ``` 
 > [!NOTE]
 > The checking that is done is that the DOI, ISBN, URL, ... is likely to exist, not that the reference is **factually** correct. 
-At present, if there is a DOI, then a comparison is made between the year in the reference and the year returned by Crossref (prioritizing 'published-print' over 'issued' year.
+At present, if there is a DOI (or ISBN), then a comparison is made between the year in the reference and the year returned by Crossref (in the case of a DOI: prioritizing 'published-print' over 'issued' year; in the case of an ISBN: prioritizing 'published-print' over 'issued' over 'published-online' year).
 Ideally, this checking should be expanded to compare author, title, and other information with the information from CrossRef or other sources -- this could help reduce the probably of undetected fake/erroneous references. 
 
 > [!TIP]
