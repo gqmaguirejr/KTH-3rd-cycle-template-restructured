@@ -360,7 +360,7 @@ By making this template available via GitHub, we exploit the ability of CI/CD (G
 * **Bibliography Cleanup** Runs scripts/bib_cleanup.py when ever output.bcf, output.aux, or references.bib changes.
 
 #### Bibliography Cleanup - GitHub workflow
-The program scripts/bib_cleanup.py creates a `references_used.bib` file containing only the items from `references.bib` that you have cited. It also does some checking of the DOIs, ISBNs, (US) patents, and computes what fraction of your references have a DOI, ISBN, or URL - to encourage you to have persistant identifiers for your references.
+The program scripts/bib_cleanup.py creates a `referencesUsed.bib` file containing only the items from `references.bib` that you have cited. It also does some checking of the DOIs, ISBNs, (US) patents, and computes what fraction of your references have a DOI, ISBN, or URL - to encourage you to have persistant identifiers for your references.
 
 To automatically have this script run, you need to manually download the output.bcf file (if you are using biblatex) or output.aux (if you are using bibtex) from the (log) files generated when you compiled your thesis. When you upload this to you GitHub repository the Bibliography Cleanup workflow will run. This workflow will also be run if the references.bib file changes.
 
@@ -369,7 +369,7 @@ To be able to facilitate this automation you should add the following files to w
 | File | Role in the Workflow |
 | --- | --- |
 | .bib_validator_cache.json | verification cache |
-| references_used.bib | "Clean" output of references you have cited. The cleaning removes a number of fields (such as abstract and file) that might be sensitiveor violate a copyright.|
+| referencesUsed.bib | "Clean" output of references you have cited. The cleaning removes a number of fields (such as abstract and file) that might be sensitiveor violate a copyright.|
 | output.aux | Produced by bibtex - contains information about what references were cited. In the case of biblatex and biber this is a stub.|
 | output.bcf | In the case of biblatex and biber, this tells the script which references to keep. |
 | .github/workflows/bib-clean.yml | The instructions that tell GitHub to automate the cleanup every time you push. |
@@ -378,10 +378,14 @@ A cache of the DOI, ISBN, etc. lookup is stored in `.bib_validator_cache.json`. 
 
 To add all of these files (if they exist) to what is tracked, do:
 ``` bash
-git add .bib_validator_cache.json references_used.bib output.*  .github/workflows/bib-clean.yml
+git add .bib_validator_cache.json referencesUsed.bib output.*  .github/workflows/bib-clean.yml
 ``` 
 > [!NOTE]
 > The checking that is done is that the DOI, ISBN, URL, ... is likely to exist, not that the reference is **factually** correct. Ideally, this checking should be expanded to compare author, title, and other information with the information from CrossRef or other sources -- this could help reduce the probably of undetected fake/erroneous references.
+
+> [!TIP]
+> Since the GitHub actions for Bibliography Cleanup do an auto-commit, always run `git pull --rebase` before you start editing your .json or .bib files to keep your "local" and "upstream" repositories in sync.
+
 
 
 <a id="troubleshooting"></a>
