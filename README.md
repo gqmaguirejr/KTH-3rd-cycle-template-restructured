@@ -366,14 +366,13 @@ To automatically have this script run, you need to manually download the output.
 
 To be able to facilitate this automation you should add the following files to what git tracks:
 
-| File                            | Role in the Workflow 
-                                             | |
-| ------------------------------- | ---------------------------------------------------------------------------------------- |
-| .bib_validator_cache.json       | verification cache |
-| references_used.bib             | "Clean" output of references you have cited.                                             |
-| output.bcf                      | The "Ground Truth" artifact from Overleaf that tells the script of which papers to keep. |
-| output.aux                      | Even if it's a stub, it acts as the primary entry point for the script's detection logic.|
-| .github/workflows/bib-clean.yml | The instructions that tell GitHub to automate the cleanup every time you push.           |
+| File | Role in the Workflow |
+| --- | --- |
+| .bib_validator_cache.json | verification cache |
+| references_used.bib | "Clean" output of references you have cited.|
+| output.bcf | The "Ground Truth" artifact from Overleaf that tells the script of which papers to keep. |
+| output.aux | Even if it is a stub, it acts as the primary entry point for the script's detection logic.|
+| .github/workflows/bib-clean.yml | The instructions that tell GitHub to automate the cleanup every time you push. |
 
 A cache of the DOI, ISBN, etc. lookup is stored in `.bib_validator_cache.json`. This helps prevents the GitHub Runner from hitting API rate limits by reusing your local verification or previous verification results.
 
