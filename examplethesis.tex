@@ -2349,8 +2349,8 @@ xxxx.
 \section{Directly: Attach files to the PDF file}
 % Attach the BibTeX for your references to make it easy for a reader to find and use them
 The BibTeX references used in this thesis are attached.
-    \IfFileExists{references_used.bib}{
-    \attachfile[description={references_used.bib}]{references_used.bib}}
+    \IfFileExists{referencesUsed.bib}{
+    \attachfile[description={referencesUsed.bib}]{referencesUsed.bib}}
     {\attachfile[description={references.bib}]{references.bib}}
 \engExpl{Here we have used \texttt{\textbackslash attachfile} and attached the file. There is also a mechanism for \textbf{embedding} files into PDF, but I do not use it or describe it further here -- for reasons of \first simplicity, \Second \texttt{\textbackslash attachfile} supports any type of file, \third the attached files are visible as annotations on the page where they are included, and  \fourth potential compatibility with PDF/A-3.}
 
