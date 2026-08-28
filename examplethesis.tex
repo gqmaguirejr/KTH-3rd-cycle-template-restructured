@@ -53,34 +53,11 @@
 %% To avoid the warning: "Package transparent Warning: Loading aborted, because pdfTeX is not running in PDF mode."
 \disablepackage{transparent}{}
 
-% To avoid complaints from datatool and glossaries regarding missing latin and swedish support
-\begin{filecontents*}{datatool-swedish.ldf}
-\ProvidesFile{datatool-swedish.ldf}
-% Define how Swedish characters should be handled during sorting
-% This maps them so Å, Ä, and Ö appear at the end of the alphabet
-\@ifundefined{dtl@sortreplace}{}{%
-  \dtl@sortreplace{å}{za}%
-  \dtl@sortreplace{Å}{Za}%
-  \dtl@sortreplace{ä}{zb}%
-  \dtl@sortreplace{Ä}{Zb}%
-  \dtl@sortreplace{ö}{zc}%
-  \dtl@sortreplace{Ö}{Zc}%
-}
-\end{filecontents*}
-\begin{filecontents*}{datatool-latin.ldf}
-\ProvidesFile{datatool-latin.ldf}
-\end{filecontents*}
-\begin{filecontents*}{glossaries-swedish.ldf}
-\ProvidesGlossariesLang{swedish}[2024/03/26]
-% Use provide or renew to avoid the "already defined" error
-\renewcommand*{\glossaryname}{Ordlista}
-\renewcommand*{\acronymname}{Akronymer}
-\renewcommand*{\entryname}{Term}
-\renewcommand*{\descriptionname}{Beskrivning}
-\end{filecontents*}
-\begin{filecontents*}{glossaries-latin.ldf}
-\ProvidesGlossariesLang{latin}[2024/03/26]
-\end{filecontents*}
+% Input file generators before \documentclass
+\input{lib/ext-eprint-dbx}
+% Emit local LDF shims before packages load
+\input{lib/datatool-ldf}
+
 
 % --- Configure the documentclass ---
 %% The template is designed to handle a thesis in English or Swedish
@@ -178,6 +155,9 @@ includepublications,    % uncomment - if you want to include publications for a 
 % For filtering out warnings that the user is not interested in
 \input{lib/filter-warnings.tex}
 % ------------------------------------
+
+% Load datatool and babel/polyglossia
+\usepackage{datatool}
 
 % include a variety of packages that are useful
 \input{lib/includes}
@@ -413,29 +393,9 @@ morekeywords={begin, todo, textbf, textit, texttt}
 
 \ifbiblatex
   % set up the bibliography style
-  %\usepackage[language=english,bibstyle=authoryear,citestyle=authoryear, maxbibnames=99]{biblatex}
-  
-    % Alternatively, you might use another style, such as IEEE and use citestyle=numeric-comp  to put multiple citations in a single pair of square brackets
-    % Note that the following explicitly uses biber as the backend
-    \ifinswedish
-    \usepackage[language=swedish,
-        style=ieee,citestyle=numeric-comp, maxbibnames=99, giveninits=false, 
-        refsection=none,  %
-        refsegment=none,   %
-        backend=biber]{biblatex}
-    \else
-        \usepackage[language=english,
-        style=ieee,citestyle=numeric-comp, maxbibnames=99, giveninits=false, 
-        refsection=none,  %
-        refsegment=none,   %
-        backend=biber]{biblatex}
-    \fi
+  % Input centralized biblatex configuration
+    \input{lib/biblatex-and-friends}
     
-    % --- Allow biblatex to break long URL identifiers gracefully ---
-    \setcounter{biburlnumpenalty}{9000} % Permits line breaks after numeric digits
-    \setcounter{biburllcpenalty}{9000} % Permits line breaks after lowercase letters
-    \setcounter{biburlucpenalty}{9000} % Permits line breaks after uppercase letters
-
     % Use the chapter* style for the heading of the bibliography
     \defbibheading{bibliography}[\bibname]{%
     \chapter*{#1}%   skip \centering 
