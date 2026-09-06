@@ -157,7 +157,7 @@ The configuration wizard and CReDiT Matrix Wizard uses two local files. Understa
    - **Resetting:** Click **"Clear All Data (Reset)"** in the config_wizard.py interface to wipe this and start the form from scratch.
 
 2. publications_map.json (Used for information about publications & CReDiT data)
-   - This is a critical file that maps your publications from DiVA and your references.bib file to your LaTeX by indicating which papers are included, their labels, and your **CReDiT contribution roles**.
+   - This is a critical file that maps your publications from DiVA and your references.bib file to your LaTeX by indicating which papers are included, their labels, and your **CReDiT contribution roles**. This file acts as a configuration manifest for physical thesis assembly and UI persistence.
 
    - This repository may contain a version of this file containing demonstration data. Therefore, if you see publications (when starting) the CReDiT Matrix Wizard that are not yours, then you are looking at the template's publications_map.json file -- in this case delete the file and invoke the Manual DiVA discovery workflow in the Actions tab.
 
