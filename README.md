@@ -187,7 +187,7 @@ Once you have your KTHID in your `custom_configuration.tex` file and you have ad
 > [!NOTE]
 > You can also manually run the **Sync Publications** workflow.
 
-There is now configuration CReDiT Matrix Wizard (`CReDiT_Matrix_Wizard.py`). You can invoke this wizard on your local machine. It will read the `publications_map.json` file and the `references.bib` file and prompt you to enter the CReDiT roles for each author - for each of the papers. It will update the `publications_map.json` file with contribution information. It is also possible to put in 'equal contribution' information with an optional text to go with it. You can run this wizard with:
+There is now a configuration CReDiT Matrix Wizard (`CReDiT_Matrix_Wizard.py`). You can invoke this wizard on your local machine. It will read the `publications_map.json` file and the `references.bib` file and prompt you to enter the CReDiT roles for each author - for each of the papers. It will update the `publications_map.json` file with contribution information. It is also possible to put in 'equal contribution' information with an optional text to go with it. You can run this wizard with:
 
 ```bash
 streamlit run ./scripts/CReDiT_Matrix_Wizard.py
