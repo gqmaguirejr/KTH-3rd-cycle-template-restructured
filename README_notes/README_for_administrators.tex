@@ -42,10 +42,6 @@
 \fi
 
 
-% Set up to use biblatex
-\newif\ifbiblatex
-\biblatextrue
-
 \usepackage[style=ieee,citestyle=numeric-comp, maxbibnames=99, giveninits=false]{biblatex}
 
 % Use the chapter* style for the heading of the bibliography
@@ -62,15 +58,22 @@
 
 \usepackage[plainpages=false, unicode=true]{hyperref}
 
-\usepackage[acronym, style=super, toc=false, nonumberlist, nomain, nopostdot=true, notranslate]{glossaries-extra}
+% In the document preamble where glossaries-extra is loaded:
+\usepackage[
+  acronym,
+  toc=false,
+  nonumberlist,
+  nomain,
+  nopostdot=true, 
+  nohypertypes={main, acronym}, % disables link generation to targets that do not exist
+  notranslate,
+]{glossaries-extra}
 %% In overleaf, if this file is in a folder and not the root
 %% using \makeglossaries will not work, as the Overleaf latexmk
 %% will not run the program to take the output.acn file and make the output.acr file
 %\makeglossaries
 % However, you can get TeX to do the work with the following:
 \makenoidxglossaries
-% For details of the Overleaf make process, see https://www.overleaf.com/learn/how-to/How_does_Overleaf_compile_my_project%3F
-%% Potentially, one could set up a latexmkrc file in the folder
 
 \input{lib/acronyms}                %load the acronyms file
 
@@ -114,7 +117,7 @@
     %\setsansfont{TeX Gyre Heros}   %% Helvetica like font
     \babelfont{sf}{TeX Gyre Heros}
     %\setmonofont[Ligatures={NoCommon}, Numbers={Lining,Monospaced}]{TeX Gyre Cursor}  %% Courier like font
-    \babelfont{tt}{TeX Gyre Cursor}
+    \babelfont{tt}[Ligatures={ResetAll}]{TeX Gyre Cursor}
  \begin{comment}
     \babelfont[english]{rm}{TeX Gyre Termes}
     \babelfont[english]{sf}{TeX Gyre Heros}
@@ -237,11 +240,17 @@
 \setlength{\headheight}{15pt}
 \addtolength{\topmargin}{-3pt}
 
+% define a listing postbreak character to be used
+% Note that this version works safely with cmyk mode for xcolors.
+% It uses the STIX Match font to have the correct character at the LuaLaTeX engine level.
+\newsavebox{\lstbreakbox}
+\sbox{\lstbreakbox}{\textcolor{red}{\mystixmathfont ↪}\space}
+
 
 \lstdefinestyle{latexExampleForAuthors}{
 language=[LaTeX]{TeX},
     breaklines=true,
-    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+    postbreak=\usebox{\lstbreakbox},
     basicstyle=\small\tt,
     keywordstyle=\color{blue}\sf,
     identifierstyle=\color{magenta},
@@ -253,13 +262,13 @@ language=[LaTeX]{TeX},
     columns=flexible,
     morekeywords={subtitle, alttitle, altsubtitle, hostcompany, courseCycle,
       courseCode, courseCredits, programcode, degreeName, subjectArea,
-      nationalsubjectcategories, todo, ifbiblatex, subsection}
+      nationalsubjectcategories, todo, subsection}
 }
 
 \lstdefinestyle{latexExample}{
 language=[LaTeX]{TeX},
     breaklines=true,
-    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+    postbreak=\usebox{\lstbreakbox},
     basicstyle=\small\tt,
     keywordstyle=\color{blue}\sf,
     identifierstyle=\color{magenta},
@@ -286,7 +295,7 @@ language=[LaTeX]{TeX},
     showspaces=false,
     showtabs=false,
     breaklines=true,
-    postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{gray}\hookrightarrow\space}},
+    postbreak=\usebox{\lstbreakbox},
     breakatwhitespace=true,
     basicstyle=\ttfamily\small,
     extendedchars=false,
@@ -323,7 +332,7 @@ language=[LaTeX]{TeX},
   identifierstyle=\color{blue},
   keywordstyle=\color{cyan},
   breaklines=true,
-  postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{gray}\hookrightarrow\space}},
+  postbreak=\usebox{\lstbreakbox},
   breakatwhitespace=true,
   morekeywords={xmlns,version,type}% list your attributes here
 }
@@ -334,10 +343,11 @@ language=[LaTeX]{TeX},
 \title{DiVA administrator's viewpoint}
 
 \author{Gerald Q. Maguire Jr.}
-\date{July 2025}
+\date{14 September 2026}
 
 \begin{document}
-\glsresetall[]
+\pagenumbering{roman}
+\glsresetall
 \maketitle
 \fancypagestyle{empty}{}
 \warningExpl{\textbf{This document is a work in progress.}}
@@ -349,6 +359,9 @@ This document provides information for \gls{DiVA} administrators about the templ
 
 \textbf{NB} In the case of third-cycle theses, the \textbf{student} has to enter the thesis and their included publications.
 
+\setcounter{page}{1}
+\pagenumbering{arabic}
+\glsresetall
 \section[Introduction to the template]{Introduction to the template}
 
 The assumption is that a student is writing their thesis using my \LaTeX\ ~template\footnote{Or perhaps a \gls{DOCX} file that also produces a \fname{fordiva.json} file.}.  The key idea is to have the thesis include  \first the information needed for input into \gls{DiVA}, the TRITA list/database, and \gls{LADOK}, and \Second information that can be used by US-AB to produce the covers, title page, and book information page.
@@ -654,7 +667,7 @@ Traceback (most recent call last):
 Exception: Couldn't register PRO3=P 2021-07-14: Hinder mot skapa resultat påträffat: Rapporteringsrättighet saknas
 \end{lstlisting}
 
-\warningExpl{There is currently a transfer to \gls{LADOK} project within the group of developers at the IT unit who are working on E-learning - they have been working on an API for entering the title(s) and other information (just as they are making it possible to use a program to enter grades and dates for other courses).}
+\warningExpl{There is currently a transfer to \gls{LADOK} project within the group of developers at the IT unit who are working on E-learning - they have been working on an \gls{API} for entering the title(s) and other information (just as they are making it possible to use a program to enter grades and dates for other courses).}
 
 \FloatBarrier
 
@@ -662,12 +675,12 @@ Exception: Couldn't register PRO3=P 2021-07-14: Hinder mot skapa resultat påtr�
 \section{Final notes}
 \textbf{Best of success in using the scripts (programs)!} If there are questions, contact me at  \href{mailto:maguire@kth.se}{maguire@kth.se}
 .
+\clearpage
 \ifinswedish
 \printglossary[style=mylong, type=\acronymtype, title={Lista över akronymer
 och förkortningar}]
 \else
-%\printglossary[style=mylong, type=\acronymtype, title={List of Acronyms and abbreviations}]
-\printnoidxglossaries
+\printnoidxglossary[type=\acronymtype, style=mylong, title={List of Acronyms and Abbreviations}]
 \fi
 \clearpage
 
@@ -679,14 +692,7 @@ och förkortningar}]
 % It works for BibTeX because the thesis format is basically that of a Report.
 \renewcommand{\bibname}{References}
 
-\ifbiblatex
-    %\typeout{Biblatex current language is \currentlang}
+%\typeout{Biblatex current language is \currentlang}
+\printbibliography[heading=bibintoc, title={References}]
 
-    \printbibliography[heading=bibintoc, title={References}]
-\else
-   
-    \phantomsection  % make it include a hyperref - see https://tex.stackexchange.com/a/98995
-    \addcontentsline{toc}{chapter}{References}
-    \bibliography{references}
-\fi
 \end{document}

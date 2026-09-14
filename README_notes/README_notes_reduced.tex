@@ -5,7 +5,7 @@
 % --- Load the warning filters  ---
 % For filtering out warnings that the user is not interested in
 \input{../lib/filter-warnings.tex}
-% ------------------------------------
+% ---
 
 \newif\ifinswedish
 \inswedishfalse
@@ -42,9 +42,6 @@
     \usepackage[swedish, main=english, provide+=*, bidi=basic]{babel}
 \fi
 
-% Set up to use biblatex
-\newif\ifbiblatex
-\biblatextrue
 \usepackage[style=ieee,citestyle=numeric-comp, maxbibnames=99, giveninits=false]{biblatex}
 
 % Use the chapter* style for the heading of the bibliography
@@ -59,15 +56,22 @@
 
 \usepackage[plainpages=false, unicode=true]{hyperref}
 
-\usepackage[acronym, style=super, toc=false, nonumberlist, nomain, nopostdot=true, notranslate]{glossaries-extra}
+% In the document preamble where glossaries-extra is loaded:
+\usepackage[
+  acronym,
+  toc=false,
+  nonumberlist,
+  nomain,
+  nopostdot=true, 
+  nohypertypes={main, acronym}, % disables link generation to targets that do not exist
+  notranslate,
+]{glossaries-extra}
 %% In overleaf, if this file is in a folder and not the root
 %% using \makeglossaries will not work, as the Overleaf latexmk
 %% will not run the program to take the output.acn file and make the output.acr file
 %\makeglossaries
 % However, you can get TeX to do the work with the following:
 \makenoidxglossaries
-% For details of the Overleaf make process, see https://www.overleaf.com/learn/how-to/How_does_Overleaf_compile_my_project%3F
-%% Potentially, one could set up a latexmkrc file in the folder
 
 \input{lib/acronyms}                %load the acronyms file
 
@@ -111,7 +115,7 @@
     %\setsansfont{TeX Gyre Heros}   %% Helvetica like font
     \babelfont{sf}{TeX Gyre Heros}
     %\setmonofont[Ligatures={NoCommon}, Numbers={Lining,Monospaced}]{TeX Gyre Cursor}  %% Courier like font
-    \babelfont{tt}{TeX Gyre Cursor}
+    \babelfont{tt}[Ligatures={ResetAll}]{TeX Gyre Cursor}
  \begin{comment}
     \babelfont[english]{rm}{TeX Gyre Termes}
     \babelfont[english]{sf}{TeX Gyre Heros}
@@ -279,11 +283,16 @@
 \setlength{\headheight}{15pt}
 \addtolength{\topmargin}{-3pt}
 
+% define a listing postbreak character to be used
+% Note that this version works safely with cmyk mode for xcolors.
+% It uses the STIX Match font to have the correct character at the LuaLaTeX engine level.
+\newsavebox{\lstbreakbox}
+\sbox{\lstbreakbox}{\textcolor{red}{\mystixmathfont ↪}\space}
 
 \lstdefinestyle{latexExampleForAuthors}{
 language=[LaTeX]{TeX},
     breaklines=true,
-    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+    postbreak=\usebox{\lstbreakbox},
     basicstyle=\small\tt,
     keywordstyle=\color{blue}\sf,
     identifierstyle=\color{magenta},
@@ -295,13 +304,13 @@ language=[LaTeX]{TeX},
     columns=flexible,
     morekeywords={subtitle, alttitle, altsubtitle, hostcompany, courseCycle,
       courseCode, courseCredits, programcode, degreeName, subjectArea,
-      nationalsubjectcategories, todo, ifbiblatex, subsection}
+      nationalsubjectcategories, todo, subsection}
 }
 
 \lstdefinestyle{latexExample}{
 language=[LaTeX]{TeX},
     breaklines=true,
-    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+    postbreak=\usebox{\lstbreakbox},
     basicstyle=\small\tt,
     keywordstyle=\color{blue}\sf,
     identifierstyle=\color{magenta},
@@ -317,9 +326,10 @@ language=[LaTeX]{TeX},
 \title{README and notes about the template}
 
 \author{Gerald Q. Maguire Jr.}
-\date{July 2025}
+\date{14 September 2026}
 
 \begin{document}
+\pagenumbering{roman}
 \glsresetall[]
 \maketitle
 \fancypagestyle{empty}{}
@@ -334,7 +344,9 @@ This document describes some of the \LaTeX\  thesis templates that I have develo
 \tableofcontents
 \markboth{\contentsname}{}
 \cleardoublepage
- 
+\setcounter{page}{1}
+\pagenumbering{arabic}
+\glsresetall
 \section{Introduction}
 This template evolved (radically) from an earlier \LaTeX\ thesis template that was widely used at \gls{KTH}. The start of this evolution was a DOCX template I developed over many years for use with students for whom I was the examiner and/or supervisor. The suggested structure and contents of the thesis reflect my experience as an examiner for more than 600 degree projects and the experience I have had as a teacher and examiner for the course \textit{II2202 Research Methodology and Scientific Writing}. The template also reflects my interest as a member of KTH's Language Committee in facilitating the parallel use of English and Swedish at \gls{KTH}, as well as supporting other languages. The latter aspect
 reflects my experience with double-degree students, who often need to have at least the abstract of their thesis in their home university's language(s). The thesis template also reflects my experience in entering the metadata for hundreds of theses into \gls{DiVA} and announcing a very large number of degree project seminars (with a large fraction of them having abstracts and keywords in both English and Swedish).
@@ -380,9 +392,9 @@ As a result, collecting the data necessary for \gls{DiVA}\footnote{Also, to a le
 
 \section{Deliminations}
 
-I was told by one of my colleagues in applied mathematics that theses in this area generally do not follow the \gls{IMRAD} structure.  Instead, the main body typically follows the Definition-Theorem-Proof pattern.
+I was told by one of my colleagues in applied mathematics that theses in this area generally do not follow the \gls{IMRAD} structure. Instead, the main body typically follows the Definition-Theorem-Proof pattern.
 
-Also, as noted in a footnote, in the \fname{README\_3rd\_cycle\_author.tex}: While the template includes support for textual \& image artifacts and references to other types of artifacts, I have not fully considered additional types of media, such as video, audio, physical artifacts, $\ldots$, and artistic output.  I apologize in advance that the template might not suit a student in a doctoral program, such as: Architecture, ``Art, Technology and Design''; and others. A practice-based thesis or thesis by project frequently features creative work (\ie the praxis) with a written document (\ie the exegesis). Constructive suggestions as to how the template can be improved are welcome.
+Also, as noted in a footnote, in the \fname{README\_3rd\_cycle\_author.tex}: While the template includes support for textual \& image artifacts and references to other types of artifacts, I have not fully considered additional types of media, such as video, audio, physical artifacts, $\ldots$, and artistic output.  I apologize in advance that the template might not suit a student in a doctoral program, such as: Architecture, ``Art, Technology and Design''; and others.  A practice-based thesis or thesis by project frequently features creative work (\ie the praxis) with a written document (\ie the exegesis). Constructive suggestions as to how the template can be improved are welcome.
 
 Some parts of the template are conditional based on the value of a switch: \texttt{\textbackslash ifinswedish}. The idea is to easily have a single template that supports theses written in English or Swedish. However, in many places, the conditional has not been used but could be. Examples of this include the Swedish names for chapters and sections. Generally, this information is in a note after the English chapter or section name. More complete implementation of the use of this condition remains as future work.
 
@@ -661,7 +673,7 @@ Once the internal reviewer approves a thesis to go forward to a defense, the aut
     \item The author has to enter the medatadata and thesis into \gls{DiVA}. See \Cref{sec:enteringMetaData}.
     
     \item Additionally, if the thesis is a compilation thesis, the author has to make sure that all of the publications (including manuscripts) that are in the ``List of Publications'' have a record in \gls{DiVA}. The \gls{DiVA} entry for the thesis will have cross references to these publications. You might find the \fname{citedtags.bib} file attached to the PDF file to be helpful in this.
-    
+
     The Jupyter notebook \fname{citations-to-DiVA-Notebook-20250811-all.ipynb} takes the \fname{citedtags.bib} and \fname{fordiva.json} files and looks up DiVA IDs for these publications. The author can use this information to \first know which already have DiVA entries and which do not, and \Second have the DiVA IDs to use when entering the metadata for the thesis. Hopefully, this should facilitate entering the thesis into \gls{DiVA}. In the future, a program utilizing the Cora-based DiVA API could automatically do all of this and then enter the thesis metadata and upload the PDF.
 \end{enumerate}
 
@@ -873,8 +885,7 @@ This version of the template has some font information, in the form of Opentype 
 \printglossary[style=mylong, type=\acronymtype, title={Lista över akronymer
 och förkortningar}]
 \else
-%\printglossary[style=mylong, type=\acronymtype, title={List of Acronyms and abbreviations}]
-\printnoidxglossaries
+\printnoidxglossary[type=\acronymtype, style=mylong, title={List of Acronyms and Abbreviations}]
 \fi
 \clearpage
 
@@ -886,16 +897,8 @@ och förkortningar}]
 % It works for BibTeX because the thesis format is basically that of a Report.
 \renewcommand{\bibname}{References}
 
-\ifbiblatex
-    %\typeout{Biblatex current language is \currentlang}
-
-    \printbibliography[heading=bibintoc, title={References}]
-\else
-   
-    \phantomsection  % make it include a hyperref - see https://tex.stackexchange.com/a/98995
-    \addcontentsline{toc}{chapter}{References}
-    \bibliography{references}
-\fi
+%\typeout{Biblatex current language is \currentlang}
+\printbibliography[heading=bibintoc, title={References}]
 
 \end{document}
 

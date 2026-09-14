@@ -44,18 +44,15 @@
 \fi
 
 
-% Set up to use biblatex
-\newif\ifbiblatex
-\biblatextrue
-
-\usepackage[style=ieee,citestyle=numeric-comp, maxbibnames=99, giveninits=false]{biblatex}
+% Input centralized biblatex configuration
+\input{lib/biblatex-and-friends}
 
 % Use the chapter* style for the heading of the bibliography
 \defbibheading{bibliography}[\bibname]{%
 \section*{#1}%   skip \centering 
 }
   
-    \addbibresource{references.bib}    
+\addbibresource{references.bib}    
 \input{kth/kthcolors}
 
 
@@ -116,7 +113,7 @@
     %\setsansfont{TeX Gyre Heros}   %% Helvetica like font
     \babelfont{sf}{TeX Gyre Heros}
     %\setmonofont[Ligatures={NoCommon}, Numbers={Lining,Monospaced}]{TeX Gyre Cursor}  %% Courier like font
-    \babelfont{tt}{TeX Gyre Cursor}
+    \babelfont{tt}[Ligatures={ResetAll}]{TeX Gyre Cursor}
  \begin{comment}
     \babelfont[english]{rm}{TeX Gyre Termes}
     \babelfont[english]{sf}{TeX Gyre Heros}
@@ -199,11 +196,16 @@ Extension = .ttf,
 \setlength{\headheight}{15pt}
 \addtolength{\topmargin}{-3pt}
 
+% define a listing postbreak character to be used
+% Note that this version works safely with cmyk mode for xcolors.
+% It uses the STIX Match font to have the correct character at the LuaLaTeX engine level.
+\newsavebox{\lstbreakbox}
+\sbox{\lstbreakbox}{\textcolor{red}{\mystixmathfont ↪}\space}
 
 \lstdefinestyle{latexExampleForAuthors}{
 language=[LaTeX]{TeX},
     breaklines=true,
-    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+    postbreak=\usebox{\lstbreakbox},
     basicstyle=\small\tt,
     keywordstyle=\color{blue}\sf,
     identifierstyle=\color{magenta},
@@ -216,14 +218,14 @@ language=[LaTeX]{TeX},
     columns=flexible,
     morekeywords={subtitle, alttitle, altsubtitle, hostcompany, courseCycle,
       courseCode, courseCredits, programcode, degreeName, subjectArea,
-      nationalsubjectcategories, todo, ifbiblatex, subsection}
+      nationalsubjectcategories, todo, subsection}
 }
 
 
 \lstdefinestyle{latexExample}{
 language=[LaTeX]{TeX},
     breaklines=true,
-    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+    postbreak=\usebox{\lstbreakbox},
     basicstyle=\small\tt,
     keywordstyle=\color{blue}\sf,
     identifierstyle=\color{magenta},
@@ -236,12 +238,13 @@ language=[LaTeX]{TeX},
 \newcommand{\dname}[1]{\textbf{#1}}
 \newcommand{\fname}[1]{\texttt{#1}}
 
-\title{Notes on `Tekla''-template}
+\title{Notes on ``Tekla''-template}
 
 \author{Gerald Q. Maguire Jr.}
-\date{September 2025}
+\date{14 September 2026}
 
 \begin{document}
+\pagenumbering{roman}
 \glsresetall[]
 \maketitle
 \fancypagestyle{empty}{}
@@ -261,8 +264,11 @@ My \LaTeX{} template overcomes many of what I view as deficiencies of the Tekla-
 \tableofcontents
 \markboth{\contentsname}{}
 \cleardoublepage
+\setcounter{page}{1}
+\pagenumbering{arabic}
+\glsresetall
 \section{Good features of the Tekla-template}
-The Tekla-template has a number of good features, these include (but are \textit{not} limited to):
+The Tekla-template has a number of good features; these include (but are \textit{not} limited to):
 \begin{itemize}[label=\color{green}\ding{51}]
 \item The \fname{my-phd-thesis.tex} file is very simple and easy to understand. It
 does have a front cover, title page, and book information page. While these will
@@ -327,7 +333,7 @@ I believe that the Tekla-template has a number of deficiencies. These deficienci
     \textbackslash paragraph\{Contributions\} This doctoral dissertation consists of two parts. The first part provides an overview of the research field on which I focused and a summary of my contributions to it. The second part comprises the contributions that I have made to this research field through published works and patent applications.
     \end{quote}
 
-    However, this text is misleading in that it does not describe the author's contributions to the publication. Furthermore, this description should be in the body of the text and ideally follow a taxonomy such as \gls{CRediT}.
+    However, this text is misleading in that it does not describe the author's contributions to the publication. Furthermore, this description should be in the body of the text and ideally follow a taxonomy such as \gls{CReDiT}.
 
     Moreover, in the case of a compilation thesis, the first \texttt{part} is the kappa and the second \texttt{part} is the included publications. The kappa is \textbf{not} simply an overview of the research field.
 
