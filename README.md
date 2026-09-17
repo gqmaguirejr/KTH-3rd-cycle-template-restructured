@@ -369,7 +369,7 @@ To be able to facilitate this automation you should add the following files to w
 | File | Role in the Workflow |
 | --- | --- |
 | .bib_validator_cache.json | verification cache |
-| referencesUsed.bib | "Clean" output of references you have cited. The cleaning removes a number of fields (such as abstract and file) that might be sensitiveor violate a copyright.|
+| referencesUsed.bib | "Clean" output of references you have cited. The cleaning removes a number of fields (such as abstract and file) that might be sensitive or violate a copyright.|
 | output.aux | Produced by bibtex - contains information about what references were cited. In the case of biblatex and biber this is a stub.|
 | output.bcf | In the case of biblatex and biber, this tells the script which references to keep. |
 | .github/workflows/bib-clean.yml | The instructions that tell GitHub to automate the cleanup every time you push. |
@@ -387,7 +387,7 @@ Ideally, this checking should be expanded to compare author, title, and other in
 
 > [!TIP]
 > Since the GitHub actions for Bibliography Cleanup do an auto-commit, always run `git pull --rebase` before you start editing your .json or .bib files to keep your "local" and "upstream" repositories in sync.
-
+ 
 
 
 <a id="troubleshooting"></a>
