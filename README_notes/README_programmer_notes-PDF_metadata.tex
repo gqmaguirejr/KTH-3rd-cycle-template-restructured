@@ -1,0 +1,2149 @@
+\DocumentMetadata{
+  lang        = en-US,
+  pdfversion  = 1.7,
+  pdfstandard = a-2u,
+  %uncompress,
+  %debug
+}
+\documentclass[12pt, twoside]{article}
+% Emit local LDF shims before packages load
+\input{lib/datatool-ldf}
+
+% Make it possible to conditionally depend on the TeX engine used
+\RequirePackage{ifluatex}
+
+\RequirePackage{comment}
+
+% To access the \captionof{} functionality
+\RequirePackage{caption}
+
+%\RequirePackage{silence}
+%\WarningFilter{latexfont}{Font shape `U/stmry/m/n' in size <5.5> not available}
+%\WarningFilter{latexfont}{Font shape}
+
+\newif\ifinswedish
+\inswedishfalse
+
+\RequirePackage{etoolbox}
+
+% The following toggles are needed because of kth/kthcolors.tex and lib/includes.tex
+\newif\ifnomenclature
+\nomenclaturefalse
+
+\newif\ifdigitaloutput
+\digitaloutputfalse
+
+\makeatletter
+%% Define a pair of commands to disable and reenable specific packages - see https://tex.stackexchange.com/questions/39415/unload-a-latex-package
+\makeatletter
+\newcommand{\disablepackage}[2]{%
+  \disable@package@load{#1}{#2}%
+}
+\newcommand{\reenablepackage}[1]{%
+  \reenable@package@load{#1}%
+}
+\makeatother
+
+%% To avoid the warning: "Package transparent Warning: Loading aborted, because pdfTeX is not running in PDF mode."
+\disablepackage{transparent}{}
+
+% include a variety of packages that are useful
+\input{lib/includes}
+
+\usepackage{minted}
+\RequirePackage{fancyhdr} % Take control of headers and footers
+
+%\usepackage{luatexja-fontspec}
+%\ltjdefcharrange{8}{"2190-"21FF} % Define range 8 as Arrows
+%\ltjsetparameter{jacharrange={-8}} % Treat range 8 as Western characters (ALChar)
+
+%\ltjsetparameter{jacharrange={-3}} % Treat range 3 as Western characters (ALChar)
+
+\begin{comment}
+\ifinswedish
+    \usepackage[english, main=swedish, bidi=basic]{babel}
+\else
+    \usepackage[swedish, main=english, provide+=*, bidi=basic]{babel}
+\fi
+\end{comment}
+\ifinswedish
+    \usepackage[main=swedish]{babel}
+\else
+    \usepackage[main=english, provide+=*]{babel}
+\fi
+%\setmainjfont{Noto Sans CJK JP}
+
+%\usepackage[style=ieee,citestyle=numeric-comp, maxbibnames=99, giveninits=false]{biblatex}
+% Input centralized biblatex configuration
+\input{lib/biblatex-and-friends}
+
+
+
+% Use the chapter* style for the heading of the bibliography
+\defbibheading{bibliography}[\bibname]{%
+\section*{#1}%   skip \centering 
+}
+  
+\addbibresource{references.bib}    
+\input{kth/kthcolors}
+
+
+
+\input{lib/defines}  % load some additional definitions to make writing more consistent
+
+\usepackage[plainpages=false, unicode=true]{hyperref}
+\input{lib/includes-after-hyperref}
+\usepackage{orcidlink}  %% to provide ORCID icons and links
+
+%\usepackage[acronym, style=super, toc=false, nonumberlist, nomain, nopostdot=true, notranslate]{glossaries-extra}
+% In the document preamble where glossaries-extra is loaded:
+\usepackage[
+  acronym,
+  toc=false,
+  nonumberlist,
+  nomain,
+  nopostdot=true, 
+  nohypertypes={main, acronym}, % disables link generation to targets that do not exist
+  notranslate,
+]{glossaries-extra}
+%% In overleaf, if this file is in a folder and not the root
+%% using \makeglossaries will not work, as the Overleaf latexmk
+%% will not run the program to take the output.acn file and make the output.acr file
+%\makeglossaries
+% However, you can get TeX to do the work with the following:
+\makenoidxglossaries
+% For details of the Overleaf make process, see https://www.overleaf.com/learn/how-to/How_does_Overleaf_compile_my_project%3F
+%% Potentially, one could set up a latexmkrc file in the folder
+
+\input{lib/acronyms}                %load the acronyms file
+
+% Include Glossary ---
+% Align the text expansion of the glossary entries
+\newglossarystyle{mylong}{%
+  \setglossarystyle{long}%
+  \renewenvironment{theglossary}%
+     {\begin{longtable}[l]{@{}p{\dimexpr 2cm-\tabcolsep}p{0.8\hsize}}}% <-- change the value here
+     {\end{longtable}}%
+ }
+ 
+% define a left-aligned table cell that is ragged right
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\usepackage{cleveref}           %% Replace Section with a symbol
+\usepackage{metalogo}   % for \LuaLaTeX logo
+
+
+  \RequirePackage{fontspec}
+  \defaultfontfeatures{Ligatures={TeX}} % This enables TeX style ligatures such as ---, '', ``, and so on
+
+
+
+
+    \babelfont{rm}{TeX Gyre Termes}
+    \DeclareFontShape{TU}{TeXGyreTermes(0)}{md}{n}{<->sub * TeXGyreTermes(0)/m/n}{}
+    \DeclareFontShape{TU}{TeXGyreTermes(0)}{sb}{n}{<->ssub * TeXGyreTermes(0)/b/n}{}
+    \DeclareFontShape{TU}{TeXGyreTermes(0)}{sb}{it}{<->ssub * TeXGyreTermes(0)/b/it}{}
+  
+    %\setsansfont{TeX Gyre Heros}   %% Helvetica like font
+    \babelfont{sf}{TeX Gyre Heros}
+    %\setmonofont[Ligatures={NoCommon}, Numbers={Lining,Monospaced}]{TeX Gyre Cursor}  %% Courier like font
+    %% Turn off ligature for tt font
+    \babelfont{tt}[Ligatures={ResetAll}]{TeX Gyre Cursor}
+ \begin{comment}
+    \babelfont[english]{rm}{TeX Gyre Termes}
+    \babelfont[english]{sf}{TeX Gyre Heros}
+    \babelfont[english]{tt}{TeX Gyre Cursor}
+\end{comment}
+
+ %  \setmathfont{TeX Gyre Termes Math} %% a math font
+    \usepackage{mathtools}
+ \usepackage[warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
+  % The [version=bold, FakeBold=1.2] is to avoid a warning about the lack of a bold font
+  %\setmathfont{TeX Gyre Pagella Math}[version=bold, FakeBold=1.2] %% a font for math
+  \setmathfont{STIX Two Math}[version=normal]
+  %\setmathfont{TeX Gyre Pagella Math}[version=normal]
+  %\setmathfont{TeX Gyre Pagella Math}[version=bold, BoldFeatures={FakeBold=1.5}]
+  % For both XeLaTeX and LuaLatex for getting access to unicode symbols
+  %\newfontfamily\myfont[CharacterVariant=1]{NewCM10-Regular.otf}
+  % STIX Project (Scientific and Technical Information Exchange)
+  % STIX Two Math does not have bold face - so we fake it
+  %\newfontfamily\mystixmathfont[BoldFeatures={FakeBold=1.5}, BoldItalicFeatures={FakeBold=1.5}]{STIX Two Math}
+  \newfontfamily\mystixmathfont{STIX Two Math}
+  % STIX Two Math does not have a bold font, but it has bold symbols with and without serifs - but you manually have to use them, unless you are in math mode - then you can use \symbf{}
+  % and this will return the bold serif version of the character
+\makeatletter
+\AtBeginDocument{%
+  \@for\idx:={0,1,2,3,4,5,6}\do{%
+    \@ifundefined{T@TU+STIXTwoMath(\idx)}{%
+      % Family not loaded by unicode-math; do nothing
+    }{%
+      \DeclareFontShape{TU}{STIXTwoMath(\idx)}{b}{n}{<->ssub * STIXTwoMath(\idx)/m/n}{}%
+      \DeclareFontShape{TU}{STIXTwoMath(\idx)}{sb}{n}{<->ssub * STIXTwoMath(\idx)/m/n}{}%
+      \DeclareFontShape{TU}{STIXTwoMath(\idx)}{b}{it}{<->ssub * STIXTwoMath(\idx)/m/it}{}%
+      \DeclareFontShape{TU}{STIXTwoMath(\idx)}{sb}{it}{<->ssub * STIXTwoMath(\idx)/m/it}{}%
+    }%
+  }%
+}
+\makeatother
+  \newfontfamily\mystixtextfont{STIX Two Text}
+  
+    % To access the Stylistic Set 1 <ss01> such as ℋ
+    \newfontfamily\mystixmathfontSSa{STIX Two Math}[StylisticSet=1]
+
+    % use english as a fallback when in other languages
+    \babelprovide[import, onchar=ids fonts]{english}
+
+    
+  % for new KTH cover
+  % Load the Figtree font as it is used for the new KTH graphical profile
+  % 
+
+    \newfontfamily{\FigtreeFont}[Ligatures=TeX,
+        Path=./Figtree/static/,
+        Extension = .ttf,
+        UprightFont=*-Regular,
+        BoldFont=*-Bold,
+        BoldItalicFont=*-BoldItalic,
+        ItalicFont=*-Italic,
+        %FontFace={l}{n}{*-Light},
+        %FontFace={l}{it}{*-LightItalic},
+        FontFace={md}{n}{*-Medium},
+        FontFace={md}{it}{*-MediumItalic},
+        FontFace={sb}{n}{*-Semibold},
+        FontFace={sb}{it}{*-SemiBoldItalic},
+        %FontFace={k}{n}{*-Black},
+        %FontFace={k}{it}{*-BlackItalic},
+        %FontFace={eb}{n}{Font=*-ExtraBold},
+        %FontFace={eb}{it}{Font=*-ExtraBoldItalic}
+        ]{Figtree}
+
+
+\newfontfamily\pageNumberFont{Figtree} %% set the font to use for page numbering
+
+\newfontfamily{\NotoEmojiFont}[Ligatures=TeX,
+    Path=./Noto_Emoji/static/,
+    Extension = .ttf,
+    UprightFont=*-Regular,
+    BoldFont=*-Bold,
+    FontFace={l}{n}{*-Light.ttf},
+    FontFace={md}{n}{*-Medium},
+    FontFace={sb}{n}{*-SemiBold},
+    ]{NotoEmoji}
+
+
+
+\begin{comment}
+   % To set the abstract headings in Figtree, we redefine the abstract environment to look at the language being used and use the appropriate font, with the default being Figtree
+   % The languages that are automatically introduced by Polyglossia or Babel have a name of the form xxxfont and xxxfontsf; where xxxfont is the serif font and xxxfontsf is the sans serif font.
+   % This means that for each language that Figtree does not support, you have to define the sans serif and serif font to use.
+
+      \babelprovide[import, onchar=ids fonts]{greek}
+      \babelprovide[import, onchar=ids fonts]{russian}
+      \babelprovide[import, onchar=ids fonts]{vietnamese}
+      \babelfont[greek, russian, vietnamese]{rm}{Noto Serif}
+      \babelfont[greek, russian, vietnamese]{sf}{Noto Sans}
+      \babelfont[greek, russian, vietnamese]{tt}{Noto Mono}
+
+  
+    \babelprovide[import, onchar=ids fonts]{hindi}
+    \babelfont[hindi]{rm}{Noto Serif Devanagari}
+    \babelfont[hindi]{sf}{Noto Sans Devanagari}
+    \babelfont[hindi]{tt}{Noto Sans Devanagari} % Noto Mono does not have the glyphs
+
+    %\babelprovide[import, onchar=ids fonts]{russian}
+    %\babelfont[russian]{rm}{Noto Serif}
+    %\babelfont[russian]{sf}{Noto Sans}
+    %\babelfont[russian]{tt}{Noto Mono}
+
+    \babelprovide[import, onchar=ids fonts]{chinese-simplified}
+    \babelfont[chinese-simplified]{rm}{Noto Serif CJK SC}
+    \babelfont[chinese-simplified]{sf}{Noto Sans CJK SC}
+    \babelfont[chinese-simplified]{tt}{Noto Sans Mono CJK SC}
+    
+    \babelfont[chinese-traditional]{rm}{Noto Serif CJK TC}
+    \babelfont[chinese-traditional]{sf}{Noto Sans CJK TC}
+    \babelfont[chinese-traditional]{tt}{Noto Sans Mono CJK TC}
+  
+    \babelprovide[import, onchar=ids fonts]{japanese}
+    \babelfont[japanese]{rm}{Noto Serif CJK JP}
+    \babelfont[japanese]{sf}{Noto Sans CJK JP}
+    \babelfont[japanese]{tt}{Noto Sans Mono CJK JP}
+  
+  % If you are going to use Arabic
+
+    \babelprovide[import, onchar=ids fonts]{arabic}
+    \babelprovide[import, onchar=ids fonts]{centralkurdish}
+    \babelfont[arabic, centralkurdish]{rm}{Noto Naskh Arabic}
+    \babelfont[arabic, centralkurdish]{sf}{Noto Sans Arabic}
+    \babelfont[arabic, centralkurdish]{tt}{Noto Sans Arabic}
+    % If one really needs a monospaced font, one might try Kawkab Mono
+    % However, it seems that it is a work in progress - see https://makkuk.com/kawkab-mono/ and https://github.com/aiaf/kawkab-mono/tree/master
+
+    %\babelprovide[import, onchar=ids fonts]{centralkurdish}
+    %\babelfont[centralkurdish]{rm}{Noto Naskh Arabic}
+    %\babelfont[centralkurdish]{sf}{Noto Sans Arabic}
+    %\babelfont[centralkurdish]{tt}{Noto Sans Arabic}
+
+      
+  % If you are going to use Hebrew or Yiddish
+\babelprovide[import, onchar=ids fonts]{hebrew}
+\babelprovide[import, onchar=ids fonts]{yiddish}
+\babelfont[hebrew, yiddish]{rm}{Noto Serif Hebrew}
+\babelfont[hebrew, yiddish]{sf}{Noto Sans Hebrew}
+\babelfont[hebrew, yiddish]{tt}{Noto Sans Hebrew}
+
+
+    %\babelprovide[import, onchar=ids fonts]{vietnamese}
+    %\babelfont[vietnamese]{rm}{Noto Serif}
+    %\babelfont[vietnamese]{sf}{Noto Sans}
+    %\babelfont[vietnamese]{tt}{Noto Mono}
+
+\end{comment}
+  
+    % The Overleaf TeX Live includes these fonts, so there is little you have to do!
+    % The list of such fonts is at https://www.overleaf.com/learn/latex/Questions%2FWhich_OTF_or_TTF_fonts_are_supported_via_fontspec%3F
+    %
+\newfontfamily{\NotoSansJPMonoFont}[Ligatures=TeX,
+    ]{Noto Sans Mono CJK JP Regular}
+
+
+\newfontfamily{\NotoSansJPFont}[Ligatures=TeX,
+    ]{Noto Sans CJK JP}
+
+
+\newfontfamily{\NotoSansFont}[Ligatures=TeX,
+Extension = .ttf,
+    UprightFont = NotoSans-Regular,
+    BoldFont = NotoSans-Bold,
+    ItalicFont = NotoSans-Italic,
+    BoldItalicFont = NotoSans-BoldItalic
+    ]{NotoSansCustomA}
+    
+\newfontfamily{\NotoSerifFont}[Ligatures=TeX,
+Extension = .ttf,
+    UprightFont = NotoSerif-Regular,
+    BoldFont = NotoSerif-Bold,
+    ItalicFont = NotoSerif-Italic,
+    BoldItalicFont = NotoSerif-BoldItalic
+    ]{NotoSerifCustomA}
+
+\newfontfamily{\DejaVuSansFont}[Ligatures=TeX,]{DejaVu Sans}
+
+% A font to be used in minted listings
+\newfontfamily{\ListingMono}{Noto Sans Mono}[Ligatures=ResetAll]
+
+% fonts for various symbols
+\newfontfamily{\NotoSansSymbolsFont}{Noto Sans Symbols}[Ligatures=ResetAll]
+\newfontfamily{\NotoSansSymbolsTwoFont}{Noto Sans Symbols 2}[Ligatures=ResetAll]
+
+
+
+% color symbols - this would require changes in the font used in the U+2600-U+26FF-Miscellaneous-Symbols.tex file
+% for example for characters: ☕, ⚽, ⛄, and ✈
+%\newfontfamily{\NotoColorEmojiFont}{Noto Color Emoji}[Renderer=Harfbuzz]
+
+% Phonetic Extensions, U+1D00 - U+1D7F
+\input{unicode_blocks/U+1D00-U+1D7F-Phonetic-Extensions}
+% Superscripts and Subscripts, U+2070 - U+209F
+\input{unicode_blocks/U+2070-U+209F-Superscripts-and-Subscripts}
+% Miscellaneous Symbols, U+2600 - U+26FF
+\input{unicode_blocks/U+2600-U+26FF-Miscellaneous-Symbols}
+
+% Set up the header and footer for plain style pages
+\fancypagestyle{plain}{%
+\fancyhf{}% clear all header and footer fields
+\fancyfoot[C]{\pageNumberFont\small\selectfont\thepage}
+\renewcommand{\headrulewidth}{0pt}%
+\renewcommand{\footrulewidth}{0pt}%
+}
+% Set up the header and footer
+\fancyhead{}
+%\fancyhead[RO]{\sffamily\small\leftmark\thinspace|\thinspace\thepage}
+%\fancyhead[LE]{\sffamily\small\thepage\thinspace|\thinspace\leftmark}
+% Without conversion to uppercase
+% Note that we need to switch to the familydefault for the page numbers
+\fancyhead[RO]{{\sffamily\small\nouppercase\leftmark}{\pageNumberFont\small\selectfont \thinspace|\thinspace \thepage}}
+\fancyhead[LE]{{\pageNumberFont\small\selectfont\thepage \thinspace|\thinspace}{\sffamily\small\nouppercase\leftmark}}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]{%
+\markboth{#1}{}}
+
+
+\setlength{\headheight}{28pt}
+\addtolength{\topmargin}{-13pt}
+
+\input{lib/configure_listings}
+% If you use both listing and lstlisting environments - the following makes them both use the same counter and the same formatting in the List of Listings
+\makeatletter
+\AtBeginDocument{\let\c@listing\c@lstlisting}
+\AtBeginDocument{\let\l@listing\l@lstlisting}
+\makeatother
+
+\newcommand{\dname}[1]{\textbf{#1}}
+\newcommand{\fname}[1]{\texttt{#1}}
+
+
+\RequirePackage{luacode}
+\input{kth/Lua_timestamping}
+
+% Input file generators before \documentclass
+\input{lib/ext-eprint-dbx}
+
+\input{lib/check_for_placeholder_references}
+
+\title{README and notes about the template for programmers -- PDF metadata}
+
+\author{Gerald Q. Maguire Jr.}
+\date{October 2026}
+
+\begin{document}
+\pagenumbering{roman}
+\glsresetall
+\maketitle
+\fancypagestyle{empty}{}
+\warningExpl{\textbf{This document is a work in progress.}}
+
+\begin{abstract}
+This document describes how metadata can be added to the \gls{PDF} file.
+\end{abstract}
+\warningExpl{{\mystixmathfont ☡} This is a very deep dive that is probably only of interest to a \textit{very} small number of readers.}
+\cleardoublepage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Enable the following command the first time you compile this in a new session to give all of the time quanta to set up the font cache.
+%% If the font cache is not built, you are likely to get a timeout.
+%\end{document}
+
+% Include Table of Contents (TOC) ---
+\fancypagestyle{plain}{}
+\renewcommand{\sectionmark}[1]{ \markboth{#1}{}}
+\tableofcontents
+\markboth{\contentsname}{}
+\cleardoublepage
+ 
+\setcounter{page}{1}
+\pagenumbering{arabic}
+\glsresetall
+This document describes how metadata can be added to a \gls{PDF} file. \Cref{sec:addingKeywordsAndMetaDataToPDF} describes some background and my earlier implementation, while \Cref{sec:modernMetadataApproach} describes a modern approach to metadata.
+
+\section{Adding keywords and other data to PDF metadata}
+\label{sec:addingKeywordsAndMetaDataToPDF}
+The \texttt{hyperref} package is used to add \gls{PDF} metadata. However, to add the English and Swedish keywords as part of the \gls{PDF} metadata, you must know the keywords \textit{before} the \textbackslash begin\{document\} command in the \LaTeX{}~file. To do so, I added three new commands to the \texttt{kththesis.cls} file, as shown in \Cref{lst:keywords}. The commands are used in the \fname{examplethesis.tex} file to set up the keywords in both English and Swedish. Additionally, a new set of \LaTeX{} commands are used to store the \gls{PDF} metadata (as shown in \Cref{lst:storingkeywords}) using a file called \fname{lib/pdf\_related\_includes.tex} (shown in \Cref{lst:informationforPDFfile}). Later, the stored keywords are inserted into the \LaTeX{}~after their respective language abstracts. The title page of the thesis and the PDF metadata are shown in \Cref{fig:pdfMetadata}. Note that both the English and Swedish versions of the keywords are included in the metadata. Finally, the keywords appear (as expected) in the \enquote{For DiVA} data at the end of the \gls{PDF} file.
+
+\Needspace*{7\baselineskip}
+Note that \texttt{\textbackslash makeatletter} and \texttt{\textbackslash makeatother} are used to include the character “@” as a letter and then return “@” to being a punctuation code. This use of “@” protects the internal names from being accessed outside of these two commands. More explicitly, \texttt{\textbackslash EnglishKeywords} is a function that takes one argument, the text of the English keywords, and then stores them into \enquote{\texttt{@EnglishKeywords}}. Later, the text can be retrieved with the command \texttt{\textbackslash InsertKeywords\{english\}} or \texttt{\textbackslash InsertKeywords\{swedish\}}.
+\Needspace*{15\baselineskip}
+\begin{lstlisting}[language={[LaTeX]TeX}, caption={New commands in kththesis.cls}, label=lst:keywords]
+% Keywords
+\let\@EnglishKeywords\@empty
+\newcommand{\EnglishKeywords}[1]{\def\@EnglishKeywords{#1}}
+
+\let\@SwedishKeywords\@empty
+\newcommand{\SwedishKeywords}[1]{\def\@SwedishKeywords{#1}}
+
+\makeatletter
+\newcommand{\InsertKeywords}[1]{
+    \IfEqCase{#1}{%
+    {english}{\@EnglishKeywords}
+    {swedish}{\@SwedishKeywords}
+  }[\typeout{argument must be english or swedish}]
+}
+\end{lstlisting}
+\Needspace*{12\baselineskip}
+\Cref{lst:storingkeywords} shows the storing of the keywords using the above commands and the include of the library to set up the \gls{PDF} metadata.
+
+\begin{lstlisting}[language={[LaTeX]TeX}, caption={shows the storing of the keywords using the above commands and the include of the library to set up the PDF metadata}, label=lst:storingkeywords]
+% Enter the English and Swedish keywords here for use in the PDF metadata _and_ for later use
+% following the respective abstract.
+% Try to put the words in the same order in both to facilitate matching.
+\EnglishKeywords{Canvas Learning Management System, Docker containers, performance tuning}
+\SwedishKeywords{Canvas Lärplattform, Dockerbehållare, prestandajustering}
+
+% Put the title, author, and keyword information into the PDF meta information
+\include{lib/pdf_related_includes}
+\end{lstlisting}
+
+
+The \fname{lib/pdf\_related\_includes.tex} file contains the \LaTeX{} ~-- to add information
+to the \gls{PDF} file (specifically, author(s), title(s), and keywords). It uses the
+\texttt{hyperref} package and should be included before the \texttt{\textbackslash begin\{document\}}.
+I want to acknowledge the inspiration from Karl Voit's template for TU Graz, which inspired me to add the \gls{PDF} document information. For more information about his template, see \url{https://github.com/novoid/LaTeX-KOMA-template}
+Note that my template does not use anything from his template other than the names of the information for the \gls{PDF} meta fields, \ie \texttt{mytitle}, \texttt{myauthor}, and \texttt{mykeywords}, together with the idea of defining the corresponding \texttt{newcommand} to set the relevant \texttt{hyperref} parameters. As a result, these command names are visible to the rest of the \LaTeX{} file. See \Cref{lst:informationforPDFfile} for the code.
+
+In keeping with the Swedish standard (\foreignlanguage{swedish}{Svenska skrivregler [Språkrådet 1.6.3 och 12.11.5]}) a \enquote{\foreignlanguage{swedish}{mellanslag tankstreck}} with a space before and after, \ie \enquote{\hbox{ – }} is used to separate the title and subtitle when in Swedish, this leads to a condition based on whether the document is in Swedish or not in the computation of \texttt{mytitle} and \texttt{myalttitle}.
+
+Initially, the template used the \texttt{hyperxmp} package to add support for the \gls{PDF} metadata for the copyright notice. Because of this, if the author's name includes a suffix such as \enquote{, Jr.} or \enquote{ Jr.}, \ie the suffix can be separated with a comma or not as the author prefers to write their name; thus, there was a need to change the processing of \texttt{pdfauthor} information, as \texttt{hyperxmp} treats comma-separated strings in the author or keywords fields as being a list and converts these into a sequence of data in the metadata. This change is shown in \Cref{lst:informationforPDFfile} where the \texttt{\textbackslash hyxmp@comma} macro is used to insert something that is later replaced by a comma but is not treated as a comma when processing the \texttt{pdfauthor} information. The command \texttt{\textbackslash xmpquote} is used to wrap the whole name.
+
+\noindent \textbf{NB} The \texttt{hyperxmp} package is no longer used, as \texttt{\textbackslash DocumentMetadata} and \texttt{hyperref} now natively support \gls{PDF} metadata.
+\clearpage
+
+\begin{lstlisting}[language={[LaTeX]TeX}, caption={lib/pdf\_related\_includes.tex
+    (edited for readability and to avoid problems when rendering)}, columns=fullflexible, showstringspaces=false, label=lst:informationforPDFfile]
+% This file contains the LaTeX to add information to the PDF file (specifically, author(s), title(s), and keywords
+% It uses the hyperref package and should be included before the \begin{document}
+%
+% I want to acknowledge the inspiration of Karl Voit's template for TU Graz that inspired me to add the PDF document information
+% For more information about his template see https://github.com/novoid/LaTeX-KOMA-template
+% Note that this template does not use anything from his template other than the names of the information for the PDF meta fields, i.e., mytitle, myauthor, and mykeywords together with the idea of defining the corresponding newcommand to set the relevant hyperref parameters.
+
+\makeatletter
+\ifx\@subtitle\@empty
+    \newcommand{\mytitle}{\@title}
+\else
+    \ifinswedish
+        \newcommand{\mytitle}{\@title\xspace–\xspace\@subtitle}
+    \else
+        \newcommand{\mytitle}{\@title: \@subtitle}
+    \fi
+\fi
+\makeatother
+
+% Put the alternative title (and subtitle) into the PDF Subject meta
+\makeatletter
+\ifx\@altsubtitle\@empty\relax
+    \newcommand{\myalttitle}{\@alttitle}
+\else
+    \ifinswedish
+        \newcommand{\myalttitle}{\@alttitle: \@altsubtitle}
+    \else
+    \newcommand{\myalttitle}{\@alttitle\xspace–\xspace\@altsubtitle}
+    \fi
+    
+\fi
+\makeatother
+
+\ifinswedish
+\hypersetup{%
+    pdflang={sv},
+    pdfmetalang={sv},
+    %pdftitle={\mytitle}        % Title field
+    pdftitle = {[sv]{{\mytitle}}, [en]{{\myalttitle}}},
+}
+\else
+\hypersetup{%
+    pdflang={en},
+    pdfmetalang={en},
+    %pdftitle={\mytitle}        % Title field
+    pdftitle = {[en]{{\mytitle}}, [sv]{{\myalttitle}}},
+}
+\fi
+
+\makeatletter
+
+\ifx\@secondAuthorsLastname\@empty
+    \newcommand{\myauthor}{\@authorsFirstname\space\@authorsLastname} 
+\else
+    \newcommand{\myauthor}{\@authorsFirstname\space\@authorsLastname,
+\space\@secondAuthorsFirstname\space\@secondAuthorsLastname}
+\fi
+
+\makeatother
+
+\hypersetup{
+     pdfauthor={\myauthor}      % Author field
+}
+
+
+\ExplSyntaxOn
+\makeatletter
+\cs_new_protected:Npn \build_tagged_keywords: {
+  \clist_clear:N \l_tmpa_clist
+
+  % Add English keywords tagged with [en]
+  \tl_if_empty:NF \@EnglishKeywords {
+    \clist_map_inline:Nn \@EnglishKeywords {
+      \tl_set:Nn \l_tmpa_tl {##1}
+      \tl_trim_spaces:N \l_tmpa_tl
+      \clist_put_right:Ne \l_tmpa_clist { [en]{\exp_not:V \l_tmpa_tl} }
+    }
+  }
+
+  % Add Swedish keywords tagged with [sv]
+  \tl_if_empty:NF \@SwedishKeywords {
+    \clist_map_inline:Nn \@SwedishKeywords {
+      \tl_set:Nn \l_tmpa_tl {##1}
+      \tl_trim_spaces:N \l_tmpa_tl
+      \clist_put_right:Ne \l_tmpa_clist { [sv]{\exp_not:V \l_tmpa_tl} }
+    }
+  }
+
+  % Construct the complete argument for \hypersetup: "pdfkeywords = { ... }"
+  \tl_set:Ne \l_tmpb_tl { pdfkeywords = { \clist_use:Nn \l_tmpa_clist { ,~ } } }
+
+  % Pass the single formatted key-value pair to \hypersetup
+  \exp_args:NV \hypersetup \l_tmpb_tl
+}
+
+\cs_set_eq:NN \buildTaggedKeywords \build_tagged_keywords:
+\makeatother
+\ExplSyntaxOff
+
+
+
+% I have _not_ set the following fields:
+%    pdfcreator             % Creator field
+%    pdfproducer            % Producer field
+
+%% Note that the copyright information is added to the PDF file inside bookinfo{}
+%% as until then, the copyright information is unknown.
+
+% Put the alternative title (and subtitle) into the PDF Subject meta
+\makeatletter
+\ifx\@secondkthid\@empty\relax
+    \newcommand{\mykthids}{author: \@kthid}
+\else
+    \newcommand{\mykthids}{author: \@kthid,\xspace
+    secondauthor: \@secondkthid}
+\fi
+\makeatother
+
+\hypersetup{
+     pdfcontactemail={\mykthids}        % Subject field
+}
+
+\ExplSyntaxOn
+\makeatletter
+\cs_new_protected:Npn \build_pdf_subject: {
+  % 1. Determine localized degree string with XXX placeholder handling
+  \ifinswedish
+    \str_case:VnF \@degreeName {
+      { Doctorate }  { \tl_set:Nn \l_tmpa_tl { Doktorsavhandling } }
+      { Licentiate } { \tl_set:Nn \l_tmpa_tl { Licentiatavhandling } }
+      { XXX }        { \tl_set:Nn \l_tmpa_tl { XXX-avhandling } }
+    } { \tl_set:Nn \l_tmpa_tl { Avhandling } }
+    \tl_set:Ne \l_tmpb_tl { \l_tmpa_tl \space inom \space \exp_not:V \@subjectArea }
+  \else
+    \str_case:VnF \@degreeName {
+      { Doctorate }  { \tl_set:Nn \l_tmpa_tl { Doctoral~Thesis } }
+      { Licentiate } { \tl_set:Nn \l_tmpa_tl { Licentiate~Thesis } }
+      { XXX }        { \tl_set:Nn \l_tmpa_tl { XXX~Thesis } }
+    } { \tl_set:Nn \l_tmpa_tl { Thesis } }
+    \tl_set:Ne \l_tmpb_tl { \l_tmpa_tl \space in \space \exp_not:V \@subjectArea }
+  \fi
+
+  % 2. Pack as a single key-value token list
+  \tl_set:Ne \l_tmpa_tl { pdfsubject = { \exp_not:V \l_tmpb_tl } }
+
+  % 3. Pass the clean key-value pair to \hypersetup
+  \exp_args:NV \hypersetup \l_tmpa_tl
+}
+
+\cs_set_eq:NN \buildPdfSubject \build_pdf_subject:
+\makeatother
+\ExplSyntaxOff
+
+% Add the TRITA number to the metadata
+% Get and store information about the series and the number within this series, i.e, TRITA numbers
+%"Series": \{
+%	"Title of series": "TRITA-ICT-EX"
+%	"No. in series": "2019:00"
+\ExplSyntaxOn
+\makeatletter
+\cs_generate_variant:Nn \pdfmeta_xmp_add:n { e }
+
+\cs_new_protected:Npn \inject_prism_metadata: {
+  \tl_clear:N \l_tmpa_tl
+
+  % Series / Volume
+  \tl_if_empty:NF \@thesisSeries {
+    \tl_put_right:Ne \l_tmpa_tl {
+      \space\space\space\space<prism:volume>\exp_not:V \@thesisSeries</prism:volume>^^J
+    }
+  }
+
+  % Issue / Series Number
+  \tl_if_empty:NF \@thesisSeriesNumber {
+    \tl_put_right:Ne \l_tmpa_tl {
+      \space\space\space\space<prism:number>\exp_not:V \@thesisSeriesNumber</prism:number>^^J
+    }
+  }
+
+  % Publication Type (already registered as 'aggregationType' or custom property)
+  \tl_put_right:Nn \l_tmpa_tl {
+    \space\space\space\space<prism:publicationType>report</prism:publicationType>^^J
+  }
+
+  % Inject properties directly into the existing outer <rdf:Description>
+  \pdfmeta_xmp_add:e { \l_tmpa_tl }
+}
+
+\cs_set_eq:NN \injectPrismMetadata \inject_prism_metadata:
+\makeatother
+\ExplSyntaxOff
+
+\ExplSyntaxOn
+\makeatletter
+\cs_new_protected:Npn \inject_publisher_metadata: {
+  \tl_clear:N \l_tmpa_tl
+
+  \ifinswedish
+    \tl_set:Nn \l_tmpa_tl { Kungliga~Tekniska~högskolan~(KTH) }
+  \else
+    \tl_set:Nn \l_tmpa_tl { KTH~Royal~Institute~of~Technology }
+  \fi
+
+  % Inject directly into dc:publisher as an rdf:Bag
+  \pdfmeta_xmp_add:e {
+    \space\space\space\space<dc:publisher>^^J
+    \space\space\space\space\space\space<rdf:Bag>^^J
+    \space\space\space\space\space\space\space\space<rdf:li>\exp_not:V \l_tmpa_tl</rdf:li>^^J
+    \space\space\space\space\space\space</rdf:Bag>^^J
+    \space\space\space\space</dc:publisher>^^J
+  }
+}
+
+\cs_set_eq:NN \injectPublisherMetadata \inject_publisher_metadata:
+\makeatother
+\ExplSyntaxOff
+
+% Now that the English and Swedish keywords, subject, and TRITA number are defined, we can use them in the PDF information
+\buildTaggedKeywords
+\buildPdfSubject
+\injectPrismMetadata
+\injectPublisherMetadata
+% summary
+\end{lstlisting}
+
+The actual code for this insertion is shown in \fname{examplethesis.tex}.
+
+\begin{figure}[!ht]
+  \begin{center}
+    \fbox{\includegraphics[width=1\textwidth]{README_notes/README-examiner-figures/PDF-file-metadata-Screenshot_20220330_085854.png}}
+  \end{center}
+  \caption[{The title page of the thesis and the PDF metadata}]{The title page of the thesis and the \gls{PDF} metadata. This title page is from a first-cycle thesis. What is relevant here is the metadata shown as part of the \gls{PDF} document description.}
+  \label{fig:pdfMetadata}
+\end{figure}
+\FloatBarrier
+
+
+
+\Needspace*{10\baselineskip}
+\subsection{Adding additional metadata to the PDF file}
+\label{sec:addingMetadataToPDFfile}
+Increasingly, metadata is being embedded into digital objects to provide information about the creator (author, photographer, \etc), date of creation, copyright notices, \etc. In a typical \gls{PDF} file produced by \LaTeX{}, there is both PDF-specific metadata and additional metadata. This additional metadata is stored using Adobe's \glsfirst{XMP}. \gls{XMP} is a means of embedding metadata in \gls{XMP} format into \gls{PDF} documents so that tools can extract it mechanically.
+
+An early paper about automatically extracting the title, author(s), and abstract from theses was written by Mao Ni of the University of North Carolina at Chapel Hill, School of Library and Information Science in 2004~\cite{Mao_Ni_2004}. The idea was to collect the metadata from the thesis using an Adobe Acrobat plugin and then write this data to \gls{XMP} (which could be embedded into the \gls{PDF} file). The schema used for the metadata~\cite{hickey_pavani_suleman_2010} \footnote{\url{https://ndltd.org/metadata/}} was that of Networked Digital Library of Theses and Dissertations\footnote{\url{https://ndltd.org/}}.
+
+More recently, Elsevier's Digital Commons \footnote{\url{https://www.elsevier.com/solutions/digital-commons}} uses an extension of the Dublin Core\footnote{\url{https://www.dublincore.org/}} shown in \Cref{tab:dublinCoreDigitalCommons} to collect metadata. We will see the Dublin Core elements and other metadata schema used in \gls{XMP} in the remainder of this section.
+
+Bepress has written about Elsevier's Digital Commons on a webpage \enquote{Digital Commons and OAI-PMH: Outbound Harvesting of Repository Records} \url{https://bepress.com/reference_guide_dc/digital-commons-oai-harvesting/}. \gls{OAI-PMH} fosters interoperability between repositories\footnote{\url{https://www.openarchives.org/pmh/}} by enabling harvesters to collect metadata from a repository. Over the last 20 years, there has been an evolution from simply having metadata in a database that is associated with a publication to an entire ecosystem of metadata and applications; see, for example, the twentieth International Conference on Dublin Core and Metadata Applications (DCMI 2022) \url{https://www.dublincore.org/conferences/2022/programme/}.
+\clearpage
+
+\begin{table}[!ht]
+    \caption{Dublin Core Elements in Digital Commons ~\cite{digital_commons_metadata_2016} - items in bold are from the so-called \enquote{simple Dublin Core}}
+    \label{tab:dublinCoreDigitalCommons}
+    \begin{scriptsize}   
+    \begin{tabular}{l | l }
+      \textbf{Element} & \textbf{Element} \\
+      \hline
+\textbf{dc.contributor} & \textbf{dc.rights}\\
+dc.contributor.role & dc.rights.accessRights\\
+\textbf{dc.coverage} & dc.rights.license\\
+dc.coverage.spatial & \textbf{dc.source}\\
+dc.coverage.spatial.lat & \textbf{dc.subject}\\
+dc.coverage.spatial.long & \textbf{dc.title}\\
+dc.coverage.temporal & dc.title.alternative\\
+\textbf{dc.creator} & \textbf{dc.type}\\
+\textbf{dc.date} & dcam.memberOf\\
+dc.date.available & dcterms.accrualMethod\\
+dc.date.created & dcterms.accrualPeriodicity\\
+dc.date.dateAccepted & dcterms.accrualPolicy\\
+dc.date.dateCopyrighted & dcterms.audience\\
+dc.date.dateSubmitted & dcterms.audience.educationLevel\\
+dc.date.issued & dcterms.audience.mediator\\
+dc.date.modified & dcterms.instructionalMethod\\
+dc.date.valid & dcterms.provenance\\
+\textbf{dc.description} & dcterms.rightsHolder\\
+dc.description.abstract & geo.alt\\
+dc.description.note & thesis.degree\\
+dc.description.release & thesis.degree.discipline\\
+dc.description.tableOfContents & thesis.degree.grantor\\
+\textbf{dc.format} & thesis.degree.level\\
+dc.format.extent & thesis.degree.name\\
+dc.format.medium\\
+\textbf{dc.identifier}\\
+dc.identifier.bibliographicCitation\\
+\textbf{dc.language}\\
+\textbf{dc.publisher}\\
+\textbf{dc.relation}\\
+dc.relation.conformsTo\\
+dc.relation.hasFormat\\
+dc.relation.hasPart\\
+dc.relation.hasVersion\\
+dc.relation.isFormatOf\\
+dc.relation.isPartOf\\
+dc.relation.isReferencedBy\\
+dc.relation.isReplacedBy\\
+dc.relation.isRequiredBy\\
+dc.relation.isVersionOf\\
+dc.relation.references\\
+dc.relation.replaces\\
+dc.relation.requires\\
+\end{tabular}
+\end{scriptsize}
+\end{table}
+\FloatBarrier
+\clearpage
+
+\Cref{fig:fileProperties} shows the properties of a \gls{PDF} file when using an old version of Adobe Acrobat with the command: \texttt{File$→$Properties}. This figure shows the Title, Author, Subject, and Keyword fields (among other properties of this \gls{PDF} file). Because this file was generated in PDF 2.0 format, Acrobat says you cannot edit the information and indicates this by displaying it in gray.
+\begin{figure}[!ht]
+  \begin{center}
+    \fbox{\includegraphics[width=0.9\textwidth]{README_notes/README-examiner-figures/New_thesis_template_document_properties-Screenshot_20221227_115745.png}}
+  \end{center}
+  \caption{PDF file properties}
+  \label{fig:fileProperties}
+\end{figure}
+\FloatBarrier
+
+\Cref{fig:fileProperties2} shows similar data for another \gls{PDF} file generated with an earlier \gls{PDF} version. Because this \gls{PDF} file uses PDF-1.5, Acrobat displays the information in dark text, and you can edit the metadata in Acrobat.
+\begin{figure}[!ht]
+  \begin{center}
+    \fbox{\includegraphics[width=0.9\textwidth]{README_notes/README-examiner-figures/File-properties-Screenshot_20221225_135914.png}}
+  \end{center}
+  \caption{PDF file properties of another PDF file, in this case, the proposal template}
+  \label{fig:fileProperties2}
+\end{figure}
+\FloatBarrier
+
+The \gls{XMP} data is in a stream indicated in the \gls{PDF} as Metadata of the subtype \gls{XML}, as shown in \Cref{lst:pdfXMPStream}. In the listing, the actual length in bytes has been replaced by dddd.
+\begin{lstlisting}[caption={PDF stream where the XMP is found}, label=lst:pdfXMPStream]
+<< /Subtype /XML /Type /Metadata /Length dddd >>
+stream
+\end{lstlisting}
+
+In the \gls{PDF} file, the \gls{XML} encoded metadata is between \texttt{<?xpacket begin="yyyy" id="xxxx"?>} and \texttt{<?xpacket end="w"?>} (where xxxx is some unique ID). Note that yyyy in the previous example is a so-called \gls{BOM} with the value 0xFEFF. While this character is a valid \mbox{UTF-8} character, the \texttt{lstlisting} environment cannot handle this value; therefore, it has been replaced by the string \enquote{BOM 0xFEFF}. An example of this is shown in \Cref{lst:pdfinfoOutput}.
+\clearpage
+\begin{lstlisting}[style={myXML}, caption={The first part of the XML metadata embedded in a PDF file (some reformatting has been done to fit the text in the borders)}, label={lst:pdfinfoOutput}]
+
+
+<?xpacket begin="BOM 0xFEFF" id="W5M0MpCehiHzreSzNTczkc9d"?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description rdf:about=""
+     xmlns:pdf="http://ns.adobe.com/pdf/1.3/"
+     xmlns:xmpRights="http://ns.adobe.com/xap/1.0/rights/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:photoshop="http://ns.adobe.com/photoshop/1.0/"
+     xmlns:xmp="http://ns.adobe.com/xap/1.0/"
+     xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/"
+     xmlns:stEvt="http://ns.adobe.com/xap/1.0/sType/ResourceEvent#"
+     xmlns:pdfaid="http://www.aiim.org/pdfa/ns/id/"
+     xmlns:pdfuaid="http://www.aiim.org/pdfua/ns/id/"
+     xmlns:pdfx="http://ns.adobe.com/pdfx/1.3/"
+     xmlns:pdfxid="http://www.npes.org/pdfx/ns/id/"
+     xmlns:prism="http://prismstandard.org/namespaces/basic/3.0/"
+     xmlns:jav="http://www.niso.org/schemas/jav/1.0/"
+     xmlns:xmpTPg="http://ns.adobe.com/xap/1.0/t/pg/"
+     xmlns:stFnt="http://ns.adobe.com/xap/1.0/sType/Font#"
+     xmlns:Iptc4xmpCore="http://iptc.org/std/Iptc4xmpCore/1.0/xmlns/"
+     xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/"
+     xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema\#"
+     xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+     xmlns:pdfaType="http://www.aiim.org/pdfa/ns/type#"
+     xmlns:pdfaField="http://www.aiim.org/pdfa/ns/field#">
+\end{lstlisting}
+
+Some of these XML elements include "rdf" elements referring to the \gls{RDF}\footnote{\url{https://www.w3.org/RDF/}}.
+
+The \gls{XMP} data utilizes a number of different schemas and namespaces. These namespaces are shown as \enquote{xmlns:xxxx}  in \Cref{lst:pdfinfoOutput}. One namespace is \texttt{xmlns:dc}, and this refers to the scheme \enquote{Dublin Core} \footnote{see Dublin Core Metadata Initiative \url{https://www.dublincore.org/}}. The information about this namespace can be found at \url{http://purl.org/dc/elements/1.1/}. Each schema and namespace is described in the next part of the \gls{XML}; see \Cref{lst:pdfinfoOutputPart2}.
+
+\begin{lstlisting}[style=myXML,
+caption={Second part of the XML metadata embedded in a PDF file (some reformatting has been done to fit the text in the borders)}, label={lst:pdfinfoOutputPart2}]
+£$\ldots$ {\color{red} continuation of the above listing}£ 
+      <pdfaExtension:schemas>
+        <rdf:Bag>
+          <rdf:li rdf:parseType="Resource">
+            <pdfaSchema:schema>Adobe PDF Schema</pdfaSchema:schema>
+            <pdfaSchema:prefix>pdf</pdfaSchema:prefix>
+            <pdfaSchema:namespaceURI>http://ns.adobe.com/pdf/1.3/£\break{\ensuremath{\color{red}\hookrightarrow\space}}£</pdfaSchema:namespaceURI>
+            <pdfaSchema:property>
+              <rdf:Seq>
+                <rdf:li rdf:parseType="Resource">
+                  <pdfaProperty:name>Trapped</pdfaProperty:name>
+                  <pdfaProperty:valueType>Text</pdfaProperty:valueType>
+                  <pdfaProperty:category>internal</pdfaProperty:category>
+                  <pdfaProperty:description>Indication if the document has been modified to include trapping information</pdfaProperty:description>
+                </rdf:li>
+              </rdf:Seq>
+            </pdfaSchema:property>
+          </rdf:li>
+          <rdf:li rdf:parseType="Resource">
+            <pdfaSchema:schema>XMP Media Management Schema</pdfaSchema:schema>
+            <pdfaSchema:prefix>xmpMM</pdfaSchema:prefix>
+            <pdfaSchema:namespaceURI>http://ns.adobe.com/xap/1.0/mm/£\break{\ensuremath{\color{red}\hookrightarrow\space}}£</pdfaSchema:namespaceURI>
+            <pdfaSchema:property>
+              <rdf:Seq>
+                <rdf:li rdf:parseType="Resource">
+                  <pdfaProperty:name>DocumentID</pdfaProperty:name>
+                  <pdfaProperty:valueType>URI</pdfaProperty:valueType>
+                  <pdfaProperty:category>internal</pdfaProperty:category>
+                  <pdfaProperty:description>UUID based identifier for all versions and renditions of a document</pdfaProperty:description>
+                </rdf:li>
+                <rdf:li rdf:parseType="Resource">
+                  <pdfaProperty:name>InstanceID</pdfaProperty:name>
+                  <pdfaProperty:valueType>URI</pdfaProperty:valueType>
+                  <pdfaProperty:category>internal</pdfaProperty:category>
+                  <pdfaProperty:description>UUID based identifier for specific incarnation of a document</pdfaProperty:description>
+                </rdf:li>
+                <rdf:li rdf:parseType="Resource">
+                  <pdfaProperty:name>VersionID</pdfaProperty:name>
+                  <pdfaProperty:valueType>Text</pdfaProperty:valueType>
+                  <pdfaProperty:category>internal</pdfaProperty:category>
+                  <pdfaProperty:description>Document version identifier</pdfaProperty:description>
+                </rdf:li>
+                <rdf:li rdf:parseType="Resource">
+                  <pdfaProperty:name>RenditionClass</pdfaProperty:name>
+                  <pdfaProperty:valueType>RenditionClass</pdfaProperty:valueType>
+                  <pdfaProperty:category>internal</pdfaProperty:category>
+                  <pdfaProperty:description>The manner in which a document is rendered</pdfaProperty:description>
+                </rdf:li>
+              </rdf:Seq>
+            </pdfaSchema:property>
+          </rdf:li>
+          <rdf:li rdf:parseType="Resource">
+            <pdfaSchema:schema>IPTC Core Schema</pdfaSchema:schema>
+            <pdfaSchema:prefix>Iptc4xmpCore</pdfaSchema:prefix>
+            <pdfaSchema:namespaceURI>http://iptc.org/std/Iptc4xmpCore/1.0/xmlns/£\break{\ensuremath{\color{red}\hookrightarrow\space}}£</pdfaSchema:namespaceURI>
+            <pdfaSchema:property>
+              <rdf:Seq>
+                <rdf:li rdf:parseType="Resource">
+                  <pdfaProperty:name>CreatorContactInfo</pdfaProperty:name>
+                  <pdfaProperty:valueType>ContactInfo</pdfaProperty:valueType>
+                  <pdfaProperty:category>external</pdfaProperty:category>
+                  <pdfaProperty:description>Document creator's contact information</pdfaProperty:description>
+                </rdf:li>
+              </rdf:Seq>
+            </pdfaSchema:property>
+            <pdfaSchema:valueType>
+              <rdf:Seq>
+                <rdf:li rdf:parseType="Resource">
+                  <pdfaType:type>ContactInfo</pdfaType:type>
+                  <pdfaType:namespaceURI>http://iptc.org/std/Iptc4xmpCore/1.0/xmlns/£\break{\ensuremath{\color{red}\hookrightarrow\space}}£</pdfaType:namespaceURI>
+                  <pdfaType:prefix>Iptc4xmpCore</pdfaType:prefix>
+                  <pdfaType:description>Basic set of information to get in contact with a person</pdfaType:description>
+                  <pdfaType:field>
+                    <rdf:Seq>
+                      <rdf:li rdf:parseType="Resource">
+                        <pdfaField:name>CiAdrCity</pdfaField:name>
+                        <pdfaField:valueType>Text</pdfaField:valueType>
+                        <pdfaField:description>Contact information city</pdfaField:description>
+                      </rdf:li>
+                      <rdf:li rdf:parseType="Resource">
+                        <pdfaField:name>CiAdrCtry</pdfaField:name>
+                        <pdfaField:valueType>Text</pdfaField:valueType>
+                        <pdfaField:description>Contact information country</pdfaField:description>
+                      </rdf:li>
+                      <rdf:li rdf:parseType="Resource">
+                        <pdfaField:name>CiAdrExtadr</pdfaField:name>
+                        <pdfaField:valueType>Text</pdfaField:valueType>
+                        <pdfaField:description>Contact information address</pdfaField:description>
+                      </rdf:li>
+                      <rdf:li rdf:parseType="Resource">
+                        <pdfaField:name>CiAdrPcode</pdfaField:name>
+                        <pdfaField:valueType>Text</pdfaField:valueType>
+                        <pdfaField:description>Contact information local postal code</pdfaField:description>
+                      </rdf:li>
+                      <rdf:li rdf:parseType="Resource">
+                        <pdfaField:name>CiAdrRegion</pdfaField:name>
+                        <pdfaField:valueType>Text</pdfaField:valueType>
+                        <pdfaField:description>Contact information regional information such as state or province</pdfaField:description>
+                      </rdf:li>
+                      <rdf:li rdf:parseType="Resource">
+                        <pdfaField:name>CiEmailWork</pdfaField:name>
+                        <pdfaField:valueType>Text</pdfaField:valueType>
+                        <pdfaField:description>Contact information email address(es)</pdfaField:description>
+                      </rdf:li>
+                      <rdf:li rdf:parseType="Resource">
+                        <pdfaField:name>CiTelWork</pdfaField:name>
+                        <pdfaField:valueType>Text</pdfaField:valueType>
+                        <pdfaField:description>Contact information telephone number(s)</pdfaField:description>
+                      </rdf:li>
+                      <rdf:li rdf:parseType="Resource">
+                        <pdfaField:name>CiUrlWork</pdfaField:name>
+                        <pdfaField:valueType>Text</pdfaField:valueType>
+                        <pdfaField:description>Contact information Web URL(s)</pdfaField:description>
+                      </rdf:li>
+                    </rdf:Seq>
+                  </pdfaType:field>
+                </rdf:li>
+              </rdf:Seq>
+            </pdfaSchema:valueType>
+          </rdf:li>
+          <rdf:li rdf:parseType="Resource">
+            <pdfaSchema:schema>PRISM Basic Metadata</pdfaSchema:schema>
+            <pdfaSchema:prefix>prism</pdfaSchema:prefix>
+            <pdfaSchema:namespaceURI>http://prismstandard.org/namespaces/basic/3.0/£\break{\ensuremath{\color{red}\hookrightarrow\space}}£</pdfaSchema:namespaceURI>
+            <pdfaSchema:property>
+              <rdf:Seq>
+                <rdf:li rdf:parseType="Resource">
+                  <pdfaProperty:name>complianceProfile</pdfaProperty:name>
+                  <pdfaProperty:valueType>Text</pdfaProperty:valueType>
+                  <pdfaProperty:category>internal</pdfaProperty:category>
+                  <pdfaProperty:description>PRISM specification compliance profile to which this document adheres</pdfaProperty:description>
+                </rdf:li>
+                <rdf:li rdf:parseType="Resource">
+                  <pdfaProperty:name>publicationName</pdfaProperty:name>
+                  <pdfaProperty:valueType>Text</pdfaProperty:valueType>
+                  <pdfaProperty:category>external</pdfaProperty:category>
+                  <pdfaProperty:description>Publication name</pdfaProperty:description>
+                </rdf:li>
+                <rdf:li rdf:parseType="Resource">
+                  <pdfaProperty:name>aggregationType</pdfaProperty:name>
+                  <pdfaProperty:valueType>Text</pdfaProperty:valueType>
+                  <pdfaProperty:category>external</pdfaProperty:category>
+                  <pdfaProperty:description>Publication type</pdfaProperty:description>
+                </rdf:li>
+                <rdf:li rdf:parseType="Resource">
+                  <pdfaProperty:name>bookEdition</pdfaProperty:name>
+                  <pdfaProperty:valueType>Text</pdfaProperty:valueType>
+                  <pdfaProperty:category>external</pdfaProperty:category>
+                  <pdfaProperty:description>Edition of the book in which the document was published</pdfaProperty:description>
+                </rdf:li>
+                <rdf:li rdf:parseType="Resource">
+                  <pdfaProperty:name>volume</pdfaProperty:name>
+                  <pdfaProperty:valueType>Text</pdfaProperty:valueType>
+                  <pdfaProperty:category>external</pdfaProperty:category>
+                  <pdfaProperty:description>Publication volume number</pdfaProperty:description>
+                </rdf:li>
+                <rdf:li rdf:parseType="Resource">
+                  <pdfaProperty:name>number</pdfaProperty:name>
+                  <pdfaProperty:valueType>Text</pdfaProperty:valueType>
+                  <pdfaProperty:category>external</pdfaProperty:category>
+                  <pdfaProperty:description>Publication issue number within a volume</pdfaProperty:description>
+                </rdf:li>
+                <rdf:li rdf:parseType="Resource">
+                  <pdfaProperty:name>pageRange</pdfaProperty:name>
+                  <pdfaProperty:valueType>Text</pdfaProperty:valueType>
+                  <pdfaProperty:category>external</pdfaProperty:category>
+                  <pdfaProperty:description>Page range for the document within the print version of its publication</pdfaProperty:description>
+                </rdf:li>
+                <rdf:li rdf:parseType="Resource">
+                  <pdfaProperty:name>issn</pdfaProperty:name>
+                  <pdfaProperty:valueType>Text</pdfaProperty:valueType>
+                  <pdfaProperty:category>external</pdfaProperty:category>
+                  <pdfaProperty:description>ISSN for the printed publication in which the document was published</pdfaProperty:description>
+                </rdf:li>
+                <rdf:li rdf:parseType="Resource">
+                  <pdfaProperty:name>eIssn</pdfaProperty:name>
+                  <pdfaProperty:valueType>Text</pdfaProperty:valueType>
+                  <pdfaProperty:category>external</pdfaProperty:category>
+                  <pdfaProperty:description>ISSN for the electronic publication in which the document was published</pdfaProperty:description>
+                </rdf:li>
+                <rdf:li rdf:parseType="Resource">
+                  <pdfaProperty:name>isbn</pdfaProperty:name>
+                  <pdfaProperty:valueType>Text</pdfaProperty:valueType>
+                  <pdfaProperty:category>external</pdfaProperty:category>
+                  <pdfaProperty:description>ISBN for the publication in which the document was published</pdfaProperty:description>
+                </rdf:li>
+                <rdf:li rdf:parseType="Resource">
+                  <pdfaProperty:name>doi</pdfaProperty:name>
+                  <pdfaProperty:valueType>Text</pdfaProperty:valueType>
+                  <pdfaProperty:category>external</pdfaProperty:category>
+                  <pdfaProperty:description>Digital Object Identifier for the document</pdfaProperty:description>
+                </rdf:li>
+                <rdf:li rdf:parseType="Resource">
+                  <pdfaProperty:name>url</pdfaProperty:name>
+                  <pdfaProperty:valueType>URL</pdfaProperty:valueType>
+                  <pdfaProperty:category>external</pdfaProperty:category>
+                  <pdfaProperty:description>URL at which the document can be found</pdfaProperty:description>
+                </rdf:li>
+                <rdf:li rdf:parseType="Resource">
+                  <pdfaProperty:name>byteCount</pdfaProperty:name>
+                  <pdfaProperty:valueType>Integer</pdfaProperty:valueType>
+                  <pdfaProperty:category>internal</pdfaProperty:category>
+                  <pdfaProperty:description>Approximate file size in octets</pdfaProperty:description>
+                </rdf:li>
+                <rdf:li rdf:parseType="Resource">
+                  <pdfaProperty:name>pageCount</pdfaProperty:name>
+                  <pdfaProperty:valueType>Integer</pdfaProperty:valueType>
+                  <pdfaProperty:category>internal</pdfaProperty:category>
+                  <pdfaProperty:description>Number of pages in the print version of the document</pdfaProperty:description>
+                </rdf:li>
+                <rdf:li rdf:parseType="Resource">
+                  <pdfaProperty:name>subtitle</pdfaProperty:name>
+                  <pdfaProperty:valueType>Text</pdfaProperty:valueType>
+                  <pdfaProperty:category>external</pdfaProperty:category>
+                  <pdfaProperty:description>Document's subtitle</pdfaProperty:description>
+                </rdf:li>
+              </rdf:Seq>
+            </pdfaSchema:property>
+          </rdf:li>
+        </rdf:Bag>
+      </pdfaExtension:schemas>
+\end{lstlisting}
+
+\Cref{lst:pdfinfoOutputPart3} shows the third part of the \gls{XMP} data. In this part, we can see information in the \texttt{pdf} namespace. Information about this namespace can be found at \url{https://developer.adobe.com/xmp/docs/XMPNamespaces/pdf/}. The Adobe \gls{PDF} namespace has defined four names: pdf:Keywords, pdf:PDFVersion, pdf:Producer, and pdf:Trapped. In this listing, we can see two of these: pdf:Producer and pdf:Keywords. The latter of these is a comma-separated list of keywords.
+
+\Needspace*{6\baselineskip}
+\begin{lstlisting}[style=myXML,
+caption={{The \texttt{pdf}-prefix metadata embedded in a PDF file (some reformatting has been done to fit the text in the boarders)}}, label={lst:pdfinfoOutputPart3}]
+£$\ldots$ {\color{red} continuation of the above listing}£ 
+      <pdf:Producer>XeTeX version 0.999994</pdf:Producer>
+      <pdf:Keywords>Canvas Learning Management System, Docker containers, Performance tuning, Canvas Lärplattform, Dockerbehållare, Prestandajustering</pdf:Keywords>
+\end{lstlisting}
+
+\Cref{lst:pdfinfoOutputPart4} shows the next part of the \gls{XMP} data. Here, we see a new name prefix, \texttt{xmpRights}, specifically \texttt{xmpRights:Marked}. This namespace is described at \url{https://developer.adobe.com/xmp/docs/XMPNamespaces/xmpRights/}. This namespace defines the following names: \texttt{xmpRights:Certificate}, \texttt{xmpRights:Marked}, \texttt{xmpRights:Owner}, \texttt{xmpRights:UsageTerms}, and \texttt{xmpRights:WebStatement}. In this case, \texttt{xmpRights:Marked} is marked as \enquote{True} which \enquote{indicates that this is a rights-managed resource. When false, it indicates that this is a public-domain resource. Omit if the state is unknown.}. So in this case, it is a rights-managed resource.
+
+\Needspace*{3\baselineskip}
+\begin{lstlisting}[style=myXML,
+caption={{The \texttt{xmpRights:Marked} metadata embedded in a PDF file}}, label={lst:pdfinfoOutputPart4}]
+£$\ldots$ {\color{red} continuation of the above listing}£ 
+      <xmpRights:Marked>True</xmpRights:Marked>
+\end{lstlisting}
+
+\Cref{lst:pdfinfoOutputPart5} shows the next part of the \gls{XMP} data. Here, we see an element from the \texttt{dc} namespace. The name \texttt{dc:format} indicates the format of the document. As per \url{https://www.dublincore.org/specifications/dublin-core/format-element/} in the case of an electronic document, the format is described using the Internet Media Types (\ie MIME values).
+\Needspace*{3\baselineskip}
+\begin{lstlisting}[style=myXML,
+caption={{The \texttt{dc:format} metadata embedded in a PDF file}}, label={lst:pdfinfoOutputPart5}]
+£$\ldots$ {\color{red} continuation of the above listing}£ 
+      <dc:format>application/pdf</dc:format>
+\end{lstlisting}
+
+\Cref{lst:pdfinfoOutputPart6} shows the next part of the \gls{XMP} data. Here, we see another element from the \texttt{dc} namespace. More specifically, the element \texttt{dc:title} contains the document title. This also illustrates another feature of \gls{XML} -- it is possible to have the title in several different languages. The \gls{RDF} tag \texttt{rdf:Alt} indicates that there is a list of alternatives. In this case, the list items are tagged with a language tag. The language tag \texttt{xml:lang="x-default"} is the default language of the document. This is followed by items that contain English (tagged \enquote{en}) and Swedish (tagged \enquote{sv}). The language tags are an \gls{ISO} 639-1 two-letter language code with an
+optional \gls{ISO} 3166-1 two-letter region code.
+\begin{lstlisting}[style=myXML,
+caption={{The \texttt{dc:title>} metadata embedded in a PDF file (some reformatting has been done to fit the text in the borders)}}, label={lst:pdfinfoOutputPart6}]
+£$\ldots$ {\color{red} continuation of the above listing}£ 
+      <dc:title>
+        <rdf:Alt>
+          <rdf:li xml:lang="x-default">This is the title in the language of the thesis: A subtitle in the language of the thesis</rdf:li>
+          <rdf:li xml:lang="en">This is the title in the language of the thesis: A subtitle in the language of the thesis</rdf:li>
+          <rdf:li xml:lang="sv">Detta är den svenska översättningen av titeln – Detta är den svenska översättningen av undertiteln</rdf:li>
+        </rdf:Alt>
+      </dc:title>
+\end{lstlisting}
+
+%% I currently do not support putting the abstracts in as meta data
+\begin{comment}
+\Cref{lst:pdfinfoOutputPart7} shows the \texttt{dc:description} metadata. These contain the abstracts in each of the languages used in the thesis. This is done using the same mechanism as described above for the titles. Note that is possible to use \LaTeX~macros in the abstracts, but the set of things that are supported by subsequent post-processing is limited. The \LaTeX{}~macros are hidden from expansion by replacing all instances of '\textbackslash' with '\textcent' (the cent symbol) using a new macro: \textbackslash replaceBS defined in \texttt{kththesis.cls}.
+\begin{lstlisting}[style=myXML,
+caption={{The \texttt{dc:description} metadata embedded in a PDF file (some reformatting has been done to fit the text in the boarders)}}, label={lst:pdfinfoOutputPart7}]
+£$\ldots$ {\color{red} continuation of the above listing}£ 
+      <dc:description>
+        <rdf:Alt>
+          <rdf:li xml:lang="x-default">Detta är den svenska översättningen av titeln – Detta är den svenska översättningen av undertiteln</rdf:li>
+          <rdf:li xml:lang="en">Detta är den svenska översättningen av titeln – Detta är den svenska översättningen av undertiteln</rdf:li>
+          <rdf:li xml:lang="sv">Detta är den svenska översättningen av titeln – Detta är den svenska översättningen av undertiteln</rdf:li>
+          <rdf:li xml:lang="en-US">abstract: "¢generalExpl{Enter your abstract here!}
+Write an abstract that is about 250 and 350 words (1/2 A4-page)  with the following components:
+% key parts of the abstract
+¢begin{itemize}
+  ¢item What is the topic area? (optional) Introduces the subject area for the project.
+  ¢item Short problem statement
+  ¢item Why was this problem worth a Bachelor's/Master’s thesis project? (¢ie, why is the problem both significant and of a suitable degree of difficulty for a Bachelor's/Master’s thesis project? Why has no one else solved it yet?)
+  ¢item How did you solve the problem? What was your method/insight?
+  ¢item Results/Conclusions/Consequences/Impact: What are your key results/¢linebreak[4]conclusions? What will others do based upon your results? What can be done now that you have finished - that could not be done before your thesis project was completed?
+¢end{itemize}
+"</rdf:li>
+          <rdf:li xml:lang="sv">abstract: "¢generalExpl{Enter your Swedish abstract or summary here!}
+¢sweExpl{Alla avhandlingar vid KTH ¢textbf{måste ha} ett abstrakt på både ¢textit{engelska} och ¢textit{svenska}.¢¢
+Om du skriver din avhandling på svenska ska detta göras först (och placera det som det första abstraktet) - och du bör revidera det vid behov.}
+
+¢engExpl{If you are writing your thesis in English, you can leave this until the draft version that goes to your opponent for the written opposition. In this way you can provide the English and Swedish abstract/summary information that can be used in the announcement for your oral presentation.¢¢If you are writing your thesis in English, then this section can be a summary targeted at a more general reader. However, if you are writing your thesis in Swedish, then the reverse is true – your abstract should be for your target audience, while an English summary can be written targeted at a more general audience.¢¢This means that the English abstract and Swedish sammnfattning
+or Swedish abstract and English summary need not be literal translations of each other.}
+
+¢warningExpl{Do not use the ¢textbackslash glspl¢{¢} command in an abstract that is not in English, as my programs do not know how to generate plurals in other languages. Instead you will need to spell these terms out or give the proper plural form. In fact, it is a good idea not to use the glossary commands at all in an abstract/summary in a language other than the language used in the ¢texttt{acronyms.tex file} - since the glossary package does ¢textbf{not} support use of more than one language.}
+
+¢engExpl{The abstract in the language used for the thesis should be the first abstract, while the Summary/Sammanfattning in the other language can follow}"</rdf:li>
+          <rdf:li xml:lang="fr-FR">abstract: "Résumé en français."</rdf:li>
+          <rdf:li xml:lang="es-ES">abstract: "Résumé en espagnol."</rdf:li>
+          <rdf:li xml:lang="it">abstract: "Sommario in italiano."</rdf:li>
+          <rdf:li xml:lang="nb">abstract: "Sammendrag på norsk."</rdf:li>
+          <rdf:li xml:lang="de-DE">abstract: "Zusammenfassung in Deutsch."</rdf:li>
+          <rdf:li xml:lang="da">abstract: "Abstrakt på dansk."</rdf:li>
+          <rdf:li xml:lang="nl">abstract: "Samenvatting in het Nederlands."</rdf:li>
+          <rdf:li xml:lang="et">abstract: "Eesti keeles kokkuvõte."</rdf:li>
+        </rdf:Alt>
+      </dc:description>
+\end{lstlisting}
+\end{comment}
+
+\Needspace*{32\baselineskip}
+\Cref{lst:pdfinfoOutputPart8} shows the \texttt{dc:rights}, \texttt{dc:publisher}, \texttt{dc:date}, and \texttt{dc:type} elements. The \texttt{\textbackslash bookinfomacro} was extended to put the copyright information into the metadata. This metadata and the \texttt{xmpRights:Marked} value being \textbf{True} enables the display of the copyright data as shown in \Cref{fig:exampleCopyrightXMPdisplayed}.
+
+\begin{lstlisting}[style=myXML,
+caption={{The \texttt{dc:rights}, \texttt{dc:publisher}, \texttt{dc:date}, and \texttt{dc:type} metadata embedded in a PDF file (some reformatting has been done to fit the text in the boarders)}}, label={lst:pdfinfoOutputPart8}]
+£$\ldots$ {\color{red} continuation of the above listing}£ 
+      <dc:rights>
+        <rdf:Alt>
+          <rdf:li xml:lang="en">Copyright (c) 2022 Fake A. Student, Jr. and Fake B. Student</rdf:li>
+        </rdf:Alt>
+      </dc:rights>
+      <dc:publisher>
+        <rdf:Bag>
+          <rdf:li>KTH Royal Institute of Technology</rdf:li>
+        </rdf:Bag>
+      </dc:publisher>
+      <dc:date>
+        <rdf:Seq>
+          <rdf:li>2022-12-27T10:22:34Z</rdf:li>
+        </rdf:Seq>
+      </dc:date>
+      <dc:type>
+        <rdf:Bag>
+          <rdf:li>Text</rdf:li>
+        </rdf:Bag>
+      </dc:type>
+\end{lstlisting}
+
+ 	
+\begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[width=0.99\textwidth]{README_notes/README-examiner-figures/Example-of-copyright-data-Screenshot_20221227_143035.png}
+  \end{center}
+  \caption{Example of the copyright information being displayed}
+  \label{fig:exampleCopyrightXMPdisplayed}
+\end{figure}
+
+\Cref{lst:pdfinfoOutputPart9} shows the \texttt{dc:creator} metadata. In this case, the comma-separated list of authors is rendered as an \texttt{rdf:Seq}, an \textbf{ordered} list of items.
+
+\Needspace*{8\baselineskip}
+\begin{lstlisting}[style=myXML,
+caption={{The \texttt{dc:creator} metadata embedded in a PDF file}}, label={lst:pdfinfoOutputPart9}]
+£$\ldots$ {\color{red} continuation of the above listing}£ 
+      <dc:creator>
+        <rdf:Seq>
+          <rdf:li>Fake A. Student, Jr.</rdf:li>
+          <rdf:li>Fake B. Student</rdf:li>
+        </rdf:Seq>
+      </dc:creator>
+\end{lstlisting}
+\clearpage
+
+\Cref{lst:pdfinfoOutputPart10} shows the \texttt{dc:subject} metadata. In this case, the comma-separated list of keywords is rendered as an \texttt{rdf:Bag}, an \textbf{unordered} list of items.
+\begin{lstlisting}[style=myXML,
+caption={{The \texttt{dc:subject} metadata embedded in a PDF file}}, label={lst:pdfinfoOutputPart10}]
+£$\ldots$ {\color{red} continuation of the above listing}£ 
+      <dc:subject>
+        <rdf:Bag>
+          <rdf:li>Canvas Learning Management System</rdf:li>
+          <rdf:li>Docker containers</rdf:li>
+          <rdf:li>Performance tuning</rdf:li>
+          <rdf:li>Canvas Lärplattform</rdf:li>
+          <rdf:li>Dockerbehållare</rdf:li>
+          <rdf:li>Prestandajustering</rdf:li>
+        </rdf:Bag>
+      </dc:subject>
+\end{lstlisting}
+
+\Cref{lst:pdfinfoOutputPart11} shows the \texttt{dc:source} and \texttt{dc:language} metadata. The value of \texttt{dc:source} was not set explicitly, so this seems to have been derived in some way. Additionally, the \texttt{dc:language} \texttt{rdf:Bag} was automatically computed and includes all of the languages used via \textsc{babel} or \textsc{polyglossia} in the thesis.
+\begin{lstlisting}[style=myXML,
+caption={{The \texttt{dc:source} and \texttt{dc:language} metadata embedded in a PDF file}}, label={lst:pdfinfoOutputPart11}]
+£$\ldots$ {\color{red} continuation of the above listing}£ 
+      <dc:source>output.tex</dc:source>
+      <dc:language>
+        <rdf:Bag>
+          <rdf:li>fr-FR</rdf:li>
+          <rdf:li>es-ES</rdf:li>
+          <rdf:li>nb</rdf:li>
+          <rdf:li>de-DE</rdf:li>
+          <rdf:li>sv</rdf:li>
+          <rdf:li>it</rdf:li>
+          <rdf:li>da</rdf:li>
+          <rdf:li>nl</rdf:li>
+          <rdf:li>et</rdf:li>
+          <rdf:li>en-US</rdf:li>
+        </rdf:Bag>
+      </dc:language>
+\end{lstlisting}
+
+\Cref{lst:pdfinfoOutputPart12} shows the \texttt{xmp}-prefix elements in the file. This namespace is supposed to be defined at \url{http://ns.adobe.com/xap/1.0/}; however, this URL is no longer valid, but the Adobe XMP Basic namespace is described at https://developer.adobe.com/xmp/docs/XMPNamespaces/xmp/. In this specific case, the file provides the \texttt{CreateDate}, \texttt{xmp:ModifyDate}, \texttt{xmp:MetadataDate}, and \texttt{xmp:CreatorTool}. For the last of these, the value is shown as \enquote{LaTeX with hyperref} even though the \XeLaTeX{} engine had been used.
+\begin{lstlisting}[style=myXML,
+caption={The final set of metadata embedded in a PDF file}, label={lst:pdfinfoOutputPart12}]
+£$\ldots$ {\color{red} continuation of the above listing}£ 
+      <xmp:CreateDate>2022-12-27T10:22:34</xmp:CreateDate>
+      <xmp:ModifyDate>2022-12-27T10:22:34Z</xmp:ModifyDate>
+      <xmp:MetadataDate>2022-12-27T10:22:34Z</xmp:MetadataDate>
+      <xmp:CreatorTool>LaTeX with hyperref</xmp:CreatorTool>
+\end{lstlisting}
+
+\Cref{lst:pdfinfoOutputPart13} shows the \texttt{xmpMM}-prefix metadata. The information about this namespace should be at http://ns.adobe.com/xap/1.0/mm/; however, this URL is no longer valid, but the description of the XMP Media Management namespace is available at \url{https://developer.adobe.com/xmp/docs/XMPNamespaces/xmpMM/}.
+\begin{lstlisting}[style=myXML,
+caption={{The \texttt{xmpMM}-prefix metadata embedded in a PDF file (two of the lines have been manually broken to fit the test in the margins)}}, label={lst:pdfinfoOutputPart13}]
+£$\ldots$ {\color{red} continuation of the above listing}£ 
+      <xmpMM:DocumentID>uuid:d7a82bbb-620a-439b-ac90-5413339b620a£\break£</xmpMM:DocumentID>
+      <xmpMM:InstanceID>uuid:620005f7-f75f-4dce-a820-a8888d18205f£\break£</xmpMM:InstanceID>
+      <xmpMM:VersionID>1</xmpMM:VersionID>
+      <xmpMM:RenditionClass>default</xmpMM:RenditionClass>
+\end{lstlisting}
+
+\Cref{lst:pdfinfoOutputPart14} shows the \texttt{Iptc4xmpCore}-prefix metadata. The International Press Telecommunications Council (IPTC) Core Schema namespace used by the IPTC Photo Metadata standards is described briefly at \url{http://iptc.org/std/Iptc4xmpCore/1.0/xmlns/}. A full description is available at \url{https://www.iptc.org/std/Iptc4xmpCore/1.0/specification/Iptc4xmpCore_1.0-spec-XMPSchema_8.pdf}. The \texttt{Iptc4xmpCore:CreatorContactInfo} is supposed to provide enough information to enable someone reading the file to be able to contact the creator of the content. For the purposes of a thesis, I have identified the authors using their KTH\_id, since once a student has completed their studies at KTH, their accounts are deactivated; hence, an e-mail address is no longer meaningful.
+\begin{lstlisting}[style=myXML,
+caption={{The \texttt{Iptc4xmpCore}-prefix metadata embedded in a PDF file}}, label={lst:pdfinfoOutputPart14}]
+£$\ldots$ {\color{red} continuation of the above listing}£ 
+      <Iptc4xmpCore:CreatorContactInfo rdf:parseType="Resource">
+        <Iptc4xmpCore:CiEmailWork>author: u100001,secondauthor: u100002</Iptc4xmpCore:CiEmailWork>
+      </Iptc4xmpCore:CreatorContactInfo>
+\end{lstlisting}
+
+\Cref{lst:pdfinfoOutputPart15} shows the \texttt{prism}-prefix metadata. The Publishing Requirements for Industry Standard Metadata (PRISM) namespace should be described at http://prismstandard.org/namespaces/basic/3.0/; however, this \gls{URL} is no longer valid, but the PRISM Basic Metadata Specification can be found at \url{https://www.w3.org/Submission/2020/SUBM-prism-20200910/prism-basic.html}.
+\begin{lstlisting}[style=myXML,
+caption={{The \texttt{prism}-prefix metadata embedded in a PDF file}}, label={lst:pdfinfoOutputPart15}]
+£$\ldots$ {\color{red} continuation of the above listing}£ 
+      <prism:complianceProfile>three</prism:complianceProfile>
+      <prism:subtitle xml:lang="en">A subtitle in the language of the thesis</prism:subtitle>
+      <prism:aggregationType>report</prism:aggregationType>
+      <prism:volume>TRITA-EECS-EX</prism:volume>
+      <prism:number>2022:0000</prism:number>
+      <prism:pageCount>322</prism:pageCount>
+      <xmpTPg:NPages>322</xmpTPg:NPages>
+\end{lstlisting}
+
+\begin{lstlisting}[style=myXML,
+caption={The final part of the metadata embedded in a PDF file}, label={lst:pdfinfoOutputPart16}]
+£$\ldots$ {\color{red} continuation of the above listing}£ 
+    </rdf:Description>
+  </rdf:RDF>
+</x:xmpmeta>
+\end{lstlisting}
+
+\Needspace*{14\baselineskip}
+\subsection{Extending the set of elements for theses}
+\label{sec:newMetadataForTheses}
+Even with the various schemas included in \gls{XMP}, DiVA still needs metadata that cannot yet be easily included and embedded in \gls{XMP}. Thus, the extra metadata needs to be collected and processed via some mechanism other than \gls{XMP}.
+
+For \gls{XMP}, there are some specific areas that might be of interest in the future:
+\begin{itemize}
+  \item Adding new dc elements (§\,\ref{sec:newDCelements}) 
+  \item Adding references to the metadata (§\,\ref{sec:addingReferences}), and 
+  \item Adding citation data to the metadata (§\,\ref{sec:addingCitation})
+\end{itemize}
+
+\subsubsection{Adding new dc elements}
+\label{sec:newDCelements}
+In \Cref{tab:dublinCoreDigitalCommons} on \pageref{tab:dublinCoreDigitalCommons} we saw five elements that are perhaps worth adding, specifically:
+\texttt{thesis.degree}, \texttt{thesis.degree.discipline}, \linebreak[4]\texttt{thesis.degree.grantor}, \texttt{thesis.degree.level}, and \linebreak[4] \texttt{thesis.degree.name}. It may be worth adding these to the XMP data for a thesis in the future. For some discussion of these elements, please see the discussion of EDT‐MS metadata elements in the paper by Ivanović, Ivanović, and Surla entitled \textit{A data model of theses and dissertations compatible with {CERIF}, {Dublin} {Core} and {EDT}‐{MS}}~\cite{ivanovic_data_2012}. ETD-MS is defined in \textit{ETD-MS v1.1: an Interoperability Metadata Standard for Electronic Theses and Dissertations}~\cite{hickey_pavani_suleman_2010} and available at \url{https://ndltd.org/wp-content/uploads/2021/04/etd-ms-v1.1.html}.
+
+
+\subsubsection{Adding references to the metadata}
+\label{sec:addingReferences}
+Increasingly, there is interest in easily knowing which references a thesis cites. Part of this interest is to be able to compute citation maps (who cites whom) and to examine the types of sources that are cited.
+
+There are several possibilities for storing information about references. One is the element \texttt{dc.relation.references}. Another possibility is to use the \texttt{dcterms:references} element refinement of \texttt{dc:relation} as proposed in 1998 by Ann Apps of the Dublin Core Metadata Initiative (DCMI) Citations Working Group (\url{https://www.dublincore.org/groups/citation/}).
+
+\Needspace*{9\baselineskip}
+More recently, a new schema was proposed by CrossRef; see \url{https://www.crossref.org/documentation/schema-library/markup-guide-metadata-segments/references/}. Note that the focus of this work is to facilitate depositing with CrossRef the list of references used in a publication. Their set of elements is shown in \Cref{tab:crossRefElementsForCitationTagging}\footnote{\url{https://www.crossref.org/documentation/schema-library/markup-guide-metadata-segments/references/\#00178}}. Note that while the focus seems to be on journal articles, they also have a \enquote{Metadata best practices} website with lots of examples of metadata for different types of documents; see \url{https://www.crossref.org/documentation/principles-practices/best-practices/}.
+
+\begin{table}[!ht]
+    \caption{CrossRef elements for citation tagging}
+    \label{tab:crossRefElementsForCitationTagging}
+    \begin{tabular}{l}
+      \textbf{Element}\\
+      \hline
+issn\\
+journal\_title\\
+author\\
+volume\\
+issue\\
+first\_page\\
+cYear\\
+article\_title\\
+isbn\\
+series\_title\\
+volume\_title\\
+edition\_number\\
+article\_title\\
+std\_designator\\
+standards\_body\_name\\
+standards\_body\_acronym\\
+component\_number\\
+unstructured\_citation\\
+doi\\
+\end{tabular}
+\end{table}
+
+\subsubsection{Adding citation data to the metadata}
+\label{sec:addingCitation}
+There is also a desire by many to include bibliographic citation information into the \gls{XMP} so that the \gls{PDF} carries this data and one does \emph{not} need to access some other source to find this information. The element \texttt{DCTERMS.bibliographicCitation} is proposed for this purpose in a document by Ann Apps, \textit{Guidelines for Encoding Bibliographic Citation Information in Dublin Core™ Metadata}~\cite{Ann_Apps_2005}.
+
+\Needspace*{3\baselineskip}
+Note that to include the \gls{URN} and \gls{DiVA} identifiers assigned by \gls{DiVA}, you first need to create a \gls{DiVA} entry and then use the assigned values to update the \gls{XMP} information in the \gls{PDF} file \textit{before} uploading the full text to \gls{DiVA}.
+
+At present, I think the easiest method to provide citation data is to embed a file containing the \BibLaTeX{} entries used. Note that the GitHub workflow and script \fname{bib\_cleanup.py} process the \fname{references.bib} file and produce a \fname{referencesUsed.bib} file that could be embedded in the \gls{PDF}. An advantage of this approach is that you can extract this file and get the bibliographic entries used --- in machine-readable form that can be used directly with \LaTeX. Further details are given in \Cref{sec:metadataVersusEmbeddedFiles}.
+
+\subsubsection{Adding abstracts via the dc.description}
+\label{sec:addingAbstractsInXMP}
+The code shown in \Cref{lst:LuaForAbstractinXMP} can be used to add the abstracts to the \gls{XMP} data. While this code works, it has \textbf{not} been added as a feature in the current template, but is a candidate for a future addition.
+
+Note that region codes have been used for several of the languages; this is to distinguish the abstract entries from alternate titles, which also seem to end up in the same part of the XMP.
+
+Unfortunately, it was not possible to add language alternates for keywords as \textit{hyperxmp} does not support language alternatives for keywords. Instead, it expects all of the keywords to be in a single comma-separated list; see the documentation for the package for the reason behind this.
+
+\begin{lstlisting}[language={[5.2]Lua}, caption={Using Lua it is possible to add the abstracts to the XMP data}, label=lst:LuaForAbstractinXMP]
+% --- LUA BACKEND ---
+\begin{luacode*}
+-- This uses the global data table thesisData
+
+-- This function will generate all the XMP metadata
+function generate_xmp_data()
+  local xmp_lang_map = {
+    eng="en-US",
+    swe="sv-SE",
+    fre="fr-FR",
+    spa="es-ES",
+    ita="it",
+    nno="nn",
+    nob="nb",
+    nor="no",
+    ger="de-DE",
+    dan="da",
+    dut="nl",
+    est="et",
+    ukr="uk",
+    lat="la",
+    fin="fi",
+    ice="is",
+    yid="yi",
+    lit="lt",
+    pol="pl",
+    por="pt",
+    per="fa",
+    rum="ro",
+    hin="hi",
+    hun="hu",
+    bul="bg",
+    alb="sq",
+    cat="ca",
+    chi="zh",
+    ara="ar",
+    bel="be",
+    rus="ru",
+    vie="vi",
+    scc="sr", -- deprecated B code
+    cze="cs",
+    gre="el",
+    ara="ar",
+    tur="tr",
+    lav="lv",
+    jpn="ja",
+    kur="ku",
+    ckb="ku",
+    heb="he",
+    slo="sk",
+    
+  }
+
+  -- Iterate through the abstracts
+  if thesisData.abstracts then
+    for lang_code, content in pairs(thesisData.abstracts) do
+      local xmp_tag = xmp_lang_map[lang_code]
+      if xmp_tag then
+        -- Call the LaTeX helper with the corrected key
+        tex.sprint("\\StoreXMPAbstract{" .. xmp_tag .. "}{" .. content .. "}")
+      end
+    end
+  end
+\end{luacode*}
+% --- LATEX FRONTEND ---
+
+% Corrected helper commands using the right keys for hyperxmp
+\newcommand{\StoreXMPAbstract}[2]{%
+  % Use 'pdfsubject' for the abstract/description
+  \XMPLangAlt{#1}{pdfsubject={#2}}%
+}
+
+% This command will trigger the process in the preamble
+%\directlua{generate_xmp_data()}
+% add this commend before the end of the document.
+\end{lstlisting}
+
+
+\clearpage
+\section{Modern PDF Metadata Management}
+\label{sec:modernMetadataApproach}
+
+This section describes a modern approach via \textbackslash DocumentMetadata and Tagged \gls{PDF} standards to provide metadata and to help ensure both indexability and accessibility of documents into the future. \Cref{sec:ModernMetadataApproach} introduces the modern \LaTeX{} kernel approach via \textbackslash DocumentMetadata).
+\Cref{sec:longTermArchiving} elaborates on PDF/A, PDF/UA, and Long-Term Archival Needs at KTH.
+\Cref{sec:metadataVersusEmbeddedFiles} describes the use of \gls{PDF} metadata and structured file attachments.
+
+
+\subsection{The Modern LaTeX Kernel Approach (\textbackslash DocumentMetadata)}
+\label{sec:ModernMetadataApproach}
+The \LaTeX{} Project introduced \texttt{\textbackslash DocumentMetadata\{\dots\}} to be executed \textbf{before} \texttt{\textbackslash documentclass}. Its primary role is to initialize the PDF management layer, enforce compliance standards (such as PDF/A-2u or  PDF/A-3u), and configure global output intents before any packages or fonts are loaded: \Cref{lst:exampleDocumentMetadata} and \Cref{lst:anotherExampleDocumentMetadata} show examples of using this new command. This key-value approach differs from the old \texttt{hyperref} / \texttt{hyperxmp} preamble injection model. However, you must know all this information before the \texttt{\textbackslash documentclass}.
+
+\Needspace*{10\baselineskip}
+\begin{lstlisting}[language={[LaTeX]TeX}, caption={Example of using \texttt{\textbackslash DocumentMetadata}}, label=lst:exampleDocumentMetadata]
+\DocumentMetadata{
+    % pdfversion  = 2.0,
+    % pdfstandard = A-4,
+    pdfversion=1.7,
+    pdfstandard=a-3u,
+    lang        = en-US
+}
+\end{lstlisting}
+
+\Needspace*{14\baselineskip}
+\begin{lstlisting}[language={[LaTeX]TeX}, caption={Second example of using \texttt{\textbackslash DocumentMetadata}}, label=lst:anotherExampleDocumentMetadata]
+\DocumentMetadata{
+  lang        = en-US,
+  pdfversion  = 1.7,
+  pdfstandard = a-2u,
+}
+\end{lstlisting}
+
+It is important to note that \texttt{\textbackslash DocumentMetadata} does not accept content-level document properties (such as \texttt{author}, \texttt{title}, or \texttt{keywords}). Instead, content-level properties are declared in the preamble using \texttt{\textbackslash hypersetup\{\dots\}} or injected directly into the kernel's \gls{XMP} data stream via \texttt{\textbackslash pdfmeta\_xmp\_add:n}. When the \texttt{hyperref} package loads, it automatically connects to the active \gls{PDF} management layer and populates the conforming \gls{PDF} catalog and \gls{XMP} packet.
+
+The actual \fname{examplethesis.tex} file only uses the top level values shown in \Cref{lst:exampleDocumentMetadata} and then later makes use of the code in \fname{lib/pdf\_related\_includes.tex} to assemble \texttt{pdftitle}, \texttt{pdfauthor}, \texttt{pdfkeywords}, and \texttt{pdfsubject} using \texttt{expl3} routines (\texttt{\textbackslash build\_tagged\_keywords:}, \texttt{\textbackslash build\_pdf\_subject:}, \texttt{\textbackslash inject\_prism\_metadata:}, and \texttt{\textbackslash inject\_publisher\_metadata}).
+
+While there might seem to be a design conflict with the dynamic, multilingual thesis workflow of the thesis, since \texttt{\textbackslash DocumentMetadata} evaluates before \fname{custom\_configuration.tex} or the toggle \texttt{\textbackslash ifinswedish} is known. Fortunately, the initial \texttt{lang = en-US} setting is mutable. Once the language configuration is determined, the document's primary language can be updated in \fname{lib/pdf\_related\_includes.tex} by issuing \texttt{\textbackslash hypersetup\{pdflang=\{sv-SE\}\}} (or through the kernel interface \texttt{\textbackslash pdfmeta\_lang\_set:n \{ sv-SE \}}), which rebinds the \texttt{/Lang} entry in the \gls{PDF} Catalog and ensures correct language tagging in the output stream.
+
+\subsection{PDF/A, PDF/UA, and Long-Term Archival at KTH}
+\label{sec:longTermArchiving}
+\gls{DiVA}'s mission is twofold: open-access dissemination and compliance with national long-term archiving mandates. Because, in its second role, \gls{DiVA} feeds the Swedish National Archives (\foreignlanguage{swedish}{Riksarkivet}) and the National Library of Sweden (\foreignlanguage{swedish}{Kungliga biblioteket}), it directly inherits the national preservation directives.
+
+Riksarkivet's official regulatory framework (RA-FS) explicitly establishes PDF/A-1 as the baseline mandated standard for long-term document preservation. For example, conformance level (b), \ie Level B (Basic), ensures exact \textit{visual replication} over centuries. The goal is that a third-cycle thesis uploaded today will look exactly the same when opened in 100 years, regardless of operating system or device. Unfortunately, PDF/A-1b does \textbf{not} mandate Unicode text mapping. Under Swedish National Archives (\foreignlanguage{swedish}{Riksarkivet}) regulations, academic publications intended for permanent deposit should preserve:
+\begin{itemize}
+    \item \textbf{Color Profiles:} Device-independent color representations via embedded ICC profiles.
+    \item \textbf{Font Embedding and Unicode Mapping:} Complete embedding of all font subsets, along with valid \texttt{ToUnicode} mappings to guarantee text extractability.
+    \item \textbf{Standardized XMP Stream Structure:} Validation of embedded \gls{XMP} streams without proprietary syntax extensions or unescaped delimiter conflicts.
+\end{itemize}
+
+
+Fischer, Lundell, and Gamalielsson examined the use of fonts and file formats for long-term maintenance of digital assets by (three types of) Swedish public sector organizations~\cite{fischer_pdfconformance_2023}. For universities, they selected \num{9341} unique doctoral dissertations with \gls{PDF} files from 28 universities. They selected \num{5931} \glspl{PDF} from the Swedish Code of
+Statutes (\foreignlanguage{swedish}{Svensk författningssamling} (SFS)). Finally, they selected \num{155} additional \gls{PDF} files from Swedish Government Official Reports (\foreignlanguage{swedish}{Statens offentliga utredningar} (SOU) submissions). They found that many \gls{PDF} files not only failed to meet PDF/A-1 requirements for font availability, but also used fonts they did not necessarily have a license to embed, and many did not embed the fonts they used. As a result, each user must find the fonts to render the document, reducing its long-term accessibility.
+
+\Needspace*{14\baselineskip}
+Increasingly, the university libraries administering \gls{DiVA} favor PDF/A-2u. Conformance level, \ie Level U (Unicode), guarantees everything Level B does regarding visual fidelity, but adds a strict prerequisite: all text must map cleanly to Unicode semantics. This has two advantages:
+\begin{enumerate}
+    \item Search Engine Visibility: PDF/A-2u is structurally guaranteed to be cleanly indexable by web crawlers, supporting DiVA's core mandate for open-access visibility; and
+    
+    \item Visual Transparency: PDF/A-2 allows transparency, layers, and modern OpenType fonts, which are common in thesis covers, complex charts, and scientific figures. PDF/A2u addresses unicode mapping (with ToUnicode CMaps), embedded ICC color profiles, and the elimination of non-standard font encoding anomalies. [\textbf{NB} Current information from USAB is that transparency is \textbf{not} allowed in a thesis they print and that the \gls{PDF} file that they produce is \textbf{not} designed to be accessible (\ie it has been optimized for printing).]
+\end{enumerate}
+
+For the third-cycle thesis template, the \gls{PDF} should use \textbf{PDF/A-3u}, as shown in \Cref{lst:exampleDocumentMetadata}. This is important as we want to attach JSON, BibTeX, source code (as well as possibly other types of files). Under PDF/A-3 any type of file can be embedded as an associated file inside the PDF stream.
+When initialized with \texttt{pdfstandard = a-3u}, the \LaTeX{} kernel's \gls{PDF} management layer adjusts its internal \gls{XMP} validation schema (\texttt{pdfaid:part = 3} and \texttt{pdfaid:conformance = U}) so that the embed operations pass long-term archival preflight checks without validation errors.
+
+By migrating from external \gls{XMP} post-processing to native kernel-level metadata declarations (as shown in \Cref{lst:hypersetupMetadata}), the template ensures that generated \gls{PDF} files remain compliant with automated deposit tools and accessible to downstream indexing engines. And for schema fields that \texttt{\textbackslash hypersetup} does not natively cover (such as PRISM volume/issue and Dublin Core publisher tags), it uses the kernel’s internal \gls{XMP} hook directly (as was shown in the latter part of \Cref{lst:informationforPDFfile}). Using \texttt{\textbackslash DocumentMetadata} automatically satisfies PDF/A \gls{XMP} validation without manual \gls{XMP} injection.
+
+\Needspace*{8\baselineskip}
+\begin{lstlisting}[language={[LaTeX]TeX}, caption={Using \texttt{\textbackslash hypersetup} for some metadata}, label=lst:hypersetupMetadata]
+\hypersetup{
+  pdftitle    = {[en]{{\mytitle}}, [sv]{{\myalttitle}}},
+  pdfauthor   = {\myauthor},
+  pdfsubject  = {\mydegreeandsubject},
+  pdfkeywords = { ... }
+}
+\end{lstlisting}
+
+\subsection{Architectural separation and delegation}
+\label{sec:metadataVersusEmbeddedFiles}
+The template makes a clean separation between \gls{PDF} document-level properties (such as \texttt{pdftitle}, \texttt{pdfauthor}, and \texttt{pdfkeywords}) and external automation payloads (\fname{fordiva.json}, \fname{referencesUsed.bib}, \fname{acronyms.tex}, and \fname{citedtags.bib}). 
+
+While document-level metadata strings are configured via \fname{lib/pdf\_related\_includes.tex}, the actual file embedding directives are executed in \fname{examplethesis.tex} using \texttt{\textbackslash embedfile} guarded by \texttt{\textbackslash IfFileNotEmpty}; see \Cref{lst:embeddingAuxFiles}. Embedding the automation payload files directly into the \gls{PDF} via \texttt{embedfile} provides full machine readability of these files \textit{without} bloating \gls{XMP} strings. For further information about extracting and working with these embedded files, see Appendix~A.1 of \fname{examplethesis.tex}.
+
+\Needspace*{14\baselineskip}
+\begin{lstlisting}[language={[LaTeX]TeX}, caption={Embedding auxiliary payload files in \texttt{examplethesis.tex}}, label=lst:embeddingAuxFiles]
+% add the various files to be embedded
+    % 1. fordiva.json -> /Data
+    \IfFileNotEmpty{fordiva.json}{%
+    \embedfile[
+        afrelationship = {Data},
+        mimetype       = {application/json},
+        desc           = {DiVA thesis metadata payload in JSON format}
+    ]{fordiva.json}%
+    }{}
+    
+    % 2. referencesUsed.bib -> /Supplement
+    \IfFileNotEmpty{referencesUsed.bib}{%
+    \embedfile[
+        afrelationship = {Supplement},
+        mimetype       = {text/x-bibtex},
+        desc           = {Sanitized BibLaTeX entries cited in the thesis}
+    ]{referencesUsed.bib}%
+    }{}
+    
+    % 3. acronyms.tex -> /Source
+    \IfFileNotEmpty{lib/acronyms.tex}{%
+    \embedfile[
+        afrelationship = {Source},
+        mimetype       = {application/x-tex},
+        desc           = {LaTeX source definitions for acronyms and glossaries}
+    ]{lib/acronyms.tex}%
+    }{}
+    
+    % 4. Attach the citedtags.bib file
+    \IfFileNotEmpty{citedtags.bib}{%
+    \embedfile[
+        afrelationship = {Supplement},
+        mimetype       = {text/x-bibtex},
+        desc           = {Cited tags BibLaTeX bibliography file}
+    ]{citedtags.bib}%
+    }{}
+\end{lstlisting}
+
+\clearpage
+\section{To achieve PDF/A when including existing PDF files}
+\label{sec:PDFAforExistingPDFs}
+
+There are several alternatives to consider when you want to include non-PDF/A compliant \gls{PDF} files in a thesis:
+\begin{enumerate}
+    \item\label{RecompileAlternative} If you have the source files (and the relevant copyright ownership or permissions), you can recompile them such that they are PDF/A compliant.
+    \begin{description}[style=nextline, labelwidth=\widthof{\textbf{Disadvantage}}, leftmargin=!]
+    \item[Advantage] PDF/A compliance --- it is also a \enquote{new} document and hence has its own copyright.
+    \item[Disadvantage] You may lose the layout of the publication.
+    \item[Note] Many monographs have chapters that are based on a specific publication, rewritten as a chapter (with, of course, a citation to the original publication).
+    \end{description}
+    
+    \item\label{AttachAlternative} If your kappa (or thesis) is PDF/A-3u compliant, \textbf{attach} the non-PDF/A compliant files
+    \begin{description}[style=nextline, labelwidth=\widthof{\textbf{Disadvantage}}, leftmargin=!]
+    \item[Advantage] PDF/A-3u compliance allows the attachment of other kinds of files without breaking the containing PDF file's PDF/A-3u compliance. As a result, the \enquote{included files} are fully present.
+    
+    \item[Disadvantage] The attached files must be viewed separately and may not maintain their appearance in the future (as they do not include all fonts used, among other external dependencies).
+    \end{description}
+
+    \item\label{TransformAlternative} Transform the non-compliant \glspl{PDF} into compliant \glspl{PDF}
+    \begin{description}[style=nextline, labelwidth=\widthof{\textbf{Disadvantage}}, leftmargin=!]
+    \item[Advantage] The documents can be included in-place with \texttt{\textbackslash includepdf}.
+    
+    \item[Disadvantage] Doing the transformation can be \textbf{very} difficult. See \Cref{sec:nonPDFAcompliantPublications}. \textbf{Note:} It took nearly a week of effort to transform all the files to successfully get the PDF/A-3u verification shown in \Cref{sec:verificationOfAll}.
+    \end{description}
+\end{enumerate}
+
+
+\subsection{Dealing with non-PDF/A compliant publications}
+\label{sec:nonPDFAcompliantPublications}
+
+This section describes the effort to transform the example publication so the full thesis, including publications, meets the PDF/A-3u requirements.
+
+\subsubsection{Dealing with Paper A from rfc1235.txt.pdf}
+\label{sec:dealingWithPaperA}
+The sample paper \fname{rfc1235.txt.pdf} uses Courier, but the file does \textbf{not} embed this Adobe \textit{proprietary} font. One can replace this font with the \texttt{NimbusMonoPS-Regular} font by using the command shown in \Cref{lst:cleanrfc1235}. While the replacement font is \textbf{not} visually identical, it is metrically matched:
+\begin{itemize}
+    \item \textbf{The Outlines (Glyph Shapes):} \texttt{NimbusMonoPS} was created as an open-source clone of Adobe Courier. While their character widths, line heights, word spacing, and overall proportions are meticulously matched (\ie metrics are identical), the actual glyph designs have subtle differences in stroke weight, serifs, and spacing. Under a microscope, you can tell they are different font families.
+
+    \item \textbf{The Layout:} Because the metrics (widths and spacing) match, the text wrapping, line breaks, page lengths, and overall formatting of the included paper will not shift.
+\end{itemize}
+
+Will NimbusMono be acceptable for \gls{KTH} and archival standards? The short answer is \enquote{Yes}. Archival bodies (enforcing PDF/A rules) care primarily about \textit{self-containment} and \textit{long-term readability}:
+\begin{itemize}
+    \item Every character is permanently baked into the file as vector outlines. PDF/A-3u strictly forbids depending on device fonts or un-embedded Base-14 references precisely because a digital archive must remain viewable decades from now, even if the user's computer does not have Adobe Courier installed. By embedding NimbusMono, the rendering engine will always have the exact outlines it needs.
+
+    \item ToUnicode maps are fully integrated so the text remains searchable and highlightable.
+
+    \item The layout is preserved without breaking pagination.
+\end{itemize}
+
+However, this clearly comes at the cost of not being visually identical at the pixel level.
+
+The file is cleaned as shown in \Cref{lst:cleanrfc1235}.
+\begin{lstlisting}[language={bash}, caption={Using ghostscript to correct the rfc1235 PDF file},label=lst:cleanrfc1235]
+gs -o rfc1235\_clean.pdf -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress rfc1235.txt.pdf
+\end{lstlisting}
+
+This works because Ghostscript does not bundle the original, proprietary Adobe font binaries; instead, it relies on high-quality, \textit{metric-compatible open-source font equivalents} created by URW++\footnote{Now known as URW Type Foundry GmbH, owned by Monotype Imaging Holdings Inc.} to render and process these fonts.
+\begin{itemize}
+    \item Courier is mapped to NimbusMonoPS-Regular.
+
+    \item Times-Roman is mapped to NimbusRoman.
+
+    \item Helvetica is mapped to NimbusSans.
+\end{itemize}
+
+\subsubsection{Dealing with Paper\_B}
+\label{sec:dealingWithPaperB}
+The example paper in \fname{Paper\_B\_one\_page.pdf} is not PDF/A compliant.
+The veraPDF\footnote{veraPDF is stylized in lowercase --- \url{https://verapdf.org/}} report for this file highlights the exact violations propagating into the thesis \gls{PDF}:
+\begin{enumerate}
+\item \textbf{123 \enquote{DeviceCMYK} Color Space Violations (Rule \enquote{6.2.3.3 Test 2}):}
+The Hindawi publisher layout (the orange/brown header band, lines, and logos) was authored with uncalibrated CMYK colors (\enquote{0.12 0.72 1.0 0.05 k}). Because \enquote{Paper\_B\_one\_page.pdf} contains no embedded CMYK OutputIntent dictionary, veraPDF flags every single CMYK fill and stroke operator.
+
+\item \textbf{21 \enquote{DeviceGray} Color Space Violations (Rule \enquote{6.2.3.3 Test 3}):}
+Grayscale text and borders were authored in uncalibrated \enquote{/DeviceGray} without an OutputIntent profile.
+
+\item \textbf{Missing \enquote{CIDSet} in Font Descriptor (Rule \enquote{6.3.5 Test 3}):}
+The font \enquote{VHFPLH+MinionPro-Regular} used by the publisher lacks the mandatory \enquote{/CIDSet} stream mapping its subset glyphs.
+
+\item \textbf{Illegal Link Annotation Properties (Rule \enquote{6.5.3 Test 2 \& 3}):}
+The clickable DOI URL (\enquote{[http://dx.doi.org/10.1155/2014/528407](http://dx.doi.org/10.1155/2014/528407)}) contains an annotation dictionary (\enquote{29 0 obj}) lacking standard \enquote{/Print} flags and containing non-conforming color arrays.
+
+\item \textbf{Non-Standard XMP Metadata Extensions (Rule \enquote{6.7.9 Test 2 \& 3}):}
+Hindawi injected CrossMark, NISO-JAV, and PRISM 2.1 properties (\enquote{crossmark:MajorVersionDate}, \enquote{jav:journal\_article\_version}, \etc) without an \enquote{extensionSchemas} container.
+\end{enumerate}
+
+The entire multi-stage pipeline that transforms the \gls{PDF} file  \fname{Paper\_B\_one\_page.pdf} into a \qty{100}{\percent} compliant PDF/A-3u file consists of:
+\begin{description}[style=nextline, labelwidth=\widthof{\textbf{Disadvantage}}, leftmargin=!]
+
+\item [Ghostscript] \Cref{lst:cleanPaperB} cleanups and converts all CMYK color channels, vector spaces, and fills into the device-independent sRGB color space.
+\begin{itemize}
+    \item \texttt{-sColorConversionStrategy=sRGB} and \texttt{-sProcessColorModel=DeviceRGB} forces Ghostscript to map all embedded CMYK vector artwork, fills, and strokes into standard sRGB, eliminating any raw DeviceCMYK operators that trigger veraPDF rule 6.2.4.3.
+
+    \item \texttt{-dOverrideICC=true} ensures that existing embedded profiles that might conflict or cause color-space mismatches are overridden by the target sRGB conversion strategy.
+\end{itemize}
+
+
+\item[Python Part 1] See \Cref{lst:cleanPaperBone}, which:
+\begin{itemize}
+    \item Injects a universal fallback byte-range (\texttt{<00> <ff> <fffd>}) into \texttt{CMap} streams to safely handle any unmapped glyph indices.
+
+    \item Allocates a custom \texttt{/ToUnicode} stream and explicitly linked it to WinAnsi-encoded fonts (such as Minion-Black).
+
+    \item Generates baseline \texttt{CIDSet} descriptor tables for embedded CID font subsets.
+\end{itemize}
+
+\item[Python Part 1] 2B performs a regex-based cleanup pass to surgically strip out conflicting or overly strict \texttt{/CIDSet} property references that tripped the validator's conditional checks.
+\end{description}
+
+\begin{lstlisting}[language={bash}, caption={Using ghostscript to correct the Paper\_B PDF file},label=lst:cleanPaperB]
+gs -o Paper_B_fully_rgb.pdf \
+   -sDEVICE=pdfwrite \
+   -dPDFSETTINGS=/prepress \
+   -dPDFA=3 \
+   -sProcessColorModel=DeviceRGB \
+   -sColorConversionStrategy=sRGB \
+   -dOverrideICC=true \
+   -dEmbedAllFonts=true \
+   -dSubsetFonts=true \
+   -dForceEncodeFonts=true \
+   -dPreserveGlyphNames=false \
+   Paper_B_one_page.pdf
+\end{lstlisting}
+
+\begin{lstlisting}[language={Python}, caption={Python to fix up paper B},label=lst:cleanPaperBone]
+import fitz
+import re
+
+doc = fitz.open("Paper_B_fully_rgb.pdf")
+
+# 1. Define a standard ToUnicode CMap stream for WinAnsi fonts
+cmap_content = (
+    b"/CIDInit /ProcSet findresource begin\n"
+    b"12 dict begin\n"
+    b"begincmap\n"
+    b"/CMapType 2 def\n"
+    b"/CMapName /Custom-WinAnsi-ToUnicode def\n"
+    b"1 begincodespacerange\n"
+    b"<00><ff>\n"
+    b"endcodespacerange\n"
+    b"1 beginbfrange\n"
+    b"<00><ff><0000>\n"
+    b"endbfrange\n"
+    b"endcmap\n"
+    b"CMapName currentdict /CMap defineresource pop\n"
+    b"end end"
+)
+
+cmap_xref = doc.get_new_xref()
+doc.update_object(cmap_xref, f"<</Length {len(cmap_content)}>>")
+doc.update_stream(cmap_xref, cmap_content)
+
+patched_cmaps = 0
+cleaned_cids = 0
+
+# 2. General-case processing across all objects
+for xref in range(1, doc.xref_length()):
+    try:
+        # A. Dynamically handle any unmapped ranges in CMap streams
+        stream_data = doc.xref_stream(xref)
+        if stream_data and b"begincmap" in stream_data:
+            cmap_text = stream_data.decode("latin1", errors="ignore")
+            # If the CMap lacks a fallback range, inject a safe universal bfrange
+            if "endcmap" in cmap_text and "<fffd>" not in cmap_text:
+                fallback_range = "\n1 beginbfrange\n<00> <ff> <fffd>\nendbfrange\n"
+                cmap_text = cmap_text.replace("endcmap", fallback_range + "endcmap")
+                doc.update_stream(xref, cmap_text.encode("latin1"))
+                patched_cmaps += 1
+
+        # B. General cleanup of conflicting /CIDSet entries from font descriptors
+        obj_text = doc.xref_object(xref, compressed=True)
+        if obj_text and ("FontDescriptor" in obj_text or "CIDSet" in obj_text):
+            new_obj = re.sub(r'/CIDSet\s+\d+\s+0\s+R', '', obj_text)
+            if new_obj != obj_text:
+                doc.update_object(xref, new_obj)
+                cleaned_cids += 1
+    except Exception:
+        continue
+
+# 3. Explicitly link the ToUnicode stream to any WinAnsi fonts lacking it
+for page_num in range(len(doc)):
+    for font in doc.get_page_fonts(page_num):
+        font_xref = font[0]
+        obj_text = doc.xref_object(font_xref, compressed=True)
+        if "/ToUnicode" not in obj_text and obj_text.endswith(">>"):
+            updated_obj = obj_text[:-2] + f"/ToUnicode {cmap_xref} 0 R>>"
+            doc.update_object(font_xref, updated_obj)
+
+doc.save("Paper_B_one_page_final.pdf", garbage=4, deflate=True)
+doc.close()
+print(f"General-case processing complete: Patched {patched_cmaps} CMaps, cleaned {cleaned_cids} CIDSets.")
+\end{lstlisting}
+
+
+\begin{figure}[!ht]
+  \begin{center}
+    \fbox{\includegraphics[width=0.75\textwidth]{README_notes/veraPDF-validation-report.png}}
+  \end{center}
+  \caption{Successful veraPDF validation report with \enquote{Validation Profile:	PDF/A-3u validation profile} of the whole thesis with Papers A and B included.}
+  \label{fig:veraPDFvalidationReport}
+\end{figure}
+\FloatBarrier
+
+Regarding the Python snippet 2B, one might ask: Is this a good idea, or just removing the symptom?
+
+This is a classic tension in digital preservation: \textbf{reconciling rigid, older archival standards with modern font engineering}. Removing the \enquote{/CIDSet} entry is indeed \textbf{treating the symptom} rather than fixing the root cause at the font-generation level. However, in the context of PDF/A-3u compliance, it is a pragmatic and technically safe workaround.
+
+The mismatch happens because:
+\begin{description}[style=nextline, labelwidth=\widthof{\textbf{The Specification Anchor}}, leftmargin=!]
+    \item [The Specification Anchor] PDF/A-3 (ISO 19005-3:2012) normatively inherits its rules from \gls{PDF} 1.7 (ISO 32000-1). Under \gls{PDF} 1.7 rules, a subsetted CID font \textbf{must} include a \enquote{/CIDSet} stream, \ie a binary bitmask indicating which character IDs are present in the subset.
+    
+    \item [Modern Tooling vs. Legacy Rules] When modern engines (\eg LuaLaTeX, Ghostscript, or modern subsetters) build a \gls{PDF}, they either omit \enquote{/CIDSet} or generate a bitmask that strict validators, such as veraPDF, find fault with (\eg a mismatch between the bitmask and the actual glyph usage tables inside the font program).
+    
+    \item [The PDF 2.0 Shift] The committee behind PDF 2.0 (ISO 32000-2) deprecated \enquote{/CIDSet} precisely because it was redundant, error-prone, and caused more archiving headaches than it solved. Modern \gls{PDF} processors can inspect the embedded font program (\enquote{FontFile2} or \enquote{FontFile3}) directly to see what glyphs exist.
+\end{description}
+
+Is removing it safe? Yes, it is safe for long-term archiving and rendering, for a few key reasons:
+\begin{description}[style=nextline, labelwidth=\widthof{\textbf{The Source of Truth Remains}}, leftmargin=!]
+    \item [The Source of Truth Remains] The actual font subset data (\enquote{FontFile2}/\enquote{FontFile3}) is untouched and fully embedded. Any compliant PDF renderer gets its glyph data straight from the font program, not from the \enquote{/CIDSet} bitmask.
+    \item [Bypassing the Rule] The PDF/A rule for \enquote{CIDSet} is conditional: \textbf{If} a \enquote{CIDSet} stream is present, it must be exhaustively accurate. By stripping the key entirely, you bypass the conditional validation check while leaving the core font intact.
+\end{description}
+While fixing it upstream in the LaTeX or Ghostscript compilation chain would be the \enquote{pure} architectural fix, surgically removing a deprecated, redundant metadata entry to satisfy a legacy validator is a standard and effective technique in PDF remediation.
+
+Useful tools when tracking down VerPDF issues were the program \texttt{pdffonts}, \texttt{gs}, the \texttt{fitz} Python library (part of \texttt{PyMuPDF}), and Google's Gemini.
+
+
+
+\subsubsection{Dealing with Paper\_D}
+\label{sec:dealingWithPaperD}
+We start with the same Ghostscript to clean up the color information. See \Cref{lst:cleanPaperD}.
+\begin{lstlisting}[language={bash}, caption={Using ghostscript to correct the Paper\_D PDF file},label=lst:cleanPaperD]
+gs -o Paper\_D\_fully\_rgb.pdf \
+   -sDEVICE=pdfwrite \
+   -dPDFSETTINGS=/prepress \
+   -dPDFA=3 \
+   -sProcessColorModel=DeviceRGB \
+   -sColorConversionStrategy=sRGB \
+   -dOverrideICC=true \
+   -dEmbedAllFonts=true \
+   -dSubsetFonts=true \
+   -dForceEncodeFonts=true \
+   -dPreserveGlyphNames=false \
+   Paper\_D.pdf
+\end{lstlisting}
+
+However, this \gls{PDF} breaks the following rule:
+\begin{verbatim}
+Rule	Status
+Specification: ISO 19005-3:2012, Clause: 6.2.5, Test number: 1	
+An ExtGState dictionary shall not contain the TR key	Failed
+1 occurrences	Hide
+PDExtGState	
+containsTR == false	
+root/document[0]/pages[94](227 0 obj PDPage)/contentStream[0](229 0 obj PDContentStream)/operators[9]/xObject[0]/contentStream[0](228 0 obj PDContentStream)/operators[752]/extGState[0](1267 0 obj PDExtGState)
+An ExtGState dictionary contains the TR key
+\end{verbatim}
+
+To address this, the Python code has to scan all objects across the document, detect any dictionary containing a forbidden Transfer Function (\texttt{/TR} or \texttt{/TR2}), and purge it programmatically. See \Cref{lst:cleanPaperDone}.
+
+\begin{lstlisting}[language={Python}, caption={Python to fix up paper D},label=lst:cleanPaperDone]
+doc = fitz.open("Paper_D_fully_rgb.pdf")
+
+# 1. Define a standard ToUnicode CMap stream for WinAnsi fonts
+cmap_content = (
+    b"/CIDInit /ProcSet findresource begin\n"
+    b"12 dict begin\n"
+    b"begincmap\n"
+    b"/CMapType 2 def\n"
+    b"/CMapName /Custom-WinAnsi-ToUnicode def\n"
+    b"1 begincodespacerange\n"
+    b"<00><ff>\n"
+    b"endcodespacerange\n"
+    b"1 beginbfrange\n"
+    b"<00><ff><0000>\n"
+    b"endbfrange\n"
+    b"endcmap\n"
+    b"CMapName currentdict /CMap defineresource pop\n"
+    b"end end"
+)
+
+cmap_xref = doc.get_new_xref()
+doc.update_object(cmap_xref, f"<</Length {len(cmap_content)}>>")
+doc.update_stream(cmap_xref, cmap_content)
+
+patched_cmaps = 0
+cleaned_cids = 0
+removed_tr = 0
+
+# 2. General-purpose processing across all document objects
+for xref in range(1, doc.xref_length()):
+  try:
+    # A. Dynamically handle unmapped ranges in CMap streams
+    stream_data = doc.xref_stream(xref)
+    if stream_data and b"begincmap" in stream_data:
+      cmap_text = stream_data.decode("latin1", errors="ignore")
+      if "endcmap" in cmap_text and "<fffd>" not in cmap_text:
+        fallback_range = "\n1 beginbfrange\n<00> <ff> <fffd>\nendbfrange\n"
+        cmap_text = cmap_text.replace("endcmap", fallback_range + "endcmap")
+        doc.update_stream(xref, cmap_text.encode("latin1"))
+        patched_cmaps += 1
+    # B. Clean up object definitions (uncompressed and compressed parsing)
+    obj_text = doc.xref_object(xref, compressed=False)
+    if not obj_text or obj_text == "null":
+      obj_text = doc.xref_object(xref, compressed=True)
+    if obj_text:
+      updated = False
+      # Strip /CIDSet references from font descriptors
+      if "FontDescriptor" in obj_text or "CIDSet" in obj_text:
+        new_obj = re.sub(r'/CIDSet\s+\d+\s+0\s+R', '', obj_text)
+        if new_obj != obj_text:
+          obj_text = new_obj
+          updated = True
+          cleaned_cids += 1
+      # General-purpose purge of forbidden /TR or /TR2 keys across any dictionary
+      if "/TR" in obj_text or "/TR2" in obj_text:
+        # Matches any /TR or /TR2 dictionary key definition and removes it entirely
+        new_obj = re.sub(r'/\s*TR2?\b\s*(?:\[[^\]]*\]|/[A-Za-z0-9#+-]+|\d+\s+\d+\s+R|<[^>]*>|\([^)]*\)|<<[^>]*>>)?', '', obj_text)
+        # Fallback safety: if inline regex missed a multi-line format, clean line by line
+        if new_obj == obj_text:
+          lines = obj_text.splitlines()
+          filtered = [l for l in lines if not re.search(r'/\s*TR2?\b', l)]
+          new_obj = "\n".join(filtered)
+        if new_obj != obj_text:
+          obj_text = new_obj
+          updated = True
+          removed_tr += 1
+      if updated:
+        doc.update_object(xref, obj_text)
+  except Exception:
+    continue
+
+# 3. Explicitly link the ToUnicode stream to any WinAnsi fonts lacking it
+for page_num in range(len(doc)):
+  for font in doc.get_page_fonts(page_num):
+    font_xref = font[0]
+    obj_text = doc.xref_object(font_xref, compressed=True)
+    if "/ToUnicode" not in obj_text and obj_text.endswith(">>"):
+      updated_obj = obj_text[:-2] + f"/ToUnicode {cmap_xref} 0 R>>"
+      doc.update_object(font_xref, updated_obj)
+
+doc.save("Paper_D_clean.pdf", garbage=4, deflate=True)
+doc.close()
+print(f"General-purpose processing complete: Patched {patched_cmaps} CMaps, cleaned {cleaned_cids} CIDSets, purged {removed_tr} TR keys.")
+\end{lstlisting}
+
+By injecting the fallback range right before \texttt{endcmap}, we ensure that any character codes missing from the publisher's sparse tables safely map to \texttt{<fffd>}, while the publisher's explicit character mappings retain precedence during text extraction.
+
+\Cref{lst:cleanPaperGeneral} shows a clean, generalized, object-agnostic Python script\footnote{Available in \fname{README\_notes/pdf\_a3u\_remediator.py}.} that you can use as the universal recipe for any non-compliant publication \gls{PDF} (\eg Paper B, Paper D, or future inclusions). The approach is to repair incomplete CMaps rather than skipping them. Instead of only attaching a fallback to fonts that completely lack a /ToUnicode map, we inspect every font's CMap stream. If an existing CMap stream does not contain a broad fallback range (\ie \texttt{<00> <ff> <fffd>}), we append it to the stream. This ensures that any 8-bit character code lacking an explicit mapping falls back safely to \texttt{<fffd>}\footnote{See \Cref{sec:sixteenBitFallback} for further information.}, satisfying VeraPDF without breaking valid character mappings.
+
+\begin{lstlisting}[language={Python}, caption={Python to fix up publications},label=lst:cleanPaperGeneral]
+import argparse
+import fitz
+import re
+
+parser = argparse.ArgumentParser(description="Remediate a publication PDF for PDF/A-3u compliance.")
+parser.add_argument("input", help="Path to input PDF")
+parser.add_argument("output", help="Path to output remediated PDF")
+args = parser.parse_args()
+
+doc = fitz.open(args.input)
+cleaned_cids = 0
+cleaned_tr = 0
+patched_cmaps = 0
+
+# 1. Universal structural cleanup and CMap patching across all objects
+for xref in range(1, doc.xref_length()):
+  try:
+    # A. Safely append a fallback range to CMap streams lacking '<fffd>'
+    stream_data = doc.xref_stream(xref)
+    if stream_data and b"begincmap" in stream_data:
+      cmap_text = stream_data.decode("latin1", errors="ignore")
+      if "endcmap" in cmap_text and "<fffd>" not in cmap_text:
+        # Injecting a fallback bfrange right before endcmap handles unmapped glyphs safely
+        fallback_range = "\n1 beginbfrange\n<00> <ff> <fffd>\nendbfrange\n"
+        cmap_text = cmap_text.replace("endcmap", fallback_range + "endcmap")
+        doc.update_stream(xref, cmap_text.encode("latin1"))
+        patched_cmaps += 1
+    # B. Fetch object text for dictionary cleanup
+    obj_text = doc.xref_object(xref, compressed=False)
+    if not obj_text or obj_text == "null":
+      obj_text = doc.xref_object(xref, compressed=True)
+    if obj_text:
+      updated = False
+      # Clean up conflicting /CIDSet references from font descriptors
+      if "FontDescriptor" in obj_text or "CIDSet" in obj_text:
+        new_obj = re.sub(r'/CIDSet\s+\d+\s+0\s+R', '', obj_text)
+        if new_obj != obj_text:
+          obj_text = new_obj
+          updated = True
+          cleaned_cids += 1
+      # Purge forbidden /TR or /TR2 keys anywhere they appear in dictionaries
+      if "/TR" in obj_text or "/TR2" in obj_text:
+        new_obj = re.sub(r'/\s*TR2?\b\s*(?:\[[^\]]*\]|/[A-Za-z0-9#+-]+|\d+\s+\d+\s+R|<[^>]*>|\([^)]*\)|<<[^>]*>>)?', '', obj_text)
+        if new_obj == obj_text:
+          lines = obj_text.splitlines()
+          filtered = [l for l in lines if not re.search(r'/\s*TR2?\b', l)]
+          new_obj = "\n".join(filtered)
+        if new_obj != obj_text:
+          obj_text = new_obj
+          updated = True
+          cleaned_tr += 1
+      if updated:
+        doc.update_object(xref, obj_text)
+  except Exception:
+    continue
+
+doc.save(args.output, garbage=4, deflate=True)
+doc.close()
+print(f"Universal processing complete: Patched {patched_cmaps} CMaps, cleaned {cleaned_cids} CIDSets, purged {cleaned_tr} TR keys.")
+\end{lstlisting}
+
+\subsubsection{Dealing with Paper\_E}
+\label{sec:dealingWithPaperE}
+
+As shown in \Cref{lst:fontsInPaperE}, the proprietary Calibri-Bold and Times-Roman fonts are used; however, Calibri-Bold is embedded, while Times-Roman is not. \Cref{lst:cleaningPaperE} shows the cleaning and the resulting fonts.
+
+\begin{lstlisting}[language={bash}, caption={Listing of fonts in Patent\_A PDF file},label=lst:fontsInPaperE]
+pdffonts Paper\_E.pdf
+name                                 type              encoding         emb sub uni object ID
+------------------------------------ ----------------- ---------------- --- --- --- ---------
+Times-Roman                          Type 1            Standard         no  no  no     273  0
+HUMLTG+NimbusRomNo9L-Regu            Type 1            Custom           yes yes yes    276  0
+PODAVW+NimbusRomNo9L-Medi            Type 1            Custom           yes yes yes    277  0
+AEMGQO+NimbusMonL-Regu               Type 1            Custom           yes yes yes    278  0
+FBUACG+NimbusRomNo9L-ReguItal        Type 1            Custom           yes yes yes    279  0
+BCDHEE+Calibri-Bold                  TrueType          WinAnsi          yes yes no      47  0
+\end{lstlisting}
+
+\begin{lstlisting}[language={bash}, caption={Listing of fonts in Patent\_A PDF file},label=lst:cleaningPaperE]
+gs -o Paper_E_clean.pdf -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress Paper_E.pdf
+GPL Ghostscript 9.52 (2020-03-19)
+Copyright (C) 2020 Artifex Software, Inc.  All rights reserved.
+This software is supplied under the GNU AGPLv3 and comes with NO WARRANTY:
+see the file COPYING for details.
+Processing pages 1 through 2.
+Page 1
+Loading NimbusRoman-Regular font from /usr/share/ghostscript/9.52/Resource/Font/NimbusRoman-Regular... 5208692 3852001 3541824 2112088 4 done.
+Page 2
+maguire@birkz:/tmp> pdffonts Paper_E_clean.pdf
+name                                 type              encoding         emb sub uni object ID
+------------------------------------ ----------------- ---------------- --- --- --- ---------
+KWSRUE+NimbusRomNo9L-Regu            Type 1C           Custom           yes yes no      49  0
+CLGCJJ+NimbusRomNo9L-Medi            Type 1C           WinAnsi          yes yes no      51  0
+OGHZHE+NimbusMonL-Regu               Type 1C           WinAnsi          yes yes no      53  0
+HIJIRR+NimbusRomNo9L-ReguItal        Type 1C           Custom           yes yes no      55  0
+EHOKSM+Times-Roman                   Type 1C           WinAnsi          yes yes no      77  0
+ZJLLTV+Calibri-Bold                  TrueType          WinAnsi          yes yes yes     86  0
+\end{lstlisting}
+
+However, the result of the above is not sufficient, as the veraPDF verification finds the issue:
+\begin{verbatim}
+Rule	Status
+Specification: ISO 19005-3:2012, Clause: 6.2.5, Test number: 1	
+An ExtGState dictionary shall not contain the TR key
+\end{verbatim}
+
+Therefore, we apply the Python script (shown in \Cref{lst:cleanPaperGeneral}) as used with Papers B and D to produce a \fname{Paper\_E\_cleaned.pdf}.
+
+
+\subsubsection{Dealing with Patent\_A and Patent\_B}
+\label{sec:dealingWithPatentsAandB}
+Patent\_A uses the proprietary Courier font, as shown in \Cref{lst:fontsInPatentA}. The commands to clean the file are shown in \Cref{lst:cleanPatentA} and the resulting fonts are shown in \Cref{lst:fontsInCleanedPatentA}. When the cleaned file was included in the thesis, it passed all of the veraPDF tests; despite the \enquote{no} with respect to Unicode shown in \Cref{lst:fontsInCleanedPatentA}\footnote{It seems possible to extract the text from the \gls{PDF}. However, in any case, the full text of patents is publicly available}. The same method can be applied to Patent\_B.
+
+\begin{lstlisting}[language={bash}, caption={Listing of fonts in Patent\_A PDF file},label=lst:fontsInPatentA]
+ pdffonts US7107453.pdf
+Internal Error: xref num 2131175750 not found but needed, try to reconstruct<0a>
+name                                 type              encoding         emb sub uni object ID
+------------------------------------ ----------------- ---------------- --- --- --- ---------
+Courier                              Type 1            WinAnsi          no  no  no  [none]
+\end{lstlisting}
+
+
+\begin{lstlisting}[language={bash}, caption={Using ghostscript to correct the US7107453.pdf PDF file},label=lst:cleanPatentA]
+gs -o US7107453\_clean.pdf -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress US7107453.pdf
+\end{lstlisting}
+
+\begin{lstlisting}[language={bash}, caption={Listing of fonts in Patent\_A PDF file after cleaning},label=lst:fontsInCleanedPatentA]
+pdffonts US7107453\_clean.pdf
+name                                 type              encoding         emb sub uni object ID
+------------------------------------ ----------------- ---------------- --- --- --- ---------
+LOXXSN+Courier                       Type 1C           WinAnsi          yes yes no       9  0
+\end{lstlisting}
+
+\subsubsection{Dealing with Artifact\_A}
+\label{sec:dealingWithPatifactA}
+
+As shown in \Cref{lst:fontsInArtifactA}, all of the fonts are embedded.
+
+\begin{lstlisting}[language={bash}, caption={Listing of fonts in Patent\_A PDF file},label=lst:fontsInArtifactA]
+pdffonts PacketMill-Artifact_for_ASPLOS21.pdf
+name                                 type              encoding         emb sub uni object ID
+------------------------------------ ----------------- ---------------- --- --- --- ---------
+[none]                               Type 3            Custom           yes no  yes      4  0
+[none]                               Type 3            Custom           yes no  yes      5  0
+[none]                               Type 3            Custom           yes no  yes      6  0
+[none]                               Type 3            Custom           yes no  yes      7  0
+[none]                               Type 3            Custom           yes no  yes      8  0
+[none]                               Type 3            Custom           yes no  yes     12  0
+[none]                               Type 3            Custom           yes no  yes     17  0
+[none]                               Type 3            Custom           yes no  yes     19  0
+CAAAAA+LiberationSans                CID TrueType      Identity-H       yes yes yes     18  0
+EAAAAA+Roboto-Regular                CID TrueType      Identity-H       yes yes yes     20  0
+\end{lstlisting}
+
+\subsubsection{Thesis with all included papers}
+\label{sec:verificationOfAll}
+After all of the above changes to the included publications, the full \gls{PDF} passes the veraPDF PDF/A-3u validation profile. See 
+\Cref{fig:veraPDFvalidationReportFull}.
+\begin{figure}[!ht]
+  \begin{center}
+    \fbox{\includegraphics[width=0.75\textwidth]{README_notes/validation-whole-thesis-with-included-papers.png}}
+  \end{center}
+  \caption{Successful veraPDF validation report for the thesis with all included publications.}
+  \label{fig:veraPDFvalidationReportFull}
+\end{figure}
+\FloatBarrier
+
+\subsection{Cautionary statement}
+\label{sec:cautionaryStatement}
+
+While this section addressed a number of different types of publications, it does \textbf{not} necessarily follow that these methods will work for \textit{all} publications from \textit{all} publishers.
+
+\subsubsection{16-bit Fallback}
+\label{sec:sixteenBitFallback}
+As mentioned in \Cref{sec:dealingWithPaperD}, \enquote{If an existing CMap stream does not contain a broad fallback range (\ie the 8-bit single-byte range \ldots)}; future work should consider:
+\begin{itemize}
+    \item Single-byte hex ranges (\ie \texttt{<00> <ff>}) are tailored for 8-bit font encodings (such as WinAnsi, MacRoman, or Standard encoding), which are standard in Western journal papers, patents, \glspl{RFC}, and older glspl{PDF}.
+
+    \item If a publication uses a 16-bit wide-character CID font (common in CJK documents or complex symbol sets), character codes use 4-hex-digit ranges (\ e.g. \texttt{<0000> <ffff>}); thus, a broadened fallback will be needed.
+\end{itemize}
+
+Note that in the Adobe CMap Syntax Standard, the \enquote{beginbfrange} operator expects the layout:
+\begin{quotation}
+$$\text{<start\_code>} \quad \text{<end\_code>} \quad \text{<target\_mapping>}$$
+\end{quotation}
+
+No dots, dashes, or separators other than whitespace are permitted between the starting hex code and the ending hex code.
+
+Additionally, angle brackets \enquote{< >} enclose hexadecimal strings. For a 16-bit wide-character range, each value requires 4 hex digits (\eg \enquote{0000} through \enquote{FFFF}), resulting precisely in \enquote{<0000> <ffff>}.
+
+Defining a fallback for 32-bit characters is likely similar, but, as with the 16-bit case, is left for future work.
+
+
+\subsubsection{Future work should address both print and on-line optimizations}
+\label{sec:futureWork}
+Additionally, this document has not addressed the challenges of optimizing the thesis and its publications for both printed and electronic formats. This remains as future work.
+
+
+\clearpage
+\ifinswedish
+\printglossary[style=mylong, type=\acronymtype, title={Lista över akronymer
+och förkortningar}]
+\else
+%\printglossary[style=mylong, type=\acronymtype, title={List of Acronyms and abbreviations}]
+%\printnoidxglossaries% Replace \printglossary[type=\acronymtype, ...] with:
+\printnoidxglossary[type=\acronymtype, style=mylong, title={List of Acronyms and Abbreviations}]
+\fi
+\clearpage
+
+% --- print the bibliography ---
+% Print the bibliography (and make it appear in the table of contents)
+
+% Specify the title of the references page
+\renewcommand{\bibname}{References}
+
+%\typeout{Biblatex current language is \currentlang}
+\printbibliography[heading=bibintoc, title={References}]
+
+
+\end{document}
+
