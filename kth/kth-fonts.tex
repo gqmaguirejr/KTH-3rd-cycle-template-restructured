@@ -117,7 +117,10 @@
 % Alternatively, one can define a new font to access the Stylistic Set 1 <ss01>
 % To access all the Stylistic Set 1 <ss01> such as ℋ
 %\newfontfamily\mystixmathfontSSa{STIX Two Math}[StylisticSet=1]
-
+% Declare shape substitutions specifically for STIXTwoMath(1) (allocated by \mathcal range)
+\DeclareFontShape{TU}{STIXTwoMath(1)}{m}{it}{<-> ssub * STIXTwoMath(1)/m/n}{}
+\DeclareFontShape{TU}{STIXTwoMath(1)}{b}{it}{<-> ssub * STIXTwoMath(1)/b/n}{}
+\DeclareFontShape{TU}{STIXTwoMath(1)}{sb}{it}{<-> ssub * STIXTwoMath(1)/sb/n}{}
 
 % Alias cmtt to TeX Gyre Cursor across all encodings
 \DeclareFontFamily{TU}{cmtt}{}
