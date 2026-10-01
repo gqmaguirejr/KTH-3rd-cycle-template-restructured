@@ -141,6 +141,72 @@ function restore_font_cache()
 end
 
 
+function update_font_cache_file()
+  -- Define the command to be executed
+  local command = "luaotfload-tool --update"
+  
+  -- Use io.popen to run the command and get its output
+  local handle = io.popen(command)
+  if not handle then return end
+  
+  local output = handle:read("*a")
+  handle:close()
+  
+  -- Write the captured output to a temporary file
+  local outputFile = io.open("update_font_cache.tmp", "w")
+  if outputFile then
+    outputFile:write(output)
+    outputFile:close()
+  end
+end
+
+function find_font_via_tool(fontname)
+  -- Define the command to be executed
+  local command = "luaotfload-tool --find='" .. fontname .. "' -F"
+  
+  -- Use io.popen to run the command and get its output
+  local handle = io.popen(command)
+  if not handle then return end
+  
+  local output = handle:read("*a")
+  handle:close()
+  
+  -- Write the captured output to a temporary file
+  local outputFile = io.open("find_font_via_tool.tmp", "w")
+  if outputFile then
+    outputFile:write(output)
+    outputFile:close()
+  end
+end
+
+function find_font_file_definitively(fontname)
+  local output_message = ""
+  
+  -- Check if the main luaotfload system is available
+  if luaotfload and luaotfload.resolve and luaotfload.resolve.name then
+    
+    -- 1. This is the high-level function that fontspec uses.
+    --    It takes a font name and returns a table of data.
+    local font_data = luaotfload.resolve.name(fontname)
+    
+    if font_data and font_data.filename then
+      -- 2. Extract the filename from the returned data table.
+      output_message = "Found '" .. fontname .. "' at: " .. font_data.filename
+    else
+      output_message = "Could not resolve font '" .. fontname .. "' using luaotfload.resolve.name."
+    end
+  else
+    output_message = "Error: luaotfload.resolve.name function is not available. Is fontspec loaded?"
+  end
+
+  -- Write the result to a temporary file
+  local outputFile = io.open("find_font_result.tmp", "w")
+  if outputFile then
+    outputFile:write(output_message)
+    outputFile:close()
+  end
+end
+
 \end{luacode*}
 % 1. Log the start time immediately
 \directlua{log_wall_clock_time("Compilation started")}
@@ -169,6 +235,18 @@ end
   \verbatiminput{font_cache.tmp}%
 }
 
+\newcommand{\UpdateFontCache}{%
+  \directlua{update_font_cache_file()}%
+  \section*{Luaotfload Font Cache Update}%
+  \verbatiminput{update_font_cache.tmp}%
+}
+
+\newcommand{\FindFontViaTool}[1]{%
+  \directlua{find_font_via_tool("#1")}%
+  \section*{Find font #1 via Luaotfload-tool}%
+  \verbatiminput{find_font_via_tool.tmp}%
+}
+
 \newcommand{\MyCheckFontCache}{%
 \directlua{my_check_font_cache()}%
 \textbf{Invoked my\_check\_font\_cache()}\par%
@@ -193,3 +271,8 @@ end
 \textbf{Invoked restore\_font\_cache()()}\par%
 }
 
+\newcommand{\FindFont}[1]{%
+  \directlua{find_font_file_definitively("#1")}%
+  \section*{Result for font '#1'}%
+  \verbatiminput{find_font_result.tmp}%
+}

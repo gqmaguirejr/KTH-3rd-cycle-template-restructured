@@ -112,10 +112,6 @@
 \fi
 
 %% Degree-related information
-\ifx\@programcode\@empty%\relax
-    \else
-    \SetNestedValue{Degree1}{programcode}{\@prgmcode}
-\fi
 \ifx\@degreeName\@empty%\relax
     \else
     \SetNestedValue{Degree1}{Degree}{\@degreeName}
@@ -424,6 +420,5 @@
 % Generate the JSON file from all the captured data
 \GenerateFordivaJSON
 } %% end divainfo
-
 
 \makeatother

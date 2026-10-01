@@ -5,10 +5,10 @@
 % Note that this version works safely with cmyk mode for xcolors.
 % It uses the STIX Match font to have the correct character at the LuaLaTeX engine level.
 \newsavebox{\lstbreakbox}
-\sbox{\lstbreakbox}{\textcolor{red}{\mystixmathfont ↪}\space}
+\sbox{\lstbreakbox}{\textcolor{red}{\ensuremath{\hookrightarrow}}\space}
 
 \lstdefinelanguage{BibTeX}{
- basicstyle=\footnotesize\ttfamily,
+ basicstyle=\ListingMono\footnotesize,
   keywordstyle=\color{blue}\bfseries,      % @InProceedings in Blue
   keywordstyle=[2]\color{darkgray},       % author, title, etc. in Gray
   stringstyle=\color{red},                 % "Values" in Red
@@ -34,15 +34,15 @@
   morestring=[b]",      % Matches "double quotes"
   % morestring=[s]{\{}{\}}  % The correct way to handle {balanced braces}
   % FIX: use moredelim with a style argument and escaped braces
-  % moredelim=[s][\color{red}]{\{}{\}}
+  % moredelim=[s][\color{red}]{\{}{\}},
 }
 
 \lstdefinestyle{latexExampleForAuthors}{
 language=[LaTeX]{TeX},
     breaklines=true,
     postbreak=\usebox{\lstbreakbox},
-    basicstyle=\small\tt,
-    keywordstyle=\color{blue}\sf,
+    basicstyle=\ListingMono\small,
+    keywordstyle=\color{blue}\sffamily,
     identifierstyle=\color{magenta},
     commentstyle=\color{cyan},
     backgroundcolor=\color{yellow!15},
@@ -58,7 +58,7 @@ language=[LaTeX]{TeX},
 language=[LaTeX]{TeX},
     breaklines=true,
     postbreak=\usebox{\lstbreakbox},
-    basicstyle=\small\tt,
+    basicstyle=\ListingMono\small,
     keywordstyle=\color{blue}\sf,
     identifierstyle=\color{magenta},
     commentstyle=\color{cyan},
@@ -86,7 +86,7 @@ language=[LaTeX]{TeX},
     breaklines=true,
     postbreak=\usebox{\lstbreakbox},
     breakatwhitespace=true,
-    basicstyle=\ttfamily\small,
+    basicstyle=\ListingMono\small,
     extendedchars=false,
     upquote=true,
     morestring=[b]",
@@ -113,7 +113,7 @@ language=[LaTeX]{TeX},
 
 \lstdefinelanguage{XML}
 {
-  basicstyle=\ttfamily\color{blue}\bfseries\small,
+  basicstyle=\ListingMono\color{blue}\bfseries\small,
   morestring=[b]",
   morestring=[s]{>}{<},
   morecomment=[s]{<?}{?>},
@@ -131,14 +131,14 @@ language=[LaTeX]{TeX},
 language=[LaTeX]{TeX},
     breaklines=true,
     postbreak=\usebox{\lstbreakbox},
-    basicstyle=\small\tt,
+    basicstyle=\ListingMono\small,
     keywordstyle=\color{blue}\sf,
     identifierstyle=\color{magenta},
     commentstyle=\color{cyan},
     backgroundcolor=\color{yellow!15},
     extendedchars=true,
     inputencoding=utf8,
-    stringstyle=\ttfamily,
+    stringstyle=\ListingMono,
     morestring=[b]',
     tabsize=2,
     columns=flexible,
@@ -155,7 +155,7 @@ language=[LaTeX]{TeX},
     showtabs=false,                         % Dont make tabs visible
     breakatwhitespace=true,
     postbreak=\usebox{\lstbreakbox},
-    basicstyle=\ttfamily\small,
+    basicstyle=\ListingMono\small,
     columns=fixed,
     escapechar = £,
     morekeywords={dc:format, dc:title, dc:date, dc:type, dc:creator, dc:description, dc:subject, dc:source, dc:language, rdf:Alt, rdf:li, rdf:Bag, rdf:Seq, rdf:Description, rdf:Description, rdf:RDF, pdfaExtension:schemas, pdfaSchema:property, pdfaSchema:valueType, pdf:Producer, pdf:Keywords, pdf:PDFVersion, pdfaSchema:schema, pdfaSchema:prefix, pdfaSchema:namespaceURI, pdfaProperty:name, pdfaProperty:valueType, pdfaProperty:category, pdfaProperty:description,  xmp:CreateDate, xmp:ModifyDate, xmp:MetadataDate, xmp:CreatorTool, xmpMM:DocumentID, xmpMM:InstanceID, xmpMM:VersionID, xmpMM:RenditionClass, Iptc4xmpCore:CreatorContactInfo, Iptc4xmpCore:CiEmailWork, prism:complianceProfile, prism:pageCount, xmpTPg:NPages,  x:xmpmeta},
@@ -182,3 +182,35 @@ language=[LaTeX]{TeX},
   {…}{{\ldots}}1,
   %{﻿}{{BOM}{\;}{0xfeff}}{10},
 }
+
+
+\setminted{
+  fontsize        = \small,
+  fontfamily      = tt,
+  %bgcolor         = listingBackground,
+  breaklines      = true,
+  breakanywhere   = true,
+  breakindent     = 2em,
+  samepage      = false
+}
+
+
+% to remove the rules above and below the listing heading, keep heading at the top
+\floatstyle{plaintop}
+\restylefloat{listing}
+
+
+% To put all minted listings in a mdframe with a light yellow background
+% Wrap minted in a borderless, padded mdframed box with the custom background
+\BeforeBeginEnvironment{minted}{%
+  \begin{mdframed}[
+    backgroundcolor   = listingBackground,
+    hidealllines      = true,
+    linewidth         = 0pt,
+    innertopmargin    = 6pt,
+    innerbottommargin = 6pt,
+    innerleftmargin   = 6pt,
+    innerrightmargin  = 6pt
+  ]%
+}
+\AfterEndEnvironment{minted}{\end{mdframed}}
