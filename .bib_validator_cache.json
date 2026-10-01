@@ -106,5 +106,59 @@
         "source": "Crossref (DOI)"
     },
     "b94450473843c1374aa17c9504b26054ebdc62ea0c719ae0aefd2581dd71fbbb": null,
-    "45a5f8cf35c086e27e1b6fd9b795f07a90899910461330ff75cc7d981274c671": null
+    "45a5f8cf35c086e27e1b6fd9b795f07a90899910461330ff75cc7d981274c671": null,
+    "d9c24fe0bb373779a5e4fb64d315bce324de1c29af23dfa28f742f9447a05034": {
+        "title": "Patent US12111768B2",
+        "url": "https://patents.google.com/patent/US12111768B2/en",
+        "source": "Google Patents"
+    },
+    "61498c8c4f65436b655f3555490c47dc89b498a3023e68fb8a42007fda7a057b": {
+        "title": "PacketMill: Toward per-core 100-Gbps Networking - Artifact for ASPLOS'21",
+        "year": "2021",
+        "source": "DataCite (DOI)"
+    },
+    "35f2b04e0b435393c4547a1144e54ca4249a576467a4dcfe688b55632af79db9": {
+        "title": "What We Don't Know About Spreadsheet Errors Today: The Facts, Why We Don't Believe Them, and What We Need to Do",
+        "year": "2016",
+        "source": "DataCite (DOI)"
+    },
+    "e20d7b479ef1ef7eace6586a34626b858ff92a0852aac0ab4e0ed20a695998fc": {
+        "title": "FMM-Head: Enhancing Autoencoder-Based ECG Anomaly Detection with\u00a0Prior Knowledge",
+        "year": "2025",
+        "source": "Crossref (DOI)"
+    },
+    "bec453cc5423856ec2a0a343c6325c1a38aa62167e83808e09f388b677baf190": {
+        "title": "FMM-Head: Enhancing Autoencoder-based ECG anomaly detection with prior knowledge",
+        "year": "2023",
+        "source": "DataCite (DOI)"
+    },
+    "03aa0905c2820ff106b1d4fce1865a44050c182f441fdd1022b07cd6c22b0acb": null,
+    "55ddc071b8bb9a85b5ad70b3a97fe3f88513db79559d1a0d5241822527346b6e": null,
+    "11eefb7814d39e998eb651aff57de72b40006b20b897c992c70d17a4dd2cbb4f": null,
+    "8c73a11601a5ff7dc2c64630369b2fcf103f323e1e0235f46f545bb57ca75c86": {
+        "title": "ANSI/NISO Z39.104-2022, CRediT, Contributor Roles Taxonomy",
+        "year": "",
+        "source": "Crossref (DOI)"
+    },
+    "e2f7521b1b7b3a6099d0a1387815e607b742f8780458577f9e85c88719d5f2c3": {
+        "title": "Reserved Top Level DNS Names",
+        "year": "1999",
+        "source": "Crossref (DOI)"
+    },
+    "9febe098e108b62120fe23da5816a5be54670d241f2510d4d29128256acaab8b": {
+        "title": "Special-Use Domain Names",
+        "year": "2013",
+        "source": "Crossref (DOI)"
+    },
+    "47266d5294f8e5b2533c75ce60516f7cda7c5494f3e11d5b93ad3f8b6a63733b": null,
+    "e7332ff222ddb11e79ed523f8328ce2359de3a56f2da87855045812beab9d5ae": null,
+    "bdf506cc900d4f676e3b44648e6c0d513290f03bf998e525aa9ab0d75161e0d0": null,
+    "8686d5e27e84fd310e1a9af7991bfef9b59264d8a46b282f6a79291c4a70e732": null,
+    "7b053cc2fd83e4338857756e89206f6613f9cef278c5f734d6a4bda4680d4497": null,
+    "52b9dd4ec5eb2d4add649de6d8362c619e370376a02d11644aca28eaf1ef8412": null,
+    "ffeb54c72a0b557cd7955c3b11b1562aeed1271124e4f46524c12c0fda3c04dd": {
+        "title": "On PDF/A Conformance and Font Usage in PDF Documents Provided by Public Sector Organizations",
+        "year": "2023",
+        "source": "Crossref (DOI)"
+    }
 }
