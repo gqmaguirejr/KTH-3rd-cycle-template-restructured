@@ -200,11 +200,12 @@
    title = {Methods and devices for controlling memory handling},
    keywords = {memory handling, shared cache},
    abstract = {A method and device for controlling memory handling in a processing system comprising a cache shared between a plurality of processing units, wherein the cache comprises a plurality of cache portions. The method comprises obtaining first information pertaining to an allocation of a first memory portion of a memory to a first application, an allocation of a first processing unit of the plurality of processing units to the first application, and an association between a first cache portion of the plurality of cache portions and the first processing unit. The method further comprises reconfiguring a mapping configuration based on the obtained first information, and controlling a providing of first data associated with the first application to the first cache portion from the first memory portion using the reconfigured mapping configuration. },
-   year = {2020},
+    year = {2020},
     number={12111768},
     nationality={United States},
     month=feb,
     holder={Telefonaktiebolaget LM Ericsson AB},
+    url = {https://patents.google.com/patent/US12111768B2/en},
 }
 
 @inproceedings{Ghasemirahni_2022,
@@ -252,6 +253,7 @@ title = {{PacketMill: Toward Per-Core 100-Gbps Networking - Artifact for ASPLOS'
 year = {2021},
 publisher = {Association for Computing Machinery},
 url = {https://doi.org/10.5281/zenodo.4435970},
+doi = {10.5281/zenodo.4435970},
 abstract = {
     <p>This is the artifact for the “PacketMill: Toward per-core 100-Gbps Networking” paper published at ASPLOS’21.</p>
 <p>PacketMill is a system that optimizes the performance of network functions via holistic inter-stack optimizations. More specifically, PacketMill provides a new metadata management model, called X-Change, enabling the packet processing frameworks to provide their custom buffer to DPDK and fully bypass rte_mbuf. Additionally, PacketMill performs a set of source-code \& intermediate representation (IR) code optimizations.</p>
@@ -280,22 +282,35 @@ keywords = {DPDK., FastClick, LLVM, Middleboxes, Packet Processing, PacketMill, 
 	 title ={What We Don’t Know About Spreadsheet Errors Today:
 The Facts, Why We Don’t Believe Them, and What We Need to Do},
 	booktitle={Proceedings of the {EuSpRIG} 2015 Conference “Spreadsheet Risk Management”},
-	year={2015},
+	year={2016},
 	pages={79-93},
 	organization={European Spreadsheet Risks Interest Group (www.eusprig.org) },
 	isbn={978-1-905404-52-0},
 	url={https://arxiv.org/pdf/1602.02601},
-	doi={https://doi.org/10.48550/arXiv.1602.02601},
+	doi={10.48550/arXiv.1602.02601},
 }
 
-@misc{verardo2023fmmheadenhancingautoencoderbasedecg,
+@inproceedings{verardo2023fmmheadenhancingautoencoderbasedecg,
+  author       = {Giacomo Verardo and Magnus Boman and Samuel Bruchfeld and Marco Chiesa and Sabine Koch and Gerald Q. {Maguire Jr.} and Dejan Kosti{\'{c}}},
+  title        = {{FMM-Head}: Enhancing Autoencoder-Based {ECG} Anomaly Detection with Prior Knowledge},
+  booktitle    = {Bioinformatics and Biomedical Engineering},
+  year         = {2025},
+  doi          = {10.1007/978-981-97-8702-9_2},
+  eprint       = {2310.05848},
+  archiveprefix = {arXiv},
+  primaryclass = {cs.LG},
+  url          = {https://arxiv.org/abs/2310.05848},
+}
+                  
+@misc{verardo2023fmmheadenhancingautoencoderbasedecg_preprint,
       title={{FMM-Head}: Enhancing Autoencoder-based {ECG} anomaly detection with prior knowledge}, 
       author={Giacomo Verardo and Magnus Boman and Samuel Bruchfeld and Marco Chiesa and Sabine Koch and Gerald Q. {Maguire Jr.} and Dejan Kostic},
       year={2023},
-      eprint={2310.05848},
+      eprint={2310.05848v1},
       archivePrefix={arXiv},
       primaryClass={cs.LG},
-      url={https://arxiv.org/abs/2310.05848}, 
+      url={https://arxiv.org/abs/2310.05848},
+      doi = {10.48550/arXiv.2310.05848}
 }
 
 @article{10.1145/2209249.2209262,
@@ -353,7 +368,8 @@ numpages = {4}
 
 @article{MittelbachRowley2020,
     author = {Frank Mittelbach and Chris Rowley},
-    title = {{LATEX Tagged PDF|A blueprint for a large project}},
+    title = {{LATEX Tagged PDF}},
+    subtitle={{A blueprint for a large project}},
     year = {2020},
     journal={TUGboat},
     publisher = {{TeX Users Group}},
@@ -387,8 +403,10 @@ numpages = {4}
   number = 	 {ISO/IEC 29500-1:2016},
   address = 	 {ISO Central Secretariat, Chemin de Blandonnet 8, CP 401, 1214 Vernier, Geneva, Switzerland},
   annote = 	 {Edition 4},
+  url = {https://www.iso.org/standard/71691.html},
   pages=5024
 }
+
 
 @article{brand_beyond_2015,
 	title = {Beyond authorship: attribution, contribution, collaboration, and credit},
@@ -433,3 +451,220 @@ numpages = {4}
 	editor = {{University of Chicago press}},
 	year = {1982},
 }
+                  
+@techreport{bnlMPS1975,
+  author      = {Lindenbaum, S. J. and {MPS Collaboration}},
+  title       = {The {Brookhaven} {Multi-Particle} {Spectrometer} ({MPS}) Facility},
+  institution = {Brookhaven National Laboratory},
+  year        = {1975},
+  number      = {BNL-20202},
+  type        = {Report},
+  note        = {An invited paper presented at the IV International Symposium on NN Interaction, Syracuse University, May 2-4, 1975.},
+  annotation  = {The OSTI URL https://www.osti.gov/servlets/purl/4162299 is very slow to respond, if at all.},
+  url = {https://cds.cern.ch/record/1018903}                  
+}
+
+@standard{niso_z39_104_2022,
+  author       = {{National Information Standards Organization}},
+  title        = {{Contributor Roles Taxonomy}},
+  subtitle     = {{ANSI/NISO Z39.104-2022}},
+  number       = {ANSI/NISO Z39.104-2022},
+  organization = {National Information Standards Organization},
+  publisher    = {NISO},
+  address      = {Baltimore, MD, USA},
+  date         = {2022-02-08},
+  type         = {Standard},
+  issn         = {1041-5653},
+  isbn         = {978-1-950980-18-5},
+  doi          = {10.3789/ansi.niso.z39.104-2022},
+  url          = {https://www.niso.org/standards-committees/credit},
+  urldate      = {2026-08-31}
+}
+
+@article{placeholderExample1,
+  author      = {Doe, John and Smith, Jane},
+  title       = {A High-Performance Framework for Low-Latency Image Classification},
+  journal     = {Journal of Advanced Vision Systems},
+  year        = {2025},
+  placeholder = {Replace with authoritative IEEE/CVF conference publication and DOI once published in proceedings},
+}
+
+
+@article{maguire2026pipeline,
+  author     = {Maguire Jr., Gerald Q. and Smith, Jane},
+  author+an  = {
+    1:orcid="0000-0002-6066-746X";
+    1:conceptualization="lead";
+    1:software="lead";
+    1:writing-original-draft="lead";
+    2:orcid="0000-0001-2345-6789";
+    2:supervision="lead";
+    2:writing-review-editing="supporting";
+  },
+  title      = {Automated Metadata Integrity in Academic Publishing},
+  journal    = {Journal of Academic Stewardship},
+  year       = {2026},
+  volume     = {4},
+  number     = {1},
+  pages      = {45--60},
+  doi        = {10.1000/182},
+  issn       = {0000-0000},
+  placeholder = {Placeholder fake reference for use in examples},
+}
+
+@article{doe2025collaborative,
+  author     = {Maguire Jr., Gerald Q. and Smith, Jane and Green, Alex},
+  author+an  = {
+    1:orcid="0000-0002-6066-746X";
+    1:equal="true";
+    1:investigation="lead";
+    1:writing-original-draft="equal";
+    2:orcid="0000-0001-2345-6789";
+    2:equal="true";
+    2:data-curation="lead";
+    2:writing-original-draft="equal";
+    3:orcid="0000-0003-9876-5432";
+    3:supervision="lead";
+    3:writing-review-editing="supporting";
+  },
+  title      = {Collaborative Systems in Higher Education},
+  journal    = {Journal of Academic Stewardship},
+  year       = {2025},
+  volume     = {3},
+  number     = {2},
+  pages      = {112--128},
+  doi        = {10.1000/182},
+  issn       = {0000-0000},
+  placeholder = {Placeholder fake reference for use in examples},
+}
+
+@misc{rfc2606,
+    series =    {Request for Comments},
+    number =    2606,
+    howpublished =  {RFC 2606},
+    publisher = {RFC Editor},
+    doi =       {10.17487/RFC2606},
+    url =       {https://www.rfc-editor.org/info/rfc2606/},
+    author =    {D. Eastlake 3rd and A. Panitz},
+    title =     {{Reserved Top Level DNS Names}},
+    pagetotal = 5,
+    year =      1999,
+    month =     jun,
+    abstract =  {To reduce the likelihood of conflict and confusion, a few top level domain names are reserved for use in private testing, as examples in documentation, and the like. In addition, a few second level domain names reserved for use as examples are documented. This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.},
+}
+
+@misc{rfc6761,
+    series =    {Request for Comments},
+    number =    6761,
+    howpublished =  {RFC 6761},
+    publisher = {RFC Editor},
+    doi =       {10.17487/RFC6761},
+    url =       {https://www.rfc-editor.org/info/rfc6761/},
+    author =    {S. Cheshire and M. Krochmal},
+    title =     {{Special-Use Domain Names}},
+    pagetotal = 13,
+    year =      2013,
+    month =     feb,
+    abstract =  {This document describes what it means to say that a Domain Name (DNS name) is reserved for special use, when reserving such a name is appropriate, and the procedure for doing so. It establishes an IANA registry for such domain names, and seeds it with entries for some of the already established special domain names.},
+}
+
+@standard{iso2108:2017,
+  author = {{International Organization for Standardization}},
+  shortauthor = {{ISO}},
+  title        = {Information and documentation},
+  subtitle     = {International Standard Book Number ({ISBN})},
+  publisher  = {International Organization for Standardization},
+  number       = {ISO 2108:2017},
+  year         = {2017},
+  month        = {12},
+  location     = {Geneva},
+  edition = {5},
+  pagetotal = {22},
+  url = {https://www.iso.org/standard/65483.html}
+}
+
+@standard{iso27729:2024,
+  author = {{International Organization for Standardization}},
+  shortauthor = {{ISO}},
+  title        = {Information and documentation},
+  subtitle     = {International standard name identifier ({ISNI})},
+  publisher  = {International Organization for Standardization},
+  number       = {ISO 27729:2024},
+  year         = {2024},
+  month        = {11},
+  location     = {Geneva},
+  edition = {2},
+  pagetotal = {12},
+  url = {https://www.iso.org/standard/87177.html}
+}
+
+@report{maguire2026programmersguide,
+  author      = {Maguire, Jr., Gerald Q.},
+  author+an   = {1:orcid="0000-0002-6066-7469"},
+  title       = {{README} and Notes About the Template for Programmers},
+  type        = {Manual},
+  institution = {KTH Royal Institute of Technology, School of Electrical Engineering and Computer Science},
+  date        = {2026-09},
+  url         = {https://github.com/gqmaguirejr/KTH-3rd-cycle-template-restructured},
+  note        = {Documentation for my KTH LaTeX third-cycle thesis template},
+  langid      = {english}
+}
+
+@report{maguire2026programmersguide_testing,
+  author      = {Maguire, Jr., Gerald Q.},
+  author+an   = {1:orcid="0000-0002-6066-7469"},
+  title       = {{README} and Notes About the Template for Programmers},
+  type        = {Manual},
+  institution = {KTH Royal Institute of Technology, School of Electrical Engineering and Computer Science},
+  date        = {2026-09},
+  url         = {https://github.com/gqmaguirejr/KTH-3rd-cycle-template-restructured--testing},
+  note        = {Documentation for my KTH LaTeX third-cycle thesis template},
+  langid      = {english},
+  titleaddon  = {[Testing repository]}
+}
+
+@report{maguire2026biberbiblatex,
+  author      = {Maguire, Jr., Gerald Q.},
+  author+an   = {1:orcid="0000-0002-6066-7469"},
+  title       = {{README} and notes about the template for programmers -- {Biber} and {\BibLaTeX}},
+  type        = {Manual},
+  institution = {KTH Royal Institute of Technology, School of Electrical Engineering and Computer Science},
+  date        = {2026-09},
+  url         = {https://github.com/gqmaguirejr/KTH-3rd-cycle-template-restructured},
+  note        = {Programmer notes companion document for the KTH third-cycle thesis template},
+  langid      = {english}
+}
+
+@report{maguire2026biberbiblatex_testing,
+  author      = {Maguire, Jr., Gerald Q.},
+  author+an   = {1:orcid="0000-0002-6066-7469"},
+  title       = {{README} and notes about the template for programmers -- {Biber} and {\BibLaTeX}},
+  type        = {Manual},
+  institution = {KTH Royal Institute of Technology, School of Electrical Engineering and Computer Science},
+  date        = {2026-09},
+  url         = {https://github.com/gqmaguirejr/KTH-3rd-cycle-template-restructured--testing},
+  note        = {Programmer notes companion document for the KTH third-cycle thesis template},
+  langid      = {english},
+  titleaddon  = {[Testing repository]}
+}
+
+
+@article{fischer_pdfconformance_2023,
+	title = {On {PDF}/{A} {Conformance} and {Font} {Usage} in {PDF} {Documents} {Provided} by {Public} {Sector} {Organizations}:},
+	volume = {20},
+	copyright = {http://creativecommons.org/licenses/by/3.0/deed.en\_US},
+	issn = {2470-8542, 2470-8550},
+	shorttitle = {On {PDF}/{A} {Conformance} and {Font} {Usage} in {PDF} {Documents} {Provided} by {Public} {Sector} {Organizations}},
+	url = {https://services.igi-global.com/resolvedoi/resolve.aspx?doi=10.4018/IJSR.329605},
+	doi = {10.4018/IJSR.329605},
+	abstract = {The use of appropriate fonts and file formats for long-term maintenance of digital assets is a challenge for organizations in the public sector. The article reports from a study which investigated the PDF/A conformance and font usage in PDF files provided by Swedish public sector organizations (PSOs). This article presents an analysis of the PDF files' properties and font usage including a categorization of fonts' licenses. This study is motivated by the PDF/A-1 standard's requirement that ‘only fonts that are legally embeddable in a file for unlimited, universal rendering shall be used.' Analyzing PDF sets from three PSOs, the finding shows that the proportion of files that claim or succeed at conforming to PDF/A greatly varies among the sets despite similar backgrounds. Although the most popular way to make use of fonts is by embedding a subset of the font data, for some fonts expected to be ‘always available,' a considerable proportion of PDF files does not include any font data. This puts the onus of locating this data on the PDF reader which is problematic for long-term archival.},
+	language = {eng},
+	number = {1},
+	urldate = {2026-09-24},
+	journal = {International Journal of Standardization Research},
+	author = {Fischer, Thomas and Lundell, Björn and Gamalielsson, Jonas},
+	month = sep,
+	year = {2023},
+	pages = {1--19}
+}
+
