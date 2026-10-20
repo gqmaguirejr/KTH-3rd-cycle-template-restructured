@@ -198,6 +198,10 @@ streamlit run ./scripts/CReDiT_Matrix_Wizard.py
 When you now upload the `publications_map.json` file to your GitHub repository, it will trigger the Sync publications workflow creating a `lib/thesis_contributions_generated.tex` file. If this file exists, the examplethesis.tex will automatically include it.
 
 
+> [!NOTE]
+> Supports contributor degrees per NISO Z39.104-2022: "lead", "equal", "supporting", or "none".
+
+
 4. **Integration:** Pull the latest changes into Overleaf or your local environment. Your thesis will now contain the updated list of publications, cross-referenced correctly with your bibliography.
 > [!TIP]
 > If you have (1) made changes in Overleaf and pushed them to the repository or (2) a script has updated files in the repository be sure to do a `git pull` on your local git **before you start working locally**.
