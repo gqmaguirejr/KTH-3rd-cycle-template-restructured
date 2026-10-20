@@ -128,13 +128,13 @@ Now you can invoke the configuration wizard with:
 streamlit run ./scripts/config_wizard.py
 ```
 
-This will run the script with your local browser via the URL: http://localhost:8501 so you can fill in the form, then download the resulting LaTeX and upload the `config_snippet.tex` file to your repository. If you are are logged into KTH, the script will be able to get KTHIDs.
+This will run the script with your local browser via the URL: http://localhost:8501 so you can fill in the form, then download the resulting LaTeX and upload the `config_snippet.tex` file to your repository.
 
 > [!CAUTION]
 > If the wizard detects an existing publications_map.json and this is the **first time** you are running this wizard, click the red "Delete existing map & Start fresh" button. Otherwise, do **not** delete the file!
 
 > [!NOTE]
-> This script may not always be able to get the KTHID for a given user or supervisor (as the script is **not** using the KTH Profile API -- since this would require an API key). As a result you may need to collect this information manually by asking your KTH supervisors for this missing information or if you are logged into KTH you may be able to see the KTHID at the bottom of the user's profile page.
+> This script may not always be able to get the KTHID for a given user or supervisor (as the script is **not** using the KTH Profile API -- since this would require an API key). If you are are logged into KTH, the script will be able to get KTHIDs. Otherwise, you may need to collect this information manually by asking your KTH supervisors for this missing information.
 
 If you downloaded the file to `~/Downloads/config_snippet.tex` you can upload it with:
 
