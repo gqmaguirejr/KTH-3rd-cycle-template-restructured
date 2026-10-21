@@ -142,6 +142,7 @@ If you downloaded the file to `~/Downloads/config_snippet.tex` you can upload it
 cp ~/Downloads/config_snippet.tex .
 git add config_snippet.tex
 git commit -m "introduced config_snippet.tex" config_snippet.tex
+git push -u origin main
 ```
 
 This will automatically trigger the **Merge Wizard Configuration** workflow (`.github/workflows/merge_wizard.yml`) and it will run a script to merge your snippets with the `custom_configuration.tex` file and it will delete the file with your snippets from the repository.  Now sync your Overleaf project with your GitHub repository.
