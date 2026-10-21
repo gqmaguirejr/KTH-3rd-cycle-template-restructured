@@ -60,24 +60,39 @@ Using the GitHub repository (or running scripts locally) enables automated funct
 
 \Needspace*{20\baselineskip}
 \section*{When writing a compilation thesis, use the scripts}
-Use the scripts to make your job easier. The steps shown below will automatically generate files containing your list of publications, your contributions, the tabs for the included papers, and even help you check for the existence of your references. See the scripts and documentation at \url{https://github.com/gqmaguirejr/KTH-3rd-cycle-template-restructured}.
-\begin{lstlisting}[language={bash}, breaklines=true, postbreak=\usebox{\lstbreakbox}, caption={Configure your project, get publications from DiVA, add CReDiT information}, label=lst:scripts, basicstyle=\footnotesize]
-# Configure your custom_configuration.tex file
+To streamline assembling a compilation thesis, the template repository provides scripts that automate metadata configuration, publication harvesting from DiVA, CReDiT author contributions, paper divider tabs, and bibliography validation. Full documentation and tools are available at \url{https://github.com/gqmaguirejr/KTH-3rd-cycle-template-restructured}.
+
+Follow this sequential procedure:
+\begin{enumerate}
+    \item \textbf{Configure metadata:} Run the wizard to configure \fname{custom\_configuration.tex}.
+    \item \textbf{Fetch publications:} Harvest your published records from DiVA into \fname{publications\_map.json}, then reorder or label the papers to include.
+    \item \textbf{Assign contributions:} Use the matrix wizard to record CReDiT contributions for co-authored works.
+    \item \textbf{Generate thesis sections:} Run the divider and contribution generators to produce input files for the \emph{kappa}.
+    \item \textbf{Sanitize bibliography:} Validate persistent identifiers and entries in \fname{references.bib}.
+\end{enumerate}
+
+
+\begin{lstlisting}[language={bash}, breaklines=true, postbreak=\usebox{\lstbreakbox}, caption={{Configure your project, get publications from DiVA, add CReDiT information}}, label=lst:scripts, basicstyle=\footnotesize\ttfamily, escapechar=£]
+# 1. Configure your custom_configuration.tex file
 streamlit run ./scripts/config_wizard.py
-# Add your configuration data to your project; either manually or if using GitHub's automtion
-# Get information about your publications from DiVA (uses your KTHID from custom_configuration.tex)
-./scripts/DiVA_discovery.py 
+# Add your configuration data to your project; either manually or using GitHub's automation
+
+# 2. Get information about your publications from DiVA (uses your KTHID from custom_configuration.tex); assumes all your publications are in references.bib
+./scripts/DiVA_discovery.py
 # Edit publications_map.json to indicate which publications you want to include, what labels you want, and their order
-# Enter CReDiT info for your included papers
+
+# 3. Enter CReDiT info for your included papers
 streamlit run ./scripts/CReDiT_Matrix_Wizard.py
-# Automatically generate text for your thesis
+
+# 4. Automatically generate text for your thesis
 ./scripts/generate_publication_dividers.py
 ./scripts/generate_thesis_contributions.py
 # Put the generated files into your thesis folder
-# *** Write the rest of your Kappa ***
-# Check the existence of the entries in your references.bib file
+
+# 5. £{\sffamily\bfseries\color{red}*** Write the rest of your Kappa ***}£
+
+# 6. Check the existence of the entries in your references.bib file and sanitize referencesUsed.bib
 ./scripts/bib_cleanup.py
-# Compile your thesis
 \end{lstlisting}
 
 \section*{Tips for Writing and Navigating the Template}
