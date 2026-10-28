@@ -40,14 +40,37 @@ The following are those that are most interesting:
 
 | File | Purpose |
 | :--- | :--- |
-| **Quick_Start_Guide.pdf** | **Read this first.** A 3-page guide to get you started. |
+| **Quick_Start_Guide.tex** | **Read this or a PDF of it first.** A 3-page guide to get you started. |
 | **README_3rd_cycle_author.tex** | A guide for the author. |
 | **examplethesis.tex** | Your main document. Start writing here. |
 | **custom_configuration.tex** | Personal info: Name, KTHID, supervisors, and titles. |
 | **lib/acronyms.tex** | Define all your abbreviations here. |
 | **lib/includes.tex** | Add your LaTeX packages/libraries here. |
 | **lib/includes-after-hyperref.tex** | Add LaTeX packages/libraries here that must be loaded after the hyperref package, e.g., packages like cleveref. |
+| **lib/defines.tex** | Project-wide macro definitions, formatting commands, and note helpers. |
 | **errata.tex** | Use this to generate an errata sheet if errors are found *after* printing. |
+| **references.bib** | Place your references in this file. |
+| **publications_map.json** | JSON manifest mapping your papers and ordering for a compilation thesis. |
+| **kththesis.cls** | Core KTH thesis LaTeX document class. |
+| **Figtree.fontspec** | Fontspec configuration mapping the local Figtree typeface family. |
+
+| Folders | Purpose |
+| :--- | :--- |
+| **Additional_Abstracts** | Abstract translations and summaries across multiple languages. |
+| **Included_publications** | Storage for publication PDFs included in a compilation thesis. |
+| **figures** | Dedicated directory for diagrams, plots, and graphic assets. |
+| **generated** | Automatically generated files (e.g., CReDiT tables, dividers, bibliography extracts). |
+| **kth** | KTH specific elements of the template. |
+| **lib** | Core shared modular configuration and macro files. |
+| **README_notes** | Additional topic-specific documentation and background notes. |
+| **scripts** | Automation scripts for DiVA harvesting, CReDiT matrix entry, and divider generation. |
+| **tools** | Tools - primarily for dealing with fonts. |
+| **unicode_blocks** | LaTeX and font definitions providing extended Unicode symbol coverage. |
+| **unicode_blocks-old** | Legacy Unicode mapping definitions (retained for reference). |
+| **Figtree** | Local font directory containing Figtree font assets. |
+| **Noto_Emoji** | Local font directory containing Noto Emoji font assets. |
+
+
 
 
 <a id="advanced-setup-automation"></a>
