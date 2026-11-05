@@ -376,7 +376,7 @@ The folder `README_notes` contains more specialized information for users, super
 Note that while other templates (like Tekla) exist, this template retains critical automation features not present in these other templates and it is actually more **correct** (when viewed from the point of view of style guides, such as *The Chicago Manual of Style*) in numbering, ordering, consistency, completeness, etc. than these other templates.
 
 ### Some helpful scripts
-* `scripts/orcid_search.py': Look up ORCID IDs
+#### `scripts/orcid_search.py': Look up ORCID IDs
 
 You can also specify `--org "TU Delft"' one or more times to use other institutions and can also specify `--clear-default-orgs' to clear the local default organizations.
 
