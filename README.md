@@ -377,8 +377,8 @@ Note that while other templates (like Tekla) exist, this template retains critic
 
 ### Some helpful scripts
 * **Looking up ORCID IDs**: Use scripts/orcid_search.py
-     ```bash
-./orcid_search.py gerald maguire
+```console
+$ ./orcid_search.py gerald maguire
 ==> Searching ORCID by name: 'gerald maguire'
 Strategy used: strict name + regional affiliation
 Found 1 matching record(s):
@@ -387,8 +387,10 @@ Found 1 matching record(s):
     ORCID:   0000-0002-6066-746X (checksum: valid)
     URL:     https://orcid.org/0000-0002-6066-746X
     Aliases: Chip Maguire
+```
 
-./orcid_search.py maguire@kth.se
+```console
+$ ./orcid_search.py maguire@kth.se
 ==> Searching ORCID by email: 'maguire@kth.se'
 Strategy used: email user-token fallback ('maguire' + domain)
 Found 1 matching record(s):
@@ -397,8 +399,9 @@ Found 1 matching record(s):
     ORCID:   0000-0002-6066-746X (checksum: valid)
     URL:     https://orcid.org/0000-0002-6066-746X
     Aliases: Chip Maguire
-
-./orcid_search.py Chip Maguire
+```
+```console
+$ ./orcid_search.py Chip Maguire
 ==> Searching ORCID by name: 'Chip Maguire'
 Strategy used: prefix 'C*' + regional affiliation
 Found 1 matching record(s):
@@ -407,9 +410,9 @@ Found 1 matching record(s):
     ORCID:   0000-0002-6066-746X (checksum: valid)
     URL:     https://orcid.org/0000-0002-6066-746X
     Aliases: Chip Maguire
-
-
-./orcid_search.py Dejan Manojlo Kostic
+```
+```console
+$ ./orcid_search.py Dejan Manojlo Kostic
 ==> Searching ORCID by name: 'Dejan Manojlo Kostic'
 Strategy used: prefix 'D*' + regional affiliation
 Found 1 matching record(s):
@@ -417,11 +420,7 @@ Found 1 matching record(s):
   * Name:    Dejan Kostic
     ORCID:   0000-0002-1256-1070 (checksum: valid)
     URL:     https://orcid.org/0000-0002-1256-1070
-
-     ```
-
-
-
+```
 
 <a id="enhancements-and-workflows"></a>
 ## Enhancements and Workflows
