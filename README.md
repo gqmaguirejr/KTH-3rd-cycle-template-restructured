@@ -377,6 +377,9 @@ Note that while other templates (like Tekla) exist, this template retains critic
 
 ### Some helpful scripts
 * **Looking up ORCID IDs**: Use scripts/orcid_search.py
+
+You can also specify `--org "TU Delft"' one or more times to use other institutions and can also specify `--clear-default-orgs' to clear the local default organizations.
+
 ```console
 $ ./orcid_search.py gerald maguire
 ==> Searching ORCID by name: 'gerald maguire'
