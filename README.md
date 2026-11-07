@@ -428,7 +428,7 @@ Found 1 matching record(s):
 
 <a id="enhancements-and-workflows"></a>
 ## Enhancements and Workflows
-By making this template available via GitHub, we exploit the ability of CI/CD (GitHub Actions) to automate thesis metadata management. This repository currently supports:
+By making this template available via GitHub, we exploit the ability of CI/CD (GitHub Actions) to automate thesis metadata management. The repository currently supports:
 
 ### Existing workflows
 * **Automate the configuration of custom_configuration.tex**: Using the config_wizard.py
