@@ -466,10 +466,10 @@ By making this template available via GitHub, we exploit the ability of CI/CD (G
     * **Trigger:** Runs automatically on GitHub whenever `custom_configuration.tex` is modified.
     * **Usage in Thesis:**
 
-    ```latex
+  ```latex
   % read in the plain text definitions, if they exist
   \IfFileExists{generated/custom_configuration_plaintext.tex}{\input{generated/custom_configuration_plaintext}}{}
-    ```
+  ```
 * **Bibliography Cleanup** Runs scripts/bib_cleanup.py when ever output.bcf, output.aux, or references.bib changes.
 
   * The system supports citation validation against `references.bib` and automatic character escaping.
