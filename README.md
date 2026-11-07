@@ -432,10 +432,16 @@ By making this template available via GitHub, we exploit the ability of CI/CD (G
 
 ### Existing workflows
 * **Automate the configuration of custom_configuration.tex**: Using the config_wizard.py
+  ```bash
+streamlit run ./scripts/config_wizard.py
+  ```
 
 * **Automated Publication Discovery:** Using the workflow `Manual DiVA Discovery Test`, metadata is pulled directly from DiVA based on the author's KTHID.
 
-* **Controlled Inclusion:** A JSON-based mapping system (`publications_map.json`) allows authors to curate which publications are "included" or "not included" in the thesis with custom labels (e.g., `paper:A`, `patent:B`).
+* **Controlled Inclusion:** A JSON-based mapping system (`publications_map.json`) allows authors to curate which publications are "included" or "not included" in the thesis with custom labels (e.g., `paper:A`, `patent:B`). Edit publications_map.json to indicate which publications you want to include, what labels you want, and their order. Then to enter CReDiT info for your included papers:
+  ```bash
+streamlit run ./scripts/CReDiT_Matrix_Wizard.py
+  ```
 
 * **LaTeX Generation:** 
   * Direct insertion of formatted publication lists into the document via the workflow `Generate Thesis TeX Artifacts` (`.github/workflows/generate-thesis-assets.yml`) will generate in the `generated/` folder: `publications_dividers_generated.tex`, `thesis_contributions_generated.tex`, and `publications_generated.tex`.
