@@ -493,7 +493,8 @@ A cache of the DOI, ISBN, etc. lookup is stored in `.bib_validator_cache.json`. 
 
 To add all of these files (if they exist) to what is tracked, do:
 ``` bash
-git add .bib_validator_cache.json referencesUsed.bib output.*  .github/workflows/bib-clean.yml
+git add .bib_validator_cache.json referencesUsed.bib output.*
+.github/workflows/bib-clean.yml
 ``` 
 > [!NOTE]
 > The checking that is done is that the DOI, ISBN, URL, ... is likely to exist, not that the reference is **factually** correct. 
