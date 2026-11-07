@@ -437,10 +437,11 @@ By making this template available via GitHub, we exploit the ability of CI/CD (G
 
 * **Controlled Inclusion:** A JSON-based mapping system (`publications_map.json`) allows authors to curate which publications are "included" or "not included" in the thesis with custom labels (e.g., `paper:A`, `patent:B`).
 
-* **LaTeX Generation:** Direct insertion of formatted publication lists into the document via the workflow `.github/workflows/generate-thesis-assets.yml` will generate in the `generated/` folder: `publications_dividers_generated.tex`, `thesis_contributions_generated.tex`, and `publications_generated.tex`. The system supports LaTeX math mode in titles, citation validation against `references.bib`, and automatic character escaping.
+* **LaTeX Generation:** 
+  * Direct insertion of formatted publication lists into the document via the workflow `Generate Thesis TeX Artifacts` (`.github/workflows/generate-thesis-assets.yml`) will generate in the `generated/` folder: `publications_dividers_generated.tex`, `thesis_contributions_generated.tex`, and `publications_generated.tex`.
 
-  * **Trigger:** Runs automatically on GitHub whenever `publications_map.json` is modified.
-  * **Usage in Thesis:**
+    * **Trigger:** Runs automatically on GitHub whenever `publications_map.json` is modified.
+    * **Usage in Thesis:**
   ```latex
   % Main matter publication list / DiVA output
   \input{generated/publications_generated.tex}
@@ -450,7 +451,19 @@ By making this template available via GitHub, we exploit the ability of CI/CD (G
 
   % Divider pages for appended papers
   \input{generated/publications_dividers_generated.tex}
+  ```
 * **Bibliography Cleanup** Runs scripts/bib_cleanup.py when ever output.bcf, output.aux, or references.bib changes.
+
+  * The system supports LaTeX math mode in titles via the workflow `Generate Plaintext Titles and Subtitles` (`.github/workflows/generate-plaintext-titles.yml`).
+
+    * **Trigger:** Runs automatically on GitHub whenever `custom_configuration.tex` is modified.
+    * **Usage in Thesis:**
+  ```latex
+  % read in the plain text definitions, if they exist
+  \IfFileExists{generated/custom_configuration_plaintext.tex}{\input{generated/custom_configuration_plaintext}}{}
+  ```
+
+  * The system supports citation validation against `references.bib` and automatic character escaping.
 
 #### Bibliography Cleanup - GitHub workflow
 The program scripts/bib_cleanup.py creates a `referencesUsed.bib` file containing only the items from `references.bib` that you have cited. It also does some checking of the DOIs, ISBNs, (US) patents, and computes what fraction of your references have a DOI, ISBN, or URL - to encourage you to have persistant identifiers for your references.
