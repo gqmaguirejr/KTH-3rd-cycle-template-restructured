@@ -431,10 +431,10 @@ Found 1 matching record(s):
 By making this template available via GitHub, we exploit the ability of CI/CD (GitHub Actions) to automate thesis metadata management. The repository currently supports:
 
 ### Existing workflows
-* **Automate the configuration of custom_configuration.tex**: Using the config_wizard.py
+- **Automate the configuration of custom_configuration.tex**: Using the config_wizard.py
 
   ```bash
-streamlit run ./scripts/config_wizard.py
+  streamlit run ./scripts/config_wizard.py
   ```
 
 * **Automated Publication Discovery:** Using the workflow `Manual DiVA Discovery Test`, metadata is pulled directly from DiVA based on the author's KTHID.
@@ -442,7 +442,7 @@ streamlit run ./scripts/config_wizard.py
 * **Controlled Inclusion:** A JSON-based mapping system (`publications_map.json`) allows authors to curate which publications are "included" or "not included" in the thesis with custom labels (e.g., `paper:A`, `patent:B`). Edit publications_map.json to indicate which publications you want to include, what labels you want, and their order. Then to enter CReDiT info for your included papers:
 
   ```bash
-streamlit run ./scripts/CReDiT_Matrix_Wizard.py
+  streamlit run ./scripts/CReDiT_Matrix_Wizard.py
   ```
 
 * **LaTeX Generation:** 
