@@ -433,7 +433,7 @@ By making this template available via GitHub, we exploit the ability of CI/CD (G
 ### Existing workflows
 * **Automate the configuration of custom_configuration.tex**: Using the config_wizard.py
 
-* **Automated Publication Discovery:** Metadata is pulled directly from DiVA based on the author's KTHID.
+* **Automated Publication Discovery:** Using the workflow `Manual DiVA Discovery Test`, metadata is pulled directly from DiVA based on the author's KTHID.
 
 * **Controlled Inclusion:** A JSON-based mapping system (`publications_map.json`) allows authors to curate which publications are "included" or "not included" in the thesis with custom labels (e.g., `paper:A`, `patent:B`).
 
