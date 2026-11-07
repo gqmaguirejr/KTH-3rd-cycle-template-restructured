@@ -437,7 +437,7 @@ By making this template available via GitHub, we exploit the ability of CI/CD (G
 
 * **Controlled Inclusion:** A JSON-based mapping system (`publications_map.json`) allows authors to curate which publications are "included" or "not included" in the thesis with custom labels (e.g., `paper:A`, `patent:B`).
 
-**LaTeX Generation:** Direct insertion of formatted publication lists into the document via the workflow `.github/workflows/generate-thesis-assets.yml` will generate in the `generated/` folder: `publications_dividers_generated.tex`, `thesis_contributions_generated.tex`, and `publications_generated.tex`. The system supports LaTeX math mode in titles, citation validation against `references.bib`, and automatic character escaping.
+* **LaTeX Generation:** Direct insertion of formatted publication lists into the document via the workflow `.github/workflows/generate-thesis-assets.yml` will generate in the `generated/` folder: `publications_dividers_generated.tex`, `thesis_contributions_generated.tex`, and `publications_generated.tex`. The system supports LaTeX math mode in titles, citation validation against `references.bib`, and automatic character escaping.
 
   * **Trigger:** Runs automatically on GitHub whenever `publications_map.json` is modified.
   * **Usage in Thesis:**
